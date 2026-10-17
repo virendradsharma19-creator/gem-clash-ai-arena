@@ -1,0 +1,20 @@
+{
+  "id": "./",
+  "name": "Gem Clash: AI Arena",
+  "short_name": "Gem Clash",
+  "description": "A colorful match-3 fantasy battle arena with champions, rivals, arenas and challenge modes.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#10152b",
+  "theme_color": "#10152b",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
