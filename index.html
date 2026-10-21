@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 1.0.8</title>
+<title>Gem Clash: AI Arena — Build 1.0.9</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -50,12 +50,47 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px;fl
 .arenarow{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:12px}.arena{padding:10px 4px;background:#111832;color:#e8edff;border:1px solid #35436f}.arena.active{border-color:var(--gold);background:#594b46;box-shadow:0 0 12px #ffd16630}.arena small{display:block;font-size:.7rem;font-weight:600;color:#bdc9eb;margin-top:3px}.footer{text-align:center;color:#7886b1;font-size:.75rem;padding:14px}
 .overlay{position:fixed;inset:0;background:#050817d9;display:none;place-items:center;padding:20px;z-index:5}.overlay.show{display:grid}.modal{max-width:420px;width:100%;text-align:center;background:#202b52;border:1px solid #6578b5;border-radius:22px;padding:25px;box-shadow:0 25px 80px #0008}.modal h2{font-size:2rem;margin:0 0 6px}.modal p{color:#c5d0f3}.primary{padding:12px 22px;background:linear-gradient(90deg,#ffe08a,#ffad55);color:#30210b;margin-top:8px}
 @media(max-width:760px){.layout{grid-template-columns:1fr}.wrap{padding:9px}.panel{padding:11px}.board{gap:4px}.cell{border-radius:8px}.stats{gap:7px}.powerlist{grid-template-columns:1fr 1fr}.battlehead .fighter:last-child{text-align:right;flex-direction:row-reverse}.topbtn{font-size:.8rem}}
+
+/* Build 1.0.9: visual polish pass — CSS-only, keeps gameplay logic unchanged */
+:root{--gold:#ffe18a;--cyan:#71f3ff;--panel:#182346}
+body{background-color:#080b19;background-image:radial-gradient(ellipse at 50% -12%,#5868b8 0%,#202b5b 34%,#10152b 68%,#070914 100%);background-attachment:fixed}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.24;background-image:radial-gradient(2px 2px at 12% 18%,#fff 45%,transparent 55%),radial-gradient(2px 2px at 82% 14%,#9ff8ff 45%,transparent 55%),radial-gradient(1px 1px at 68% 43%,#fff 45%,transparent 55%),radial-gradient(2px 2px at 25% 73%,#ffe7a0 45%,transparent 55%),radial-gradient(1px 1px at 92% 82%,#fff 45%,transparent 55%);background-size:280px 240px}
+body[data-arena="Frostlands"]{background-image:radial-gradient(ellipse at 50% -12%,#9aeaff 0%,#286b91 34%,#10283d 68%,#06111e 100%)}
+body[data-arena="Emberfall"]{background-image:radial-gradient(ellipse at 50% -12%,#ffb15e 0%,#873b43 34%,#351725 68%,#100914 100%)}
+.wrap{max-width:1120px;padding:clamp(9px,2vw,20px)}
+header{padding:12px 14px;border:1px solid #7182bd70;border-radius:18px;background:linear-gradient(120deg,#1b2852dd,#10172fdd);box-shadow:0 12px 35px #0004,inset 0 1px #ffffff18;backdrop-filter:blur(8px)}
+.logo{font-size:clamp(1.35rem,4vw,2.2rem);text-shadow:0 0 22px #5ee7ff36}.logo span{color:#ffe18a;text-shadow:0 0 18px #ffd16650}.tag{letter-spacing:.12em;text-transform:uppercase;font-weight:800;font-size:.68rem;margin-top:3px}
+.panel{background:linear-gradient(145deg,rgba(31,43,83,.94),rgba(12,18,39,.96));border:1px solid #7182bd77;border-radius:22px;box-shadow:0 18px 50px #0005,inset 0 1px #ffffff17;backdrop-filter:blur(10px)}
+.stat{background:linear-gradient(145deg,#182344,#0d142b);border:1px solid #52649b75;box-shadow:inset 0 1px #ffffff0c;transition:transform .18s,border-color .18s}.stat:hover{transform:translateY(-2px);border-color:#8da5ee}
+.label{letter-spacing:.12em;font-weight:800}.value{text-shadow:0 1px 12px #8beaff20}
+.hpbar,.energybar{height:11px;border:1px solid #7182bd40;box-shadow:inset 0 2px 4px #0009}.hpfill{background:linear-gradient(90deg,#ff315d,#ff8b7b 65%,#ffd1a1);box-shadow:0 0 12px #ff526d80}.energyfill{background:linear-gradient(90deg,#4ddfff,#827bff,#e5a5ff);box-shadow:0 0 12px #8d8bff80}
+.board{gap:6px;padding:8px;border-radius:18px;border:1px solid #9aaeff55;background:linear-gradient(145deg,#0a1027cc,#202d56cc);box-shadow:inset 0 0 22px #0008,0 12px 26px #0003;position:relative}
+.cell{border-radius:12px;border:1px solid #c7d7ff65;background:radial-gradient(circle at 32% 22%,#ffffff38 0%,transparent 30%),linear-gradient(145deg,#465a91,#202d56 62%,#131d3b);box-shadow:inset 0 2px 2px #ffffff26,inset 0 -4px 0 #070d22a8,0 3px 0 #070b19,0 0 0 1px #090f25; text-shadow:0 2px 3px #10152b;will-change:transform,filter}
+.cell:hover{filter:brightness(1.16);border-color:#eff6ff;z-index:1}
+.cell.selected,.cell.drag-source{outline:3px solid #fff;border-color:#9ff8ff;box-shadow:0 0 0 3px #5ee7ff50,0 0 24px #5ee7ff88,inset 0 0 14px #ffffff30}
+.cell.special{border-color:#ffe18a;background:radial-gradient(circle at 35% 25%,#fff8c9 0%,#ffe18a 8%,#7b5eb9 34%,#2c2759 72%);box-shadow:inset 0 0 0 2px #ffe18a,0 0 16px #ffd16685,0 3px 0 #070b19}
+.cell.match-three{animation:gemShatter .44s cubic-bezier(.2,.8,.2,1) both}.cell.match-four{animation:gemShatterGold .54s cubic-bezier(.2,.8,.2,1) both}
+@keyframes gemShatter{0%{transform:scale(1) rotate(0);filter:brightness(1)}28%{transform:scale(1.22) rotate(-7deg);filter:brightness(2.2) saturate(1.4);box-shadow:0 0 18px #8bf7ff}58%{transform:scale(.82) rotate(7deg);filter:brightness(1.8)}100%{transform:scale(.08) rotate(25deg);opacity:0;filter:blur(2px)}}
+@keyframes gemShatterGold{0%{transform:scale(1);filter:brightness(1)}25%{transform:scale(1.3) rotate(-8deg);filter:brightness(2.6);box-shadow:0 0 0 3px #fff,0 0 30px #ffe18a}55%{transform:scale(.9) rotate(8deg);filter:brightness(2)}100%{transform:scale(.05) rotate(35deg);opacity:0;filter:blur(3px)}}
+.turnbanner{background:linear-gradient(100deg,#0d1733,#1d2a51);border-color:#5c70a7;box-shadow:inset 0 1px #ffffff12}.move-clock{display:inline-block;min-width:2.2em;text-align:center;text-shadow:0 0 12px #ffe18a66}
+.board.enemy-thinking{animation:enemyPulse .65s ease-in-out infinite alternate;box-shadow:0 0 0 2px #ff657b,0 0 30px #ff657b75;border-radius:17px}
+@keyframes enemyPulse{from{filter:brightness(1)}to{filter:brightness(1.18)}}
+button{transition:transform .14s ease,filter .14s ease,box-shadow .14s ease}button:hover:not(:disabled){filter:brightness(1.12);transform:translateY(-1px)}button:active:not(:disabled){transform:translateY(1px) scale(.985)}button:focus-visible{outline:3px solid #8cf7ff;outline-offset:2px}
+.topbtn,.rival,.diff{border:1px solid #6173a8;background:linear-gradient(180deg,#3a4b7d,#25345f);box-shadow:inset 0 1px #ffffff17}.arena,.mode,.champion-card,.power{box-shadow:inset 0 1px #ffffff0b}.arena.active,.mode.active,.champion-card.active,.rival.active,.diff.active{border-color:#ffe18a;background:linear-gradient(145deg,#6b5c65,#3e3658);box-shadow:0 0 0 1px #ffe18a35,0 0 18px #ffd16620,inset 0 1px #ffffff25}
+.attack{background:linear-gradient(110deg,#ffe08a,#ff9b58 55%,#ff647a);box-shadow:0 4px 0 #a33b4c,0 0 20px #ff8b5870}.heal{background:linear-gradient(110deg,#b0ffda,#54e2ce 60%,#4dbbe8);box-shadow:0 4px 0 #247f78,0 0 18px #54e2ce35}
+.log{background:linear-gradient(120deg,#0a122b,#172247);border-color:#5b6da4;box-shadow:inset 0 1px #ffffff0a}.power{background:linear-gradient(145deg,#172344,#0d142b);border-color:#52649b70}.rules{background:#0b1227a8;border:1px solid #46598766;border-radius:12px;padding:10px}.side-title{letter-spacing:.01em;text-shadow:0 2px 12px #8dbbff22}
+.overlay{backdrop-filter:blur(8px)}.modal{background:radial-gradient(circle at top,#384b83,#182344 62%,#10172e);border:1px solid #ffe18a;box-shadow:0 0 0 1px #ffe18a30,0 25px 90px #000b,0 0 50px #5ee7ff20;animation:modalRise .38s cubic-bezier(.2,.8,.2,1) both}.modal h2{color:#ffe18a;text-shadow:0 0 20px #ffd16655}.primary{background:linear-gradient(110deg,#fff0ad,#ffbe63,#ff8c72);box-shadow:0 4px 0 #9e5a39,0 0 22px #ffbe6360}
+@keyframes modalRise{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.footer{color:#a4b3e4}
+@media(max-width:760px){.board{gap:4px;padding:5px;border-radius:13px}.cell{border-radius:8px}.panel{border-radius:17px}header{padding:10px}.topbtn{padding:8px 9px}}
+@media(prefers-reduced-motion:reduce){body:before{display:none}button,.stat{transition:none!important}.modal{animation:none!important}.board.enemy-thinking{animation:none!important}}
+
 </style>
 <meta name="theme-color" content="#10152b"><meta name="description" content="A colorful match-3 fantasy battle arena with three selectable arenas. Challenge rivals, unlock upgrades, and build your champion."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml">
 </head>
 <body>
 <div class="wrap">
-<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 1.0.8 · TIMED GEM BATTLES</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn" id="dailyReward">🎁 Daily Gift</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
+<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 1.0.9 · VISUAL POLISH EDITION</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn" id="dailyReward">🎁 Daily Gift</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
 <div class="layout">
 <section class="panel">
   <div class="stats">
@@ -115,7 +150,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px;fl
   <div class="rules"><b>Progression:</b> Wins grant XP and coins; level-ups award bonus coins. Your progress is saved locally in this browser. <b>Combo chain:</b> matches that cascade build your combo multiplier. Longer combos deal more damage and charge energy faster. Special gem symbols: 💥 row blast, 🌈 prism, ✖️ cross bomb.</div>
 </aside>
 </div>
-<div class="footer">Gem Clash: AI Arena · Build 1.0.5 · Progress saves in this browser on this device</div>
+<div class="footer">Gem Clash: AI Arena · Build 1.0.9 · Progress saves in this browser on this device</div>
 </div>
 <div class="overlay" id="overlay"><div class="modal"><h2 id="resultTitle">VICTORY!</h2><p id="resultText">You won the battle.</p><button class="primary" id="playAgain" type="button">PLAY AGAIN</button></div></div>
 <script>
