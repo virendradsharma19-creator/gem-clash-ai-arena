@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 1.1.1</title>
+<title>Gem Clash: AI Arena — Build 1.2.0</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -29,6 +29,16 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px;fl
 .turnbanner{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#111832;border:1px solid #35436f;border-radius:12px;padding:8px 10px;margin:0 0 10px;font-weight:800;font-size:.88rem}
 .turnbadge{color:var(--cyan)}.turnbadge.enemy{color:#ff9c9c}.move-clock{font-variant-numeric:tabular-nums;color:var(--gold);font-size:1.05rem}
 .board.enemy-thinking{box-shadow:0 0 0 2px #ff657b,0 0 22px #ff657b55;border-radius:13px}
+
+/* Build 1.2.0: champion-specific ability cues */
+.avatar{display:inline-block;transform-origin:center;filter:drop-shadow(0 0 0 transparent)}
+.avatar.champion-cast{animation:championCast .72s cubic-bezier(.2,.8,.2,1) both}
+.avatar.champion-hit{animation:championHit .42s ease-out both}
+@keyframes championCast{0%{transform:scale(1) rotate(0);filter:brightness(1)}25%{transform:scale(1.45) rotate(-8deg);filter:brightness(1.9) drop-shadow(0 0 12px var(--champ-glow,#65eaff))}60%{transform:scale(.9) rotate(7deg);filter:brightness(1.5) drop-shadow(0 0 18px var(--champ-glow,#65eaff))}100%{transform:scale(1) rotate(0);filter:brightness(1)}}
+@keyframes championHit{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px) rotate(-5deg);filter:brightness(2)}45%{transform:translateX(7px) rotate(5deg)}70%{transform:translateX(-3px)}}
+.champion-caption{position:fixed;left:50%;top:19%;transform:translateX(-50%);z-index:9001;padding:10px 16px;border-radius:999px;background:#091127eF;border:1px solid var(--champ-glow,#65eaff);color:#fff;font-weight:900;letter-spacing:.04em;text-align:center;box-shadow:0 0 22px var(--champ-glow,#65eaff);animation:captionPop 1.15s ease-out forwards;pointer-events:none;max-width:90vw}
+@keyframes captionPop{0%{opacity:0;transform:translate(-50%,12px) scale(.75)}15%,70%{opacity:1;transform:translate(-50%,0) scale(1)}100%{opacity:0;transform:translate(-50%,-12px) scale(.96)}}
+
 @media(prefers-reduced-motion:reduce){.cell,.cell.match-three,.cell.match-four,.cell.special{animation:none!important;transition:none!important}}
 .hint{font-size:.78rem;color:var(--muted);margin:10px 0 0;text-align:center}
 .actionrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
@@ -83,6 +93,16 @@ button{transition:transform .14s ease,filter .14s ease,box-shadow .14s ease}butt
 @keyframes modalRise{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
 .footer{color:#a4b3e4}
 @media(max-width:760px){.board{gap:4px;padding:5px;border-radius:13px}.cell{border-radius:8px}.panel{border-radius:17px}header{padding:10px}.topbtn{padding:8px 9px}}
+
+/* Build 1.2.0: champion-specific ability cues */
+.avatar{display:inline-block;transform-origin:center;filter:drop-shadow(0 0 0 transparent)}
+.avatar.champion-cast{animation:championCast .72s cubic-bezier(.2,.8,.2,1) both}
+.avatar.champion-hit{animation:championHit .42s ease-out both}
+@keyframes championCast{0%{transform:scale(1) rotate(0);filter:brightness(1)}25%{transform:scale(1.45) rotate(-8deg);filter:brightness(1.9) drop-shadow(0 0 12px var(--champ-glow,#65eaff))}60%{transform:scale(.9) rotate(7deg);filter:brightness(1.5) drop-shadow(0 0 18px var(--champ-glow,#65eaff))}100%{transform:scale(1) rotate(0);filter:brightness(1)}}
+@keyframes championHit{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px) rotate(-5deg);filter:brightness(2)}45%{transform:translateX(7px) rotate(5deg)}70%{transform:translateX(-3px)}}
+.champion-caption{position:fixed;left:50%;top:19%;transform:translateX(-50%);z-index:9001;padding:10px 16px;border-radius:999px;background:#091127eF;border:1px solid var(--champ-glow,#65eaff);color:#fff;font-weight:900;letter-spacing:.04em;text-align:center;box-shadow:0 0 22px var(--champ-glow,#65eaff);animation:captionPop 1.15s ease-out forwards;pointer-events:none;max-width:90vw}
+@keyframes captionPop{0%{opacity:0;transform:translate(-50%,12px) scale(.75)}15%,70%{opacity:1;transform:translate(-50%,0) scale(1)}100%{opacity:0;transform:translate(-50%,-12px) scale(.96)}}
+
 @media(prefers-reduced-motion:reduce){body:before{display:none}button,.stat{transition:none!important}.modal{animation:none!important}.board.enemy-thinking{animation:none!important}}
 
 
@@ -104,6 +124,16 @@ button{transition:transform .14s ease,filter .14s ease,box-shadow .14s ease}butt
 @keyframes confettiFall{0%{opacity:1;transform:translate3d(0,-20px,0) rotate(0)}100%{opacity:0;transform:translate3d(var(--drift,40px),110vh,0) rotate(760deg)}}
 body.ultimate-flash{animation:arenaFlash .42s ease-out 2}body.ultimate-flash:before{opacity:1!important}
 @keyframes arenaFlash{0%,100%{filter:none}25%{filter:brightness(1.7) saturate(1.5)}50%{filter:brightness(.8) contrast(1.2)}}
+
+/* Build 1.2.0: champion-specific ability cues */
+.avatar{display:inline-block;transform-origin:center;filter:drop-shadow(0 0 0 transparent)}
+.avatar.champion-cast{animation:championCast .72s cubic-bezier(.2,.8,.2,1) both}
+.avatar.champion-hit{animation:championHit .42s ease-out both}
+@keyframes championCast{0%{transform:scale(1) rotate(0);filter:brightness(1)}25%{transform:scale(1.45) rotate(-8deg);filter:brightness(1.9) drop-shadow(0 0 12px var(--champ-glow,#65eaff))}60%{transform:scale(.9) rotate(7deg);filter:brightness(1.5) drop-shadow(0 0 18px var(--champ-glow,#65eaff))}100%{transform:scale(1) rotate(0);filter:brightness(1)}}
+@keyframes championHit{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px) rotate(-5deg);filter:brightness(2)}45%{transform:translateX(7px) rotate(5deg)}70%{transform:translateX(-3px)}}
+.champion-caption{position:fixed;left:50%;top:19%;transform:translateX(-50%);z-index:9001;padding:10px 16px;border-radius:999px;background:#091127eF;border:1px solid var(--champ-glow,#65eaff);color:#fff;font-weight:900;letter-spacing:.04em;text-align:center;box-shadow:0 0 22px var(--champ-glow,#65eaff);animation:captionPop 1.15s ease-out forwards;pointer-events:none;max-width:90vw}
+@keyframes captionPop{0%{opacity:0;transform:translate(-50%,12px) scale(.75)}15%,70%{opacity:1;transform:translate(-50%,0) scale(1)}100%{opacity:0;transform:translate(-50%,-12px) scale(.96)}}
+
 @media(prefers-reduced-motion:reduce){.fx-burst,.fx-spark,.fx-lightning,.fx-flame,.fx-confetti,body.ultimate-flash{animation-duration:.01ms!important;animation-iteration-count:1!important}}
 
 </style>
@@ -111,7 +141,7 @@ body.ultimate-flash{animation:arenaFlash .42s ease-out 2}body.ultimate-flash:bef
 </head>
 <body>
 <div class="wrap">
-<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 1.1.1 · ADVANCED EFFECTS EDITION</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn" id="dailyReward">🎁 Daily Gift</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
+<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 1.3.0 · SOUND & MUSIC EDITION</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn" id="dailyReward">🎁 Daily Gift</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
 <div class="layout">
 <section class="panel">
   <div class="stats">
@@ -194,8 +224,14 @@ const saved=(()=>{try{return JSON.parse(localStorage.getItem('gemClashSave')||'{
 let profile={level:saved.level||1,xp:saved.xp||0,coins:saved.coins||0,wins:saved.wins||0,losses:saved.losses||0,power:saved.power||0,vitality:saved.vitality||0,lastGift:saved.lastGift||'',arena:saved.arena||'Citadel'};
 arena=profile.arena; champion=CHAMPIONS[profile.champion]?profile.champion:'Mage'; if(!Array.isArray(profile.unlockedChampions))profile.unlockedChampions=['Mage']; if(!profile.unlockedChampions.includes('Mage'))profile.unlockedChampions.unshift('Mage'); if(!profile.unlockedChampions.includes(champion))champion='Mage';
 function applyArena(){document.body.dataset.arena=arena;document.querySelectorAll('[data-arena]').forEach(b=>b.classList.toggle('active',b.dataset.arena===arena));}
-let soundOn=false; let audioCtx=null;
-function beep(freq=440,duration=.08){if(!soundOn)return;try{audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=freq;o.type='sine';g.gain.value=.035;o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+duration)}catch(e){}}
+let soundOn=false; let audioCtx=null; let musicTimer=null; let musicStep=0;
+function getAudio(){try{audioCtx=audioCtx||(window.AudioContext||window.webkitAudioContext?new (window.AudioContext||window.webkitAudioContext)():null);if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume();return audioCtx;}catch(e){return null;}}
+function tone(freq=440,duration=.1,type='sine',volume=.035,when=0){const ctx=getAudio();if(!ctx||!soundOn)return;try{const o=ctx.createOscillator(),g=ctx.createGain(),t=ctx.currentTime+when;o.type=type;o.frequency.setValueAtTime(freq,t);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(Math.max(.0002,volume),t+.012);g.gain.exponentialRampToValueAtTime(.0001,t+duration);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+duration+.025);}catch(e){}}
+function beep(freq=440,duration=.08){tone(freq,duration,'sine',.028);}
+function playSound(kind){if(!soundOn)return;const sounds={match:[[520,.07,'sine',.025,0],[660,.08,'sine',.025,.055]],special:[[420,.12,'triangle',.035,0],[620,.14,'triangle',.035,.06],[880,.18,'sine',.025,.12]],attack:[[190,.12,'sawtooth',.035,0],[120,.16,'triangle',.04,.045]],magic:[[440,.12,'sine',.03,0],[660,.14,'triangle',.03,.06],[990,.18,'sine',.025,.12]],heal:[[523,.12,'sine',.025,0],[659,.15,'sine',.025,.09],[784,.2,'sine',.025,.18]],victory:[[523,.18,'triangle',.03,0],[659,.18,'triangle',.03,.14],[784,.2,'triangle',.03,.28],[1047,.34,'sine',.03,.43]],defeat:[[392,.2,'triangle',.025,0],[330,.22,'triangle',.025,.18],[262,.35,'sine',.025,.38]],gift:[[660,.1,'sine',.025,0],[880,.16,'sine',.025,.12]]};(sounds[kind]||sounds.match).forEach(a=>tone(...a));}
+function stopMusic(){if(musicTimer){clearTimeout(musicTimer);musicTimer=null;}}
+function musicTick(){if(!soundOn||!audioCtx){stopMusic();return;}const chords=[[130.81,164.81,196],[110,130.81,164.81],[146.83,174.61,220],[98,123.47,146.83]],chord=chords[musicStep%chords.length];chord.forEach((f,i)=>tone(f,1.55,'triangle',.008,i*.025));tone([261.63,329.63,392,329.63][musicStep%4],.32,'sine',.006,.22);musicStep++;musicTimer=setTimeout(musicTick,1650);}
+function startMusic(){if(!soundOn||musicTimer)return;getAudio();musicTick();}
 function maxHealth(){return 100+profile.vitality*10+(CHAMPIONS[champion]?.hp||0)}
 function powerBonus(){return profile.power*0.12+((CHAMPIONS[champion]?.damage||1)-1)}
 
@@ -261,7 +297,7 @@ function matchEffects(matches){
  const root=$('board');if(!root)return;const cells=[];
  for(const idx of matches.set){const r=Math.floor(idx/SIZE),c=idx%SIZE;const el=root.querySelector(`[data-r="${r}"][data-c="${c}"]`);if(el)cells.push(el);}
  const chosen=cells.filter((_,i)=>i%Math.max(1,Math.ceil(cells.length/5))===0).slice(0,9);
- chosen.forEach((el,i)=>{fxAtElement(el,'fx-burst',i%2?'#ffe18a':'#65eaff');const rect=el.getBoundingClientRect();for(let k=0;k<3;k++){const sp=document.createElement('i');sp.className='fx-spark';sp.style.setProperty('--x',(rect.left+rect.width/2)+'px');sp.style.setProperty('--y',(rect.top+rect.height/2)+'px');sp.style.setProperty('--dx',(Math.random()*90-45)+'px');sp.style.setProperty('--dy',(Math.random()*90-45)+'px');sp.style.setProperty('--fx',i%2?'#ffdf86':'#8df8ff');sp.style.setProperty('--dur',(.45+Math.random()*.4)+'s');fxLayer().appendChild(sp);setTimeout(()=>sp.remove(),1000);}});
+ playSound('match');chosen.forEach((el,i)=>{fxAtElement(el,'fx-burst',i%2?'#ffe18a':'#65eaff');const rect=el.getBoundingClientRect();for(let k=0;k<3;k++){const sp=document.createElement('i');sp.className='fx-spark';sp.style.setProperty('--x',(rect.left+rect.width/2)+'px');sp.style.setProperty('--y',(rect.top+rect.height/2)+'px');sp.style.setProperty('--dx',(Math.random()*90-45)+'px');sp.style.setProperty('--dy',(Math.random()*90-45)+'px');sp.style.setProperty('--fx',i%2?'#ffdf86':'#8df8ff');sp.style.setProperty('--dur',(.45+Math.random()*.4)+'s');fxLayer().appendChild(sp);setTimeout(()=>sp.remove(),1000);}});
 }
 function ultimateEffects(){
  document.body.classList.remove('ultimate-flash');void document.body.offsetWidth;document.body.classList.add('ultimate-flash');setTimeout(()=>document.body.classList.remove('ultimate-flash'),1000);
@@ -269,6 +305,23 @@ function ultimateEffects(){
  const bolt=document.createElement('div');bolt.className='fx-lightning';bolt.style.setProperty('--x',x+'px');bolt.innerHTML='<svg viewBox="0 0 100 700" preserveAspectRatio="none"><path d="M58 0 L35 110 L68 180 L22 290 L58 360 L30 475 L60 550 L40 700"/><path d="M58 0 L35 110 L68 180 L22 290 L58 360 L30 475 L60 550 L40 700"/></svg>';fxLayer().appendChild(bolt);setTimeout(()=>bolt.remove(),850);
  fxPoint(x,y,'fx-burst','#ffe18a');fxPoint(x,y,'fx-burst','#ff6b45');
  for(let i=0;i<8;i++){const flame=document.createElement('div');flame.className='fx-flame';flame.textContent=i%2?'🔥':'✨';flame.style.setProperty('--x',(r.left+Math.random()*r.width)+'px');flame.style.setProperty('--y',(r.top+Math.random()*r.height)+'px');fxLayer().appendChild(flame);setTimeout(()=>flame.remove(),1000);}
+}
+function championAbility(kind){
+ const cfg={
+  Mage:{color:'#8f9bff',ultimate:'ARCANE NOVA',heal:'MYSTIC WARD',icon:'✨'},
+  Knight:{color:'#ffe18a',ultimate:'IRONSTAR STRIKE',heal:'AEGIS BARRIER',icon:'🛡️'},
+  Ranger:{color:'#78ffd4',ultimate:'STARFALL VOLLEY',heal:'NATURE’S VEIL',icon:'🏹'},
+  Phoenix:{color:'#ff7848',ultimate:'PHOENIX INFERNO',heal:'REBIRTH FLAME',icon:'🔥'}
+ };
+ const c=cfg[champion]||cfg.Mage, player=$('playerAvatar'), enemy=$('enemyAvatar');
+ const target=kind==='ultimate'?enemy:player;
+ if(player){player.style.setProperty('--champ-glow',c.color);player.classList.remove('champion-cast');void player.offsetWidth;player.classList.add('champion-cast');setTimeout(()=>player.classList.remove('champion-cast'),800);}
+ if(kind==='ultimate'&&enemy){enemy.classList.remove('champion-hit');void enemy.offsetWidth;enemy.classList.add('champion-hit');setTimeout(()=>enemy.classList.remove('champion-hit'),500);}
+ const rect=(target||player).getBoundingClientRect(), x=rect.left+rect.width/2, y=rect.top+rect.height/2;
+ const caption=document.createElement('div');caption.className='champion-caption';caption.style.setProperty('--champ-glow',c.color);caption.textContent=c.icon+' '+c[kind];fxLayer().appendChild(caption);setTimeout(()=>caption.remove(),1250);
+ for(let i=0;i<7;i++){const p=document.createElement('i');p.className='fx-spark';p.style.setProperty('--x',x+'px');p.style.setProperty('--y',y+'px');p.style.setProperty('--dx',(Math.random()*150-75)+'px');p.style.setProperty('--dy',(Math.random()*130-65)+'px');p.style.setProperty('--fx',c.color);p.style.setProperty('--dur',(.5+Math.random()*.35)+'s');fxLayer().appendChild(p);setTimeout(()=>p.remove(),1000);}
+ if(kind==='heal'){fxPoint(x,y,'fx-burst',c.color);fxPoint(x,y,'fx-burst','#8cf7c5');}
+ else {const br=$('board').getBoundingClientRect();fxPoint(br.left+br.width*.5,br.top+br.height*.48,'fx-burst',c.color);}
 }
 function victoryConfetti(){const layer=fxLayer();if(!layer)return;const colors=['#ffd166','#5ee7ff','#ff6b8a','#8cf7c5','#c6a5ff','#fff'];for(let i=0;i<90;i++){const p=document.createElement('i');p.className='fx-confetti';p.style.setProperty('--x',(Math.random()*100)+'vw');p.style.setProperty('--fx',colors[i%colors.length]);p.style.setProperty('--w',(5+Math.random()*7)+'px');p.style.setProperty('--h',(7+Math.random()*12)+'px');p.style.setProperty('--dur',(1.6+Math.random()*1.8)+'s');p.style.setProperty('--drift',(Math.random()*220-110)+'px');p.style.setProperty('--rot',(Math.random()*360)+'deg');layer.appendChild(p);setTimeout(()=>p.remove(),3600);}}
 
@@ -319,7 +372,7 @@ async function prismSwap(prismPos,targetPos){
  const prism=board[prismPos.r][prismPos.c], target=board[targetPos.r][targetPos.c]?.color||randColor();
  const clear=new Set([prismPos.r*SIZE+prismPos.c]);
  for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++)if(board[r][c]?.color===target)clear.add(r*SIZE+c);
- const damage=Math.min(55,Math.round(clear.size*3*(1+powerBonus())));enemyHp=Math.max(0,enemyHp-damage);energy=Math.min(100,energy+clear.size*4);
+ playSound('special');const damage=Math.min(55,Math.round(clear.size*3*(1+powerBonus())));enemyHp=Math.max(0,enemyHp-damage);energy=Math.min(100,energy+clear.size*4);
  for(const idx of clear){board[Math.floor(idx/SIZE)][idx%SIZE]=null;}
  say(`🌈 PRISM WIPE! Cleared ${clear.size} gems for ${damage} damage.`);render();await sleep(220);
  for(let c=0;c<SIZE;c++){let vals=[];for(let r=SIZE-1;r>=0;r--)if(board[r][c])vals.push(board[r][c]);while(vals.length<SIZE)vals.push(randomCell());for(let r=SIZE-1,i=0;r>=0;r--,i++)board[r][c]=vals[i];}
@@ -348,7 +401,7 @@ async function resolveCascade(first,a,b){
   }
   const damage=Math.round(clear.size*(2+chain*.6)*(1+powerBonus())+(spec?5:0));
   enemyHp=Math.max(0,enemyHp-damage);energy=Math.min(100,energy+clear.size*4+chain*3);
-  total+=damage;beep(Math.min(900,320+clear.size*35),.07);
+  total+=damage;if(spec)playSound('special');else beep(Math.min(900,320+clear.size*35),.07);
   say(`${chain>1?'COMBO x'+chain+'! ':''}${spec==='prism'?'🌈 PRISM GEM CREATED!':spec==='cross'?'✖️ CROSS BOMB CREATED!':spec==='row'?'💥 ROW BLASTER CREATED!':`Match x${clear.size}!`} ${damage} damage.`);
   if(spec){
    let place=(a&&board[a.r][a.c]&&clear.has(a.r*SIZE+a.c))?a:(b&&board[b.r][b.c]&&clear.has(b.r*SIZE+b.c))?b:null;
@@ -378,16 +431,16 @@ async function enemyTurn(turn){
   [board[a.r][a.c],board[b.r][b.c]]=[board[b.r][b.c],board[a.r][a.c]];let matches=getMatches();render();animateMatches(matches);await sleep(420);
   const count=matches.set.size;for(const idx of matches.set){board[Math.floor(idx/SIZE)][idx%SIZE]=null;}
   for(let c=0;c<SIZE;c++){let vals=[];for(let r=SIZE-1;r>=0;r--)if(board[r][c])vals.push(board[r][c]);while(vals.length<SIZE)vals.push(randomCell());for(let r=SIZE-1,i=0;r>=0;r--,i++)board[r][c]=vals[i];}
-  const dmg=Math.max(4,Math.round(count*(1.4+(difficulty==='Expert'?.35:0))+(rival==='Blaze'?2:0)));playerHp=Math.max(0,playerHp-dmg);say(`${profile.avatar} ${rival} matched ${count} gems and dealt ${dmg} damage!`);beep(260,.12);
+  const dmg=Math.max(4,Math.round(count*(1.4+(difficulty==='Expert'?.35:0))+(rival==='Blaze'?2:0)));playerHp=Math.max(0,playerHp-dmg);const pa=$('playerAvatar');if(pa){pa.classList.remove('champion-hit');void pa.offsetWidth;pa.classList.add('champion-hit');setTimeout(()=>pa.classList.remove('champion-hit'),500);}say(`${profile.avatar} ${rival} matched ${count} gems and dealt ${dmg} damage!`);playSound('attack');beep(260,.12);
  }else{
-  let dmg=profile.attack+(difficulty==='Expert'?3:difficulty==='Casual'?-2:0);if(mode==='Survival')dmg+=3;if(rival==='Blaze'&&turn%3===0)dmg+=5;if(rival==='Nexus'&&comboBest>=3)dmg+=2;if(rival==='Frost'&&playerHp<40)dmg=Math.max(3,dmg-1);playerHp=Math.max(0,playerHp-dmg);say(`${profile.avatar} ${rival} strikes for ${dmg} damage!`);beep(230,.12);
+  let dmg=profile.attack+(difficulty==='Expert'?3:difficulty==='Casual'?-2:0);if(mode==='Survival')dmg+=3;if(rival==='Blaze'&&turn%3===0)dmg+=5;if(rival==='Nexus'&&comboBest>=3)dmg+=2;if(rival==='Frost'&&playerHp<40)dmg=Math.max(3,dmg-1);playerHp=Math.max(0,playerHp-dmg);const pa=$('playerAvatar');if(pa){pa.classList.remove('champion-hit');void pa.offsetWidth;pa.classList.add('champion-hit');setTimeout(()=>pa.classList.remove('champion-hit'),500);}say(`${profile.avatar} ${rival} strikes for ${dmg} damage!`);playSound('attack');beep(230,.12);
  }
  $('board').classList.remove('enemy-thinking');busy=false;turnCount=Math.max(turnCount,turn);checkEnd();if(!over){setTurn('player');render();}
 }
-function useUltimate(){if(energy<100||busy||over)return;ultimateEffects();energy=0;enemyHp=Math.max(0,enemyHp-Math.round(35*(1+powerBonus())));say(`⚡ ULTIMATE BLAST! A massive arcane strike deals ${Math.round(35*(1+powerBonus()))} damage!`);beep(880,.18);render();checkEnd();if(!over){setTurn('enemy');enemyTurn(turnCount+1);}}
-function useHeal(){if(energy<60||busy||over||playerHp>=maxHealth())return;energy-=60;let before=playerHp;playerHp=Math.min(maxHealth(),playerHp+22+profile.vitality*2);say(`🛡️ SHIELD BURST restores ${playerHp-before} health!`);beep(620,.12);render();setTurn('enemy');enemyTurn(turnCount+1);}
+function useUltimate(){if(energy<100||busy||over)return;championAbility('ultimate');ultimateEffects();energy=0;enemyHp=Math.max(0,enemyHp-Math.round(35*(1+powerBonus())));say(`⚡ ULTIMATE BLAST! A massive arcane strike deals ${Math.round(35*(1+powerBonus()))} damage!`);playSound('magic');beep(880,.18);render();checkEnd();if(!over){setTurn('enemy');enemyTurn(turnCount+1);}}
+function useHeal(){if(energy<60||busy||over||playerHp>=maxHealth())return;championAbility('heal');energy-=60;let before=playerHp;playerHp=Math.min(maxHealth(),playerHp+22+profile.vitality*2);say(`🛡️ SHIELD BURST restores ${playerHp-before} health!`);playSound('heal');beep(620,.12);render();setTurn('enemy');enemyTurn(turnCount+1);}
 function checkEnd(){if(over)return;if(enemyHp<=0){endGame(true);}else if(playerHp<=0){endGame(false);}else if(seconds<=0){endGame(playerHp>=enemyHp/RIVALS[rival].hp*100);}}
-function endGame(win){over=true;clearInterval(timerId);const bonus=mode==='Classic'?1:mode==='TimeAttack'?1.5:1.35;const xpReward=win?Math.round((50+comboBest*5)*bonus):15;const coinReward=win?Math.round(25*bonus):0;if(win){profile.wins++;profile.xp+=xpReward;profile.coins+=coinReward;while(profile.xp>=profile.level*100){profile.xp-=profile.level*100;profile.level++;profile.coins+=50;}}else{profile.losses++;profile.xp+=xpReward;}saveProfile();$('resultTitle').textContent=win?'🏆 VICTORY!':'💥 DEFEAT';$('resultText').textContent=win?`You defeated ${rival} in ${modeLabel()} mode! +${xpReward} XP and ${coinReward} coins. Best combo: x${comboBest}.`:`Your rival won this round. You earned ${xpReward} XP. Try a different mode or upgrade your champion!`;$('overlay').classList.add('show');if(win)victoryConfetti();updateUI();}
+function endGame(win){over=true;clearInterval(timerId);const bonus=mode==='Classic'?1:mode==='TimeAttack'?1.5:1.35;const xpReward=win?Math.round((50+comboBest*5)*bonus):15;const coinReward=win?Math.round(25*bonus):0;if(win){profile.wins++;profile.xp+=xpReward;profile.coins+=coinReward;while(profile.xp>=profile.level*100){profile.xp-=profile.level*100;profile.level++;profile.coins+=50;}}else{profile.losses++;profile.xp+=xpReward;}saveProfile();$('resultTitle').textContent=win?'🏆 VICTORY!':'💥 DEFEAT';$('resultText').textContent=win?`You defeated ${rival} in ${modeLabel()} mode! +${xpReward} XP and ${coinReward} coins. Best combo: x${comboBest}.`:`Your rival won this round. You earned ${xpReward} XP. Try a different mode or upgrade your champion!`;$('overlay').classList.add('show');if(win){victoryConfetti();playSound('victory');}else{playSound('defeat');}stopMusic();updateUI();}
 function modeLabel(){return mode==='TimeAttack'?'Time Attack':mode==='Survival'?'Survival':'Classic';}
 function updateModeStatus(){const labels={Classic:'Classic mode: 120 seconds and standard rewards.',TimeAttack:'Time Attack: defeat the rival in 75 seconds. Wins earn 50% extra XP and coins.',Survival:'Survival: last 180 seconds against more frequent, stronger counterattacks. Wins earn 35% extra XP and coins.'};$('modeStatus').textContent=labels[mode];document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));}
 function start(){
@@ -407,8 +460,8 @@ document.querySelectorAll('[data-champion]').forEach(b=>b.addEventListener('clic
  }
  champion=id;saveProfile();updateChampions();start();
 }));
-$('soundToggle').addEventListener('click',()=>{soundOn=!soundOn;$('soundToggle').textContent=soundOn?'🔊 Sound On':'🔇 Sound Off';$('soundToggle').setAttribute('aria-pressed',String(soundOn));beep(660,.1);});
-$('dailyReward').addEventListener('click',()=>{const today=new Date().toLocaleDateString('en-CA');if(profile.lastGift===today){say('🎁 Daily gift already claimed. Come back tomorrow!');return;}profile.lastGift=today;profile.coins+=50;profile.xp+=20;while(profile.xp>=profile.level*100){profile.xp-=profile.level*100;profile.level++;profile.coins+=50;}saveProfile();say('🎁 Daily gift claimed: +50 coins and +20 XP!');beep(740,.16);});
+$('soundToggle').addEventListener('click',()=>{soundOn=!soundOn;$('soundToggle').textContent=soundOn?'🔊 Sound On · Music':'🔇 Sound Off';$('soundToggle').setAttribute('aria-pressed',String(soundOn));if(soundOn){getAudio();playSound('gift');startMusic();}else{stopMusic();if(audioCtx&&audioCtx.state==='running'){try{audioCtx.suspend();}catch(e){}}}});
+$('dailyReward').addEventListener('click',()=>{const today=new Date().toLocaleDateString('en-CA');if(profile.lastGift===today){say('🎁 Daily gift already claimed. Come back tomorrow!');return;}profile.lastGift=today;profile.coins+=50;profile.xp+=20;while(profile.xp>=profile.level*100){profile.xp-=profile.level*100;profile.level++;profile.coins+=50;}saveProfile();say('🎁 Daily gift claimed: +50 coins and +20 XP!');playSound('gift');beep(740,.16);});
 $('buyPower').addEventListener('click',()=>{const cost=40+profile.power*35;if(profile.power>=10||profile.coins<cost){say('Not enough coins for that Power Rune upgrade.');return;}profile.coins-=cost;profile.power++;saveProfile();say(`⚔️ Power Rune upgraded to level ${profile.power}. Match attacks are stronger!`);beep(520,.12);});
 $('buyVitality').addEventListener('click',()=>{const cost=40+profile.vitality*35;if(profile.vitality>=10||profile.coins<cost){say('Not enough coins for that Vitality Rune upgrade.');return;}profile.coins-=cost;profile.vitality++;saveProfile();say(`❤️ Vitality Rune upgraded to level ${profile.vitality}. Your max health increases next battle.`);beep(520,.12);});
 // The help dialog is declared after this script in the HTML. Wait until parsing
