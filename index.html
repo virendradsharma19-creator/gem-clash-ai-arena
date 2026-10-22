@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 1.5.0</title>
+<title>Gem Clash: AI Arena — Build 1.6.0</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -165,12 +165,31 @@ body.ultimate-flash{animation:arenaFlash .42s ease-out 2}body.ultimate-flash:bef
 @media(max-width:520px){.battlehead{padding:11px 7px;gap:5px;min-height:94px}.battlehead .fighter{gap:5px}.battlehead .fighter small{max-width:92px}.battle-vs{width:28px;height:28px;font-size:.66rem}.battlehead:after{letter-spacing:.45rem}}
 @media(prefers-reduced-motion:reduce){.battlehead .avatar{animation:none!important}.battle-projectile{animation-duration:.01ms!important}}
 
+
+/* Build 1.6.0: cinematic combat impact and damage feedback */
+.battle-projectile{font-size:clamp(2rem,5vw,3.2rem);z-index:9005;will-change:transform,opacity;animation-duration:.58s}
+.battle-projectile.shot-fire{filter:drop-shadow(0 0 14px #ff7138) drop-shadow(0 0 24px #ff3d1f)}
+.battle-projectile.shot-lightning{filter:drop-shadow(0 0 15px #fff18a) drop-shadow(0 0 26px #fff)}
+.battle-projectile.shot-strong{font-size:clamp(2.5rem,6vw,3.8rem);filter:drop-shadow(0 0 18px #ffe18a)}
+.battlehead .fighter.impact{animation: fighterImpact .38s ease-out both}
+@keyframes fighterImpact{0%,100%{filter:none}25%{filter:brightness(1.7) saturate(1.5)}55%{filter:brightness(.8)}75%{filter:brightness(1.4)}}
+.hpbar.hp-impact{animation:hpImpact .55s ease-out}
+@keyframes hpImpact{0%,100%{box-shadow:none}25%{box-shadow:0 0 0 3px #fff,0 0 20px #ff435f}60%{box-shadow:0 0 0 1px #ff7387,0 0 12px #ff435f}}
+.damage-number{position:fixed;z-index:9010;left:var(--x);top:var(--y);transform:translate(-50%,-50%);font-size:clamp(1.35rem,4vw,2.25rem);font-weight:1000;color:#fff;text-shadow:0 3px 0 #4b1422,0 0 14px #ff385e;pointer-events:none;white-space:nowrap;animation:damageRise .95s cubic-bezier(.15,.75,.2,1) forwards}
+.damage-number.heal-number{color:#9dffd4;text-shadow:0 2px 0 #14563e,0 0 16px #4fffc2}
+@keyframes damageRise{0%{opacity:0;transform:translate(-50%,0) scale(.45)}15%{opacity:1;transform:translate(-50%,-15px) scale(1.25)}35%{transform:translate(-50%,-23px) scale(1)}100%{opacity:0;transform:translate(-50%,-76px) scale(.86)}}
+body.combat-shake .wrap{animation:combatShake .32s ease-out}
+@keyframes combatShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+.ultimate-banner{position:fixed;z-index:9012;left:50%;top:42%;transform:translate(-50%,-50%);padding:14px 22px;border-radius:16px;border:2px solid #ffe18a;background:linear-gradient(120deg,#29164deF,#10152bF2);color:#fff1b8;font-weight:1000;font-size:clamp(1.2rem,5vw,2.3rem);letter-spacing:.08em;text-align:center;text-shadow:0 0 18px #ffe18a;box-shadow:0 0 35px #ffe18a88;animation:ultimateBanner .95s ease-out forwards;pointer-events:none;white-space:nowrap}
+@keyframes ultimateBanner{0%{opacity:0;transform:translate(-50%,-50%) scale(.35) rotate(-5deg)}20%,65%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}100%{opacity:0;transform:translate(-50%,-65%) scale(.92)}}
+@media(prefers-reduced-motion:reduce){.damage-number,.ultimate-banner,body.combat-shake .wrap,.hpbar.hp-impact{animation-duration:.01ms!important}}
+
 </style>
 <meta name="theme-color" content="#10152b"><meta name="description" content="A colorful match-3 fantasy battle arena with three selectable arenas. Challenge rivals, unlock upgrades, and build your champion."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml">
 </head>
 <body>
 <div class="wrap">
-<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 1.3.0 · SOUND & MUSIC EDITION</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn" id="dailyReward">🎁 Daily Gift</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
+<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 1.6.0 · CINEMATIC BATTLE EDITION</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn" id="dailyReward">🎁 Daily Gift</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
 <div class="layout">
 <section class="panel">
   <div class="stats">
@@ -313,6 +332,14 @@ function updateUI(){
 }
 function say(t){$('log').textContent=t;}
 function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+function impactFeedback(targetId,amount,kind='damage'){
+ const target=$(targetId);if(!target)return;const rect=target.getBoundingClientRect();
+ const number=document.createElement('div');number.className='damage-number'+(kind==='heal'?' heal-number':'');number.textContent=(kind==='heal'?'+':'−')+Math.round(amount);number.style.setProperty('--x',(rect.left+rect.width/2)+'px');number.style.setProperty('--y',(rect.top+rect.height*.25)+'px');fxLayer().appendChild(number);setTimeout(()=>number.remove(),1000);
+ const bar=$(targetId==='enemyAvatar'?'enemyHpBar':'playerHpBar');if(bar){const wrap=bar.closest('.hpbar');if(wrap){wrap.classList.remove('hp-impact');void wrap.offsetWidth;wrap.classList.add('hp-impact');setTimeout(()=>wrap.classList.remove('hp-impact'),600);}}
+ const owner=target.closest('.fighter');if(owner){owner.classList.remove('impact');void owner.offsetWidth;owner.classList.add('impact');setTimeout(()=>owner.classList.remove('impact'),420);}
+ if(kind!=='heal'){document.body.classList.remove('combat-shake');void document.body.offsetWidth;document.body.classList.add('combat-shake');setTimeout(()=>document.body.classList.remove('combat-shake'),350);}
+}
+function ultimateBanner(text){const banner=document.createElement('div');banner.className='ultimate-banner';banner.textContent=text;fxLayer().appendChild(banner);setTimeout(()=>banner.remove(),1000);}
 async function animateShot(sourceId,targetId,kind='magic',power=1){
  const source=$(sourceId),target=$(targetId);if(!source||!target)return;
  const sr=source.getBoundingClientRect(),tr=target.getBoundingClientRect();
@@ -320,10 +347,10 @@ async function animateShot(sourceId,targetId,kind='magic',power=1){
  const playerSide=sourceId==='playerAvatar';const owner=source.closest('.fighter');
  if(owner){owner.classList.remove('attacking');void owner.offsetWidth;owner.classList.add('attacking');setTimeout(()=>owner.classList.remove('attacking'),500);}
  source.style.setProperty('--champ-glow',playerSide?'#70eaff':'#ff687b');source.classList.remove('champion-cast');void source.offsetWidth;source.classList.add('champion-cast');setTimeout(()=>source.classList.remove('champion-cast'),780);
- const projectile=document.createElement('div');projectile.className='battle-projectile';
+ const projectile=document.createElement('div');projectile.className='battle-projectile shot-'+kind;
  const shotKinds={magic:['✨','#b6a5ff'],fire:['🔥','#ff7138'],ice:['❄️','#80eaff'],lightning:['⚡','#fff18a'],strong:['💥','#ffe18a']};
  const shot=shotKinds[kind]||shotKinds.magic;projectile.textContent=shot[0];projectile.style.setProperty('--shot-glow',shot[1]);projectile.style.setProperty('--sx',sx+'px');projectile.style.setProperty('--sy',sy+'px');projectile.style.setProperty('--dx',(tx-sx)+'px');projectile.style.setProperty('--dy',(ty-sy)+'px');
- fxLayer().appendChild(projectile);await sleep(390);projectile.remove();
+ fxLayer().appendChild(projectile);await sleep(570);projectile.remove();
  target.classList.remove('champion-hit');void target.offsetWidth;target.classList.add('champion-hit');setTimeout(()=>target.classList.remove('champion-hit'),520);
  fxPoint(tx,ty,'fx-burst',shot[1]);
 }
@@ -416,7 +443,7 @@ async function prismSwap(prismPos,targetPos){
  const prism=board[prismPos.r][prismPos.c], target=board[targetPos.r][targetPos.c]?.color||randColor();
  const clear=new Set([prismPos.r*SIZE+prismPos.c]);
  for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++)if(board[r][c]?.color===target)clear.add(r*SIZE+c);
- playSound('special');const damage=Math.min(55,Math.round(clear.size*3*(1+powerBonus())));enemyHp=Math.max(0,enemyHp-damage);energy=Math.min(100,energy+clear.size*4);
+ playSound('special');const damage=Math.min(55,Math.round(clear.size*3*(1+powerBonus())));await animateShot('playerAvatar','enemyAvatar','strong',clear.size);enemyHp=Math.max(0,enemyHp-damage);impactFeedback('enemyAvatar',damage);energy=Math.min(100,energy+clear.size*4);
  for(const idx of clear){board[Math.floor(idx/SIZE)][idx%SIZE]=null;}
  say(`🌈 PRISM WIPE! Cleared ${clear.size} gems for ${damage} damage.`);render();await sleep(220);
  for(let c=0;c<SIZE;c++){let vals=[];for(let r=SIZE-1;r>=0;r--)if(board[r][c])vals.push(board[r][c]);while(vals.length<SIZE)vals.push(randomCell());for(let r=SIZE-1,i=0;r>=0;r--,i++)board[r][c]=vals[i];}
@@ -445,7 +472,7 @@ async function resolveCascade(first,a,b){
   }
   const damage=Math.round(clear.size*(2+chain*.6)*(1+powerBonus())+(spec?5:0));
   await animateShot('playerAvatar','enemyAvatar',spec?'strong':attackKind(clear.size,chain),clear.size);
-  enemyHp=Math.max(0,enemyHp-damage);energy=Math.min(100,energy+clear.size*4+chain*3);
+  enemyHp=Math.max(0,enemyHp-damage);impactFeedback('enemyAvatar',damage);energy=Math.min(100,energy+clear.size*4+chain*3);
   total+=damage;if(spec)playSound('special');else beep(Math.min(900,320+clear.size*35),.07);
   say(`${chain>1?'COMBO x'+chain+'! ':''}${spec==='prism'?'🌈 PRISM GEM CREATED!':spec==='cross'?'✖️ CROSS BOMB CREATED!':spec==='row'?'💥 ROW BLASTER CREATED!':`Match x${clear.size}!`} ${damage} damage.`);
   if(spec){
@@ -476,14 +503,14 @@ async function enemyTurn(turn){
   [board[a.r][a.c],board[b.r][b.c]]=[board[b.r][b.c],board[a.r][a.c]];let matches=getMatches();render();animateMatches(matches);await sleep(420);
   const count=matches.set.size;for(const idx of matches.set){board[Math.floor(idx/SIZE)][idx%SIZE]=null;}
   for(let c=0;c<SIZE;c++){let vals=[];for(let r=SIZE-1;r>=0;r--)if(board[r][c])vals.push(board[r][c]);while(vals.length<SIZE)vals.push(randomCell());for(let r=SIZE-1,i=0;r>=0;r--,i++)board[r][c]=vals[i];}
-  const dmg=Math.max(4,Math.round(count*(1.4+(difficulty==='Expert'?.35:0))+(rival==='Blaze'?2:0)));await animateShot('enemyAvatar','playerAvatar',count>=5?'lightning':count>=4?'fire':'magic',count);playerHp=Math.max(0,playerHp-dmg);say(`${profile.avatar} ${rival} matched ${count} gems and dealt ${dmg} damage!`);playSound('attack');beep(260,.12);
+  const dmg=Math.max(4,Math.round(count*(1.4+(difficulty==='Expert'?.35:0))+(rival==='Blaze'?2:0)));await animateShot('enemyAvatar','playerAvatar',count>=5?'lightning':count>=4?'fire':'magic',count);playerHp=Math.max(0,playerHp-dmg);impactFeedback('playerAvatar',dmg);say(`${profile.avatar} ${rival} matched ${count} gems and dealt ${dmg} damage!`);playSound('attack');beep(260,.12);
  }else{
-  let dmg=profile.attack+(difficulty==='Expert'?3:difficulty==='Casual'?-2:0);if(mode==='Survival')dmg+=3;if(rival==='Blaze'&&turn%3===0)dmg+=5;if(rival==='Nexus'&&comboBest>=3)dmg+=2;if(rival==='Frost'&&playerHp<40)dmg=Math.max(3,dmg-1);await animateShot('enemyAvatar','playerAvatar',rival==='Blaze'?'fire':rival==='Frost'?'ice':'lightning',1);playerHp=Math.max(0,playerHp-dmg);say(`${profile.avatar} ${rival} strikes for ${dmg} damage!`);playSound('attack');beep(230,.12);
+  let dmg=profile.attack+(difficulty==='Expert'?3:difficulty==='Casual'?-2:0);if(mode==='Survival')dmg+=3;if(rival==='Blaze'&&turn%3===0)dmg+=5;if(rival==='Nexus'&&comboBest>=3)dmg+=2;if(rival==='Frost'&&playerHp<40)dmg=Math.max(3,dmg-1);await animateShot('enemyAvatar','playerAvatar',rival==='Blaze'?'fire':rival==='Frost'?'ice':'lightning',1);playerHp=Math.max(0,playerHp-dmg);impactFeedback('playerAvatar',dmg);say(`${profile.avatar} ${rival} strikes for ${dmg} damage!`);playSound('attack');beep(230,.12);
  }
  $('board').classList.remove('enemy-thinking');busy=false;turnCount=Math.max(turnCount,turn);checkEnd();if(!over){setTurn('player');render();}
 }
-async function useUltimate(){if(energy<100||busy||over)return;busy=true;championAbility('ultimate');ultimateEffects();energy=0;await animateShot('playerAvatar','enemyAvatar','lightning',5);const ultimateDamage=Math.round(35*(1+powerBonus()));enemyHp=Math.max(0,enemyHp-ultimateDamage);say(`⚡ ULTIMATE BLAST! A massive arcane strike deals ${ultimateDamage} damage!`);playSound('magic');beep(880,.18);busy=false;render();checkEnd();if(!over){setTurn('enemy');enemyTurn(turnCount+1);}}
-function useHeal(){if(energy<60||busy||over||playerHp>=maxHealth())return;championAbility('heal');energy-=60;let before=playerHp;playerHp=Math.min(maxHealth(),playerHp+22+profile.vitality*2);say(`🛡️ SHIELD BURST restores ${playerHp-before} health!`);playSound('heal');beep(620,.12);render();setTurn('enemy');enemyTurn(turnCount+1);}
+async function useUltimate(){if(energy<100||busy||over)return;busy=true;championAbility('ultimate');ultimateEffects();ultimateBanner('ULTIMATE BLAST!');energy=0;await animateShot('playerAvatar','enemyAvatar','lightning',5);const ultimateDamage=Math.round(35*(1+powerBonus()));enemyHp=Math.max(0,enemyHp-ultimateDamage);impactFeedback('enemyAvatar',ultimateDamage);say(`⚡ ULTIMATE BLAST! A massive arcane strike deals ${ultimateDamage} damage!`);playSound('magic');beep(880,.18);busy=false;render();checkEnd();if(!over){setTurn('enemy');enemyTurn(turnCount+1);}}
+function useHeal(){if(energy<60||busy||over||playerHp>=maxHealth())return;championAbility('heal');energy-=60;let before=playerHp;playerHp=Math.min(maxHealth(),playerHp+22+profile.vitality*2);impactFeedback('playerAvatar',playerHp-before,'heal');say(`🛡️ SHIELD BURST restores ${playerHp-before} health!`);playSound('heal');beep(620,.12);render();setTurn('enemy');enemyTurn(turnCount+1);}
 function checkEnd(){if(over)return;if(enemyHp<=0){endGame(true);}else if(playerHp<=0){endGame(false);}else if(seconds<=0){endGame(playerHp>=enemyHp/RIVALS[rival].hp*100);}}
 function endGame(win){over=true;clearInterval(timerId);const bonus=mode==='Classic'?1:mode==='TimeAttack'?1.5:1.35;const xpReward=win?Math.round((50+comboBest*5)*bonus):15;const coinReward=win?Math.round(25*bonus):0;if(win){profile.wins++;profile.xp+=xpReward;profile.coins+=coinReward;while(profile.xp>=profile.level*100){profile.xp-=profile.level*100;profile.level++;profile.coins+=50;}}else{profile.losses++;profile.xp+=xpReward;}saveProfile();$('resultTitle').textContent=win?'🏆 VICTORY!':'💥 DEFEAT';$('resultText').textContent=win?`You defeated ${rival} in ${modeLabel()} mode! +${xpReward} XP and ${coinReward} coins. Best combo: x${comboBest}.`:`Your rival won this round. You earned ${xpReward} XP. Try a different mode or upgrade your champion!`;$('overlay').classList.add('show');if(win){victoryConfetti();playSound('victory');}else{playSound('defeat');}stopMusic();updateUI();}
 function modeLabel(){return mode==='TimeAttack'?'Time Attack':mode==='Survival'?'Survival':'Classic';}
