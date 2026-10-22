@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 2.0.0 Adventure Campaign</title>
+<title>Gem Clash: AI Arena — Build 2.1.0 Boss Battle Experience</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -210,6 +210,20 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
 @media(max-width:520px){.battlehead{top:4px!important;padding:5px 6px!important;min-height:0!important;gap:4px!important}.battlehead .avatar{font-size:1.45rem;flex-basis:42px;width:42px;height:48px}.battlehead .fighter-health{max-width:105px}.battlehead .fighter-hp-track{height:6px}}
 
 
+/* Build 2.1.0: cinematic boss encounters */
+.boss-alert{display:none;margin:10px 0;padding:10px 12px;border:1px solid #ff806e99;border-radius:12px;background:linear-gradient(100deg,#4a1d36,#29152d 60%,#401d28);color:#ffe4a7;font-weight:950;text-align:center;letter-spacing:.035em;box-shadow:0 0 22px #ff513b24;animation:bossPulse 1.2s ease-in-out infinite}
+.boss-alert.active{display:block}.boss-alert.warning{border-color:#fff0a0;background:linear-gradient(100deg,#71302b,#3e1d34);color:#fff4bd;animation:bossWarning .5s ease-in-out 3}
+.boss-alert .boss-sub{display:block;margin-top:3px;color:#ffc4c9;font-size:.72rem;font-weight:750;letter-spacing:0}
+.battlehead.boss-arena{border-color:#ff806eaa;background:radial-gradient(ellipse at 80% 45%,#642a47 0%,#271b40 48%,#171b39 100%);box-shadow:inset 0 1px #ffffff18,0 8px 22px #0004,0 0 24px #ff513b20}
+.battlehead.boss-arena .fighter:last-child .avatar{filter:drop-shadow(0 0 12px #ff633f99)}
+.battlehead.boss-arena .fighter-health-label span{color:#ffb7a5}
+.battlehead.boss-arena .fighter-health-label b{color:#ffe6ad}
+@keyframes bossPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.22)}}
+@keyframes bossWarning{0%,100%{transform:scale(1)}50%{transform:scale(1.025);box-shadow:0 0 28px #ff8a4b88}}
+.boss-win .result-emblem{filter:drop-shadow(0 0 24px #ffb84e)!important;animation:bossTrophy .85s ease-in-out infinite alternate}
+@keyframes bossTrophy{from{transform:translateY(0) rotate(-5deg) scale(1)}to{transform:translateY(-7px) rotate(5deg) scale(1.12)}}
+@media(prefers-reduced-motion:reduce){.boss-alert,.boss-win .result-emblem{animation:none!important}}
+
 /* Build 2.0.0: Adventure Campaign map */
 .campaign-panel{margin:0 0 20px;padding:15px;border-radius:18px;border:1px solid #8b9eff66;background:radial-gradient(ellipse at 50% 0%,#344b83 0%,#1b2649 55%,#10182f 100%);box-shadow:inset 0 1px #ffffff15,0 10px 26px #0003}
 .campaign-heading{display:flex;align-items:center;gap:11px}.campaign-icon{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:#111b3c;border:1px solid #7ee9ff66;font-size:1.65rem;box-shadow:0 0 18px #5ee7ff18}.campaign-heading h3{margin:0;font-size:1.05rem;color:#fff}.campaign-heading p{margin:4px 0 0;font-size:.74rem;line-height:1.35;color:#b9c8f5}.campaign-progress{margin:14px 0 10px;font-size:.72rem;font-weight:800;color:#d9e3ff}.campaign-progress-track{height:7px;border-radius:999px;background:#070d21;margin-top:6px;overflow:hidden}.campaign-progress-track div{height:100%;width:11.11%;border-radius:999px;background:linear-gradient(90deg,#5ee7ff,#b6a0ff,#ffe18a);transition:width .3s}.campaign-map{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.campaign-stage{min-width:0;min-height:75px;padding:8px 3px;border-radius:12px;border:1px solid #8294d544;background:#111a35;color:#dce5ff;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:3px;cursor:pointer;transition:transform .15s,border-color .15s,background .15s}.campaign-stage:hover:not(:disabled){transform:translateY(-2px);border-color:#5ee7ff}.campaign-stage .stage-number{font-size:.67rem;letter-spacing:.06em;color:#aab9ed;font-weight:900}.campaign-stage .stage-symbol{font-size:1.35rem;line-height:1.15}.campaign-stage .stage-name{font-size:.63rem;font-weight:800;line-height:1.15;text-align:center}.campaign-stage.boss{border-color:#ff8b7166;background:linear-gradient(145deg,#47233b,#211a37)}.campaign-stage.boss .stage-symbol{filter:drop-shadow(0 0 7px #ff714a)}.campaign-stage.selected{outline:2px solid #ffe18a;border-color:#ffe18a;background:linear-gradient(145deg,#3c4472,#202b52);box-shadow:0 0 18px #ffe18a22}.campaign-stage:disabled{opacity:.42;cursor:not-allowed;filter:grayscale(.55)}.campaign-selected{margin:11px 0 9px;padding:9px 10px;border-radius:10px;background:#070d21a8;border:1px solid #8294d533;font-size:.78rem;font-weight:900;color:#ffe8a3}.campaign-start{width:100%;font-weight:1000;letter-spacing:.04em}.campaign-note{margin-top:9px;font-size:.68rem;line-height:1.45;color:#aebce7}.campaign-badge{display:inline-block;margin-top:6px;padding:4px 8px;border-radius:999px;background:#3c2a54;border:1px solid #ffb58a66;color:#ffd0b8;font-size:.68rem;font-weight:900}
@@ -219,7 +233,7 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
 </head>
 <body>
 <div class="wrap">
-<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 2.0.0 · ADVENTURE CAMPAIGN</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn" id="dailyReward">🎁 Daily Gift</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
+<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 2.1.0 · BOSS BATTLE EXPERIENCE</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn" id="dailyReward">🎁 Daily Gift</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
 <div class="layout">
 <section class="panel">
   <div class="stats">
@@ -230,11 +244,12 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
     <div class="stat"><div class="label">Ultimate energy</div><div class="value" id="energyText">0 / 100</div><div class="energybar"><div class="energyfill" id="energyBar"></div></div></div>
     <div class="stat"><div class="label">Battle timer</div><div class="value" id="timer">02:00</div><div class="label" id="comboText">Best combo: x0</div></div>
   </div>
-  <div class="battlehead">
+  <div class="battlehead" id="battlehead">
     <div class="fighter"><span class="avatar" id="playerAvatar">🧙</span><div class="fighter-info"><strong id="playerChampionName">You</strong><small id="playerChampionRole">Gem Guardian</small><div class="fighter-health"><div class="fighter-health-label"><span>YOU</span><b id="playerBattleHpText">100 / 100</b></div><div class="fighter-hp-track"><div class="fighter-hp-fill player-mini-hp" id="playerBattleHpBar"></div></div></div></div></div>
     <div class="battle-vs" aria-hidden="true">VS</div>
     <div class="fighter"><span class="avatar" id="enemyAvatar">🔥</span><div class="fighter-info"><strong id="enemyName">Blaze</strong><small id="enemyStyle">Aggressive rival</small><div class="fighter-health"><div class="fighter-health-label"><span>RIVAL</span><b id="enemyBattleHpText">100 / 100</b></div><div class="fighter-hp-track"><div class="fighter-hp-fill enemy-mini-hp" id="enemyBattleHpBar"></div></div></div></div></div>
   </div>
+  <div class="boss-alert" id="bossAlert" role="status" aria-live="assertive">👑 BOSS ENCOUNTER<span class="boss-sub" id="bossAlertSub">A powerful enemy stands before you.</span></div>
   <div class="turnbanner"><span id="turnLabel" class="turnbadge">🟦 Your turn — drag or tap gems</span><span>Move time: <strong id="moveTimer" class="move-clock">10s</strong></span></div>
   <div class="board" id="board" aria-label="Match 3 game board"></div><div id="boardError" style="display:none;margin-top:10px;padding:10px;background:#5b2033;border-radius:10px;color:#fff">The gem board could not start. Press New Battle to retry.</div>
   <p class="hint">Drag a gem onto a neighbour, or tap two adjacent gems. Match 3+ to attack. You have 10 seconds per move; if time runs out, your rival takes a turn.</p>
@@ -287,7 +302,7 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
   <div class="rules"><b>Progression:</b> Wins grant XP and coins; level-ups award bonus coins. Your progress is saved locally in this browser. <b>Combo chain:</b> matches that cascade build your combo multiplier. Longer combos deal more damage and charge energy faster. Special gem symbols: 💥 row blast, 🌈 prism, ✖️ cross bomb.</div>
 </aside>
 </div>
-<div class="footer">Gem Clash: AI Arena · Build 2.0.0 · Adventure Campaign</div>
+<div class="footer">Gem Clash: AI Arena · Build 2.1.0 · Boss Battle Experience</div>
 </div>
 <div id="fxLayer" aria-hidden="true"></div>
 <div class="overlay" id="overlay" aria-live="assertive" aria-modal="true" role="dialog" aria-labelledby="resultTitle"><div class="modal result-modal"><div class="result-emblem" id="resultEmblem" aria-hidden="true">🏆</div><div class="result-kicker" id="resultKicker">BATTLE COMPLETE</div><h2 id="resultTitle">VICTORY!</h2><p id="resultText">You won the battle.</p><div class="result-rewards" id="resultRewards"><div class="reward-tile"><span>✨</span><small>XP EARNED</small><strong>+50</strong></div><div class="reward-tile"><span>💰</span><small>COINS EARNED</small><strong>+25</strong></div><div class="reward-tile"><span>🔥</span><small>BEST COMBO</small><strong>x3</strong></div></div><div class="result-footer" id="resultFooter">Your legend grows stronger with every battle.</div><button class="primary result-play-again" id="playAgain" type="button">⚔️ BATTLE AGAIN</button></div></div>
@@ -579,8 +594,12 @@ async function resolveCascade(first,a,b){
  if(chain>=2)say(`🔥 MEGA COMBO x${chain}! ${total} total damage dealt.`);
  render();
 }
+function isBossBattle(){return campaignMode&&!!CAMPAIGN_STAGES[campaignStage-1]?.boss;}
+function bossIdentity(){if(!isBossBattle())return null;return ({3:{name:'CITADEL OVERLORD',title:'👑 The Citadel Overlord',warning:'OBLIVION STRIKE',attack:'The Overlord channels a crushing void blast!'},6:{name:'FROST TITAN',title:'❄️ The Frost Titan',warning:'GLACIAL CATACLYSM',attack:'The Frost Titan unleashes a freezing shockwave!'},9:{name:'INFERNO DRAGON',title:'🐉 The Inferno Dragon',warning:'INFERNO BREATH',attack:'The Inferno Dragon breathes a devastating wave of fire!'}})[campaignStage]||null;}
+function bossWarning(){const boss=bossIdentity(),box=$('bossAlert');if(!boss||!box)return;box.classList.remove('warning');void box.offsetWidth;box.classList.add('active','warning');box.innerHTML=`⚠️ ${boss.warning}<span class="boss-sub">${boss.attack}</span>`;ultimateBanner('⚠️ '+boss.warning);playSound('attack');setTimeout(()=>{if(box.classList.contains('warning')){box.classList.remove('warning');box.innerHTML=`👑 ${boss.title}<span class="boss-sub">Boss battle · beware the special attack</span>`;}},1800);}
+
 async function enemyTurn(turn){
- if(over||enemyHp<=0)return;busy=true;setTurn('enemy');$('board').classList.add('enemy-thinking');await sleep(450);
+ if(over||enemyHp<=0)return;busy=true;setTurn('enemy');$('board').classList.add('enemy-thinking');const boss=isBossBattle(),bossMove=boss&&turn%3===0;if(bossMove){bossWarning();await sleep(900);}await sleep(450);
  const profile=RIVALS[rival];let chance=profile.rate;
  if(difficulty==='Casual')chance*=.55;if(difficulty==='Expert')chance=Math.min(.98,chance*1.25);
  if(rival==='Nexus'&&comboBest>=3)chance=Math.min(.98,chance+.12);if(rival==='Nexus'&&turn>=4)chance=Math.min(.98,chance+.08);
@@ -598,9 +617,9 @@ async function enemyTurn(turn){
   }
   const count=clear.size;for(const idx of clear){board[Math.floor(idx/SIZE)][idx%SIZE]=null;}
   for(let c=0;c<SIZE;c++){let vals=[];for(let r=SIZE-1;r>=0;r--)if(board[r][c])vals.push(board[r][c]);while(vals.length<SIZE)vals.push(randomCell());for(let r=SIZE-1,i=0;r>=0;r--,i++)board[r][c]=vals[i];}
-  const dmg=Math.max(4,Math.round(count*(1.4+(difficulty==='Expert'?.45:0))+(rival==='Blaze'?2:0)+(rival==='Nexus'&&count>=5?3:0)));await animateShot('enemyAvatar','playerAvatar',count>=5?'lightning':count>=4?'fire':'magic',count);playerHp=Math.max(0,playerHp-dmg);impactFeedback('playerAvatar',dmg);say(`${profile.avatar} ${rival} made a tactical match (${count} gems) and dealt ${dmg} damage!`);playSound('attack');beep(260,.12);
+  const dmg=Math.max(4,Math.round(count*(1.4+(difficulty==='Expert'?.45:0))+(rival==='Blaze'?2:0)+(rival==='Nexus'&&count>=5?3:0)+(bossMove?12:0)));await animateShot('enemyAvatar','playerAvatar',bossMove?'strong':count>=5?'lightning':count>=4?'fire':'magic',count);playerHp=Math.max(0,playerHp-dmg);impactFeedback('playerAvatar',dmg);say(bossMove?`👑 BOSS SPECIAL! ${bossIdentity().warning} deals ${dmg} damage!`:`${profile.avatar} ${rival} made a tactical match (${count} gems) and dealt ${dmg} damage!`);playSound('attack');beep(260,.12);
  }else{
-  let dmg=profile.attack+(difficulty==='Expert'?3:difficulty==='Casual'?-2:0);if(mode==='Survival')dmg+=3;if(rival==='Blaze'&&turn%3===0)dmg+=5;if(rival==='Nexus'&&comboBest>=3)dmg+=2;if(rival==='Frost'&&playerHp<40)dmg=Math.max(3,dmg-1);await animateShot('enemyAvatar','playerAvatar',rival==='Blaze'?'fire':rival==='Frost'?'ice':'lightning',1);playerHp=Math.max(0,playerHp-dmg);impactFeedback('playerAvatar',dmg);say(`${profile.avatar} ${rival} strikes for ${dmg} damage!`);playSound('attack');beep(230,.12);
+  let dmg=profile.attack+(difficulty==='Expert'?3:difficulty==='Casual'?-2:0);if(mode==='Survival')dmg+=3;if(rival==='Blaze'&&turn%3===0)dmg+=5;if(rival==='Nexus'&&comboBest>=3)dmg+=2;if(rival==='Frost'&&playerHp<40)dmg=Math.max(3,dmg-1);if(bossMove)dmg+=12;await animateShot('enemyAvatar','playerAvatar',bossMove?'strong':rival==='Blaze'?'fire':rival==='Frost'?'ice':'lightning',bossMove?3:1);playerHp=Math.max(0,playerHp-dmg);impactFeedback('playerAvatar',dmg);say(bossMove?`👑 BOSS SPECIAL! ${bossIdentity().warning} deals ${dmg} damage!`:`${profile.avatar} ${rival} strikes for ${dmg} damage!`);playSound('attack');beep(230,.12);
  }
  $('board').classList.remove('enemy-thinking');busy=false;turnCount=Math.max(turnCount,turn);checkEnd();if(!over){setTurn('player');render();}
 }
@@ -620,18 +639,18 @@ function endGame(win){
  if(campaignMode&&win){const st=CAMPAIGN_STAGES[campaignStage-1];const firstClear=!profile.campaignWins.includes(campaignStage);if(firstClear){profile.campaignWins.push(campaignStage);campaignBonus=st&&st.boss?60:20;profile.coins+=campaignBonus;}if(campaignStage===profile.campaignUnlocked&&profile.campaignUnlocked<9)profile.campaignUnlocked++;selectedCampaignStage=Math.min(9,profile.campaignUnlocked);saveProfile();renderCampaignMap();}
  else saveProfile();
  const overlay=$('overlay'),playerAvatar=$('playerAvatar'),enemyAvatar=$('enemyAvatar');
- overlay.classList.remove('result-win','result-lose');overlay.classList.add(win?'result-win':'result-lose');
+ overlay.classList.remove('result-win','result-lose','boss-win');overlay.classList.add(win?'result-win':'result-lose');const bossWin=win&&isBossBattle();if(bossWin)overlay.classList.add('boss-win');
  if(playerAvatar){playerAvatar.classList.remove('celebrate','fallen');playerAvatar.classList.add(win?'celebrate':'fallen');}
  if(enemyAvatar){enemyAvatar.classList.remove('celebrate','fallen');enemyAvatar.classList.add(win?'fallen':'celebrate');}
- $('resultEmblem').textContent=win?'🏆':'💔';
- $('resultKicker').textContent=win?'CHAMPION VICTORY':'BATTLE ENDED';
- $('resultTitle').textContent=win?'VICTORY!':'DEFEAT';
+ $('resultEmblem').textContent=bossWin?({3:'👑',6:'❄️',9:'🐉'}[campaignStage]||'🏆'):(win?'🏆':'💔');
+ $('resultKicker').textContent=bossWin?'BOSS SLAIN · LEGENDARY VICTORY':(win?'CHAMPION VICTORY':'BATTLE ENDED');
+ $('resultTitle').textContent=bossWin?'BOSS DEFEATED!':(win?'VICTORY!':'DEFEAT');
  $('resultText').textContent=campaignMode?(win?`Stage ${campaignStage} cleared! ${rival} has been defeated${CAMPAIGN_STAGES[campaignStage-1].boss?' in a mighty boss battle':''}.`:`Stage ${campaignStage} remains unfinished. Upgrade your champion and try again.`):(win?`You defeated ${rival} in ${modeLabel()} mode! The arena is yours.`:`${rival} won this round. Regroup, upgrade, and come back stronger!`);
  $('resultRewards').innerHTML=`<div class="reward-tile"><span>✨</span><small>XP EARNED</small><strong>+${xpReward}</strong></div><div class="reward-tile"><span>💰</span><small>COINS EARNED</small><strong>+${coinReward+campaignBonus}</strong></div><div class="reward-tile"><span>🔥</span><small>BEST COMBO</small><strong>x${comboBest}</strong></div>`;
  $('resultFooter').textContent=campaignMode?(win?`Campaign reward: +${campaignBonus} bonus coins. ${campaignStage===9?'The Adventure Campaign is complete!':`Next: Stage ${Math.min(9,profile.campaignUnlocked)}.`}`:`Your campaign progress is safe. You can retry this stage or upgrade in the Armory.`):(win?(levelsGained?`LEVEL UP! You reached Level ${profile.level} and earned ${levelCoins} bonus coins.`:'Your legend grows stronger with every victory.'):`You still earned ${xpReward} XP. Every battle helps you grow.`);
  $('playAgain').disabled=false;$('playAgain').textContent=campaignMode?'⚔️ RETRY STAGE':'⚔️ BATTLE AGAIN';
  overlay.classList.add('show');
- if(win){victoryConfetti();playSound('victory');}else{playSound('defeat');}
+ if(win){victoryConfetti();if(bossWin){for(let i=0;i<4;i++)setTimeout(()=>{fxPoint(window.innerWidth*(.2+Math.random()*.6),window.innerHeight*(.2+Math.random()*.45),'fx-burst',['#ffcf62','#ff694f','#c6a5ff','#fff18a'][i]);},i*180);say('🏆 LEGENDARY! The boss has fallen and the realm is safer.');}playSound('victory');}else{playSound('defeat');}
  stopMusic();updateUI();
 }
 function modeLabel(){return mode==='TimeAttack'?'Time Attack':mode==='Survival'?'Survival':'Classic';}
@@ -684,7 +703,7 @@ function renderCampaignMap(){
 function launchCampaignStage(n){const st=CAMPAIGN_STAGES[n-1];if(!st||n>profile.campaignUnlocked)return;campaignMode=true;campaignStage=n;selectedCampaignStage=n;arena=st.arena;rival=st.rival;difficulty=st.difficulty;mode='Classic';applyArena();document.querySelectorAll('[data-rival]').forEach(b=>b.classList.toggle('active',b.dataset.rival===rival));document.querySelectorAll('[data-diff]').forEach(b=>b.classList.toggle('active',b.dataset.diff===difficulty));document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));updateModeStatus();renderCampaignMap();start();say(`${st.boss?'👑 BOSS BATTLE: ':'🗺️ CAMPAIGN: '}Stage ${n} — ${st.name}. ${RIVALS[rival].ability}`);}
 function start(){
  applyArena();updateChampions();updateModeStatus();clearInterval(timerId);playerHp=maxHealth();enemyMaxHp=RIVALS[rival].hp;enemyHp=enemyMaxHp;if(campaignMode){const st=CAMPAIGN_STAGES[campaignStage-1];if(st&&st.boss)enemyMaxHp=Math.round(enemyMaxHp*1.75);else if(campaignStage>=7)enemyMaxHp=Math.round(enemyMaxHp*1.2);enemyHp=enemyMaxHp;}energy=0;seconds=mode==='TimeAttack'?75:mode==='Survival'?180:120;if(mode==='TimeAttack')enemyHp=Math.round(enemyHp*.8);comboBest=0;turnCount=0;selected=null;busy=false;over=false;
- $('overlay').classList.remove('show','result-win','result-lose');['playerAvatar','enemyAvatar'].forEach(id=>{const el=$(id);if(el)el.classList.remove('celebrate','fallen');});setBattleHeroes();$('playerChampionName').textContent=CHAMPIONS[champion].name;$('playerChampionRole').textContent=CHAMPIONS[champion].desc;$('enemyName').textContent=rival;$('enemyStyle').textContent=RIVALS[rival].style;
+ $('overlay').classList.remove('show','result-win','result-lose');$('overlay').classList.remove('boss-win');['playerAvatar','enemyAvatar'].forEach(id=>{const el=$(id);if(el)el.classList.remove('celebrate','fallen');});const boss=bossIdentity();$('battlehead')?.classList.toggle('boss-arena',!!boss);const bossBox=$('bossAlert');if(bossBox){bossBox.classList.toggle('active',!!boss);bossBox.classList.remove('warning');bossBox.innerHTML=boss?`👑 ${boss.title}<span class="boss-sub">Boss battle · beware the special attack every third enemy turn</span>`:'';}setBattleHeroes();$('playerChampionName').textContent=CHAMPIONS[champion].name;$('playerChampionRole').textContent=CHAMPIONS[champion].desc;$('enemyName').textContent=boss?boss.name:rival;$('enemyStyle').textContent=boss?`BOSS · ${RIVALS[rival].style}`:RIVALS[rival].style;
  createBoard();setTurn('player');render();say(`${rival}: ${RIVALS[rival].ability}`);timerId=setInterval(()=>{if(over)return;seconds--;if(!busy&&turnState==='player'){moveSeconds--;if(moveSeconds<=0){setTurn('enemy');say(`⏱️ Time is up! ${rival} takes the turn.`);enemyTurn(turnCount+1);}}updateUI();if(seconds<=0)checkEnd();},1000);
 }
 document.querySelectorAll('[data-arena]').forEach(b=>b.addEventListener('click',()=>{campaignMode=false;arena=b.dataset.arena;profile.arena=arena;applyArena();saveProfile();say(`Arena changed to ${arena}. Your next battle is ready!`);start();}));
@@ -764,7 +783,7 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
  <div style="width:min(620px,100%);background:#1b2342;border:1px solid #5ee7ff66;border-radius:20px;padding:22px;box-shadow:0 20px 80px #0009;color:#f4f7ff">
   <div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><h2 id="helpTitle" style="margin:0">💎 How to Play</h2><button id="closeHelp" class="topbtn" type="button" aria-label="Close help">✕ Close</button></div>
   <p>Drag a gem onto a neighbouring gem, or tap two adjacent gems, to match <b>three or more gems of the same colour</b>. Matches damage your rival and build ultimate energy. You have <b>10 seconds per move</b>; when time expires, the AI takes its turn and makes a visible gem move when possible. Rivals now weigh match size and special-gem opportunities when choosing moves.</p>
-  <ul style="line-height:1.8;padding-left:22px"><li><b>Choose your setup:</b> select a champion, arena, rival, difficulty and battle mode.</li><li><b>Row Blaster:</b> clear a row. <b>Prism:</b> swap it with a gem to clear that colour. <b>Cross Bomb:</b> clear a row and column.</li><li><b>Ultimate Blast:</b> spend 100 energy for a powerful attack.</li><li><b>Shield Burst:</b> spend energy to recover health.</li><li><b>Earn rewards:</b> wins give coins and XP. Spend coins on champions and upgrades.</li><li><b>Progress:</b> saved in this browser on this device. Clearing browser data may erase it.</li></ul>
+  <ul style="line-height:1.8;padding-left:22px"><li><b>Choose your setup:</b> select a champion, arena, rival, difficulty and battle mode.</li><li><b>Row Blaster:</b> clear a row. <b>Prism:</b> swap it with a gem to clear that colour. <b>Cross Bomb:</b> clear a row and column.</li><li><b>Ultimate Blast:</b> spend 100 energy for a powerful attack.</li><li><b>Shield Burst:</b> spend energy to recover health.</li><li><b>Earn rewards:</b> wins give coins and XP. Spend coins on champions and upgrades.</li><li><b>Boss battles:</b> stages 3, 6 and 9 have extra health. Watch for a warning every third boss turn—special attacks deal heavy damage.</li><li><b>Progress:</b> saved in this browser on this device. Clearing browser data may erase it.</li></ul>
   <p style="color:#aab5d6;font-size:13px">This is a local browser game with scripted computer opponents. Online multiplayer and a native Android/iOS app are not included in this build.</p>
  </div>
 </div>
