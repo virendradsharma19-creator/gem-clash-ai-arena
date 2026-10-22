@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 1.6.0</title>
+<title>Gem Clash: AI Arena — Build 1.8.2 Sticky Battle HUD</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -106,6 +106,25 @@ button{transition:transform .14s ease,filter .14s ease,box-shadow .14s ease}butt
 @media(prefers-reduced-motion:reduce){body:before{display:none}button,.stat{transition:none!important}.modal{animation:none!important}.board.enemy-thinking{animation:none!important}}
 
 
+/* Build 1.8.1: floating battle HUD stays visible after scrolling to the gem board */
+.battlehead{position:relative;z-index:30;backdrop-filter:blur(12px);box-shadow:0 8px 24px #0006}
+.battlehead-placeholder{display:none;width:100%;pointer-events:none}
+.battlehead.floating-battlehead{position:fixed;top:env(safe-area-inset-top,8px);left:50%;transform:translateX(-50%);width:min(calc(100% - 18px),1022px);margin:0;padding:7px 12px;background:linear-gradient(145deg,rgba(20,29,61,.97),rgba(8,13,31,.97));border:1px solid #6578b5;border-radius:14px;box-shadow:0 8px 30px #000b;z-index:1000}
+.battlehead.floating-battlehead .avatar{font-size:1.65rem}
+@media(max-width:520px){.battlehead.floating-battlehead{padding:5px 7px;gap:4px}.battlehead.floating-battlehead .fighter{gap:4px}.battlehead.floating-battlehead .avatar{font-size:1.45rem;flex-basis:42px;width:42px;height:48px}.battlehead.floating-battlehead .fighter strong{font-size:.68rem}.battlehead.floating-battlehead .fighter small{font-size:.53rem;max-width:85px}.battlehead.floating-battlehead .fighter-health{max-width:105px;margin-top:2px}.battlehead.floating-battlehead .fighter-health-label{font-size:.52rem}.battlehead.floating-battlehead .fighter-health-label b{font-size:.55rem}.battlehead.floating-battlehead .fighter-hp-track{height:6px}.battlehead.floating-battlehead .battle-vs{width:22px;height:22px;flex:0 0 22px}}
+.fighter-info{min-width:0;flex:1}
+.fighter-health{width:100%;max-width:150px;margin-top:5px}
+.fighter-health-label{display:flex;justify-content:space-between;gap:5px;align-items:center;font-size:.62rem;line-height:1.2;color:#dbe6ff;font-weight:800}
+.fighter-health-label b{font-size:.66rem;color:#fff;font-variant-numeric:tabular-nums;white-space:nowrap}
+.fighter-hp-track{height:7px;background:#070c1b;border:1px solid #ffffff26;border-radius:99px;overflow:hidden;margin-top:3px;box-shadow:inset 0 1px 3px #0008}
+.fighter-hp-fill{height:100%;width:100%;border-radius:99px;transition:width .32s ease,filter .2s;box-shadow:0 0 9px currentColor}
+.player-mini-hp{background:linear-gradient(90deg,#39e79a,#a6ffce);color:#63ffb2}
+.enemy-mini-hp{background:linear-gradient(90deg,#ff375e,#ffb06b);color:#ff5d78}
+.fighter-hp-fill.low-health{background:linear-gradient(90deg,#ff203f,#ff7958);animation:lowHpPulse .7s ease-in-out infinite alternate}
+@keyframes lowHpPulse{from{filter:brightness(1);opacity:.8}to{filter:brightness(1.6);opacity:1}}
+@media(max-width:520px){.battlehead{top:0;padding:7px 5px;gap:4px;min-height:0}.battlehead .fighter{gap:4px}.battlehead .avatar{flex-basis:clamp(54px,16vw,76px);width:clamp(54px,16vw,76px);height:clamp(66px,19vw,84px)}.battlehead .fighter strong{font-size:.72rem}.battlehead .fighter small{font-size:.58rem;max-width:100px}.fighter-health{max-width:105px;margin-top:3px}.fighter-health-label{font-size:.54rem}.fighter-health-label b{font-size:.57rem}.fighter-hp-track{height:6px}.battle-vs{width:25px;height:25px}}
+@media(prefers-reduced-motion:reduce){.fighter-hp-fill,.fighter-hp-fill.low-health{transition:none!important;animation:none!important}}
+
 /* Build 1.1.1: advanced battle effects */
 #fxLayer{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:9000;contain:strict}
 .fx-burst{position:fixed;left:var(--x);top:var(--y);width:20px;height:20px;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;animation:burstCore .58s ease-out forwards}
@@ -184,12 +203,18 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
 @keyframes ultimateBanner{0%{opacity:0;transform:translate(-50%,-50%) scale(.35) rotate(-5deg)}20%,65%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}100%{opacity:0;transform:translate(-50%,-65%) scale(.92)}}
 @media(prefers-reduced-motion:reduce){.damage-number,.ultimate-banner,body.combat-shake .wrap,.hpbar.hp-impact{animation-duration:.01ms!important}}
 
+
+/* Build 1.8.2: CSS sticky HUD. It stays at the top while scrolling through the battle panel. */
+.battlehead{position:-webkit-sticky!important;position:sticky!important;top:8px!important;z-index:1000!important;isolation:isolate;background:linear-gradient(145deg,rgba(20,29,61,.98),rgba(8,13,31,.98))!important;box-shadow:0 8px 28px #000b!important;backdrop-filter:blur(14px);}
+.battlehead-placeholder{display:none!important}
+@media(max-width:520px){.battlehead{top:4px!important;padding:5px 6px!important;min-height:0!important;gap:4px!important}.battlehead .avatar{font-size:1.45rem;flex-basis:42px;width:42px;height:48px}.battlehead .fighter-health{max-width:105px}.battlehead .fighter-hp-track{height:6px}}
+
 </style>
 <meta name="theme-color" content="#10152b"><meta name="description" content="A colorful match-3 fantasy battle arena with three selectable arenas. Challenge rivals, unlock upgrades, and build your champion."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml">
 </head>
 <body>
 <div class="wrap">
-<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 1.6.0 · CINEMATIC BATTLE EDITION</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn" id="dailyReward">🎁 Daily Gift</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
+<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 1.8.2 · STICKY BATTLE HUD</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn" id="dailyReward">🎁 Daily Gift</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
 <div class="layout">
 <section class="panel">
   <div class="stats">
@@ -201,9 +226,9 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
     <div class="stat"><div class="label">Battle timer</div><div class="value" id="timer">02:00</div><div class="label" id="comboText">Best combo: x0</div></div>
   </div>
   <div class="battlehead">
-    <div class="fighter"><span class="avatar" id="playerAvatar">🧙</span><div><strong id="playerChampionName">You</strong><small id="playerChampionRole">Gem Guardian</small></div></div>
+    <div class="fighter"><span class="avatar" id="playerAvatar">🧙</span><div class="fighter-info"><strong id="playerChampionName">You</strong><small id="playerChampionRole">Gem Guardian</small><div class="fighter-health"><div class="fighter-health-label"><span>YOU</span><b id="playerBattleHpText">100 / 100</b></div><div class="fighter-hp-track"><div class="fighter-hp-fill player-mini-hp" id="playerBattleHpBar"></div></div></div></div></div>
     <div class="battle-vs" aria-hidden="true">VS</div>
-    <div class="fighter"><span class="avatar" id="enemyAvatar">🔥</span><div><strong id="enemyName">Blaze</strong><small id="enemyStyle">Aggressive rival</small></div></div>
+    <div class="fighter"><span class="avatar" id="enemyAvatar">🔥</span><div class="fighter-info"><strong id="enemyName">Blaze</strong><small id="enemyStyle">Aggressive rival</small><div class="fighter-health"><div class="fighter-health-label"><span>RIVAL</span><b id="enemyBattleHpText">100 / 100</b></div><div class="fighter-hp-track"><div class="fighter-hp-fill enemy-mini-hp" id="enemyBattleHpBar"></div></div></div></div></div>
   </div>
   <div class="turnbanner"><span id="turnLabel" class="turnbadge">🟦 Your turn — drag or tap gems</span><span>Move time: <strong id="moveTimer" class="move-clock">10s</strong></span></div>
   <div class="board" id="board" aria-label="Match 3 game board"></div><div id="boardError" style="display:none;margin-top:10px;padding:10px;background:#5b2033;border-radius:10px;color:#fff">The gem board could not start. Press New Battle to retry.</div>
@@ -249,12 +274,22 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
   <div class="rules"><b>Progression:</b> Wins grant XP and coins; level-ups award bonus coins. Your progress is saved locally in this browser. <b>Combo chain:</b> matches that cascade build your combo multiplier. Longer combos deal more damage and charge energy faster. Special gem symbols: 💥 row blast, 🌈 prism, ✖️ cross bomb.</div>
 </aside>
 </div>
-<div class="footer">Gem Clash: AI Arena · Build 1.5.0 · 3D Cartoon Heroes</div>
+<div class="footer">Gem Clash: AI Arena · Build 1.9.0 · Victory & Defeat Celebration</div>
 </div>
 <div id="fxLayer" aria-hidden="true"></div>
-<div class="overlay" id="overlay"><div class="modal"><h2 id="resultTitle">VICTORY!</h2><p id="resultText">You won the battle.</p><button class="primary" id="playAgain" type="button">PLAY AGAIN</button></div></div>
-<script>
-(() => {
+<div class="overlay" id="overlay" aria-live="assertive" aria-modal="true" role="dialog" aria-labelledby="resultTitle"><div class="modal result-modal"><div class="result-emblem" id="resultEmblem" aria-hidden="true">🏆</div><div class="result-kicker" id="resultKicker">BATTLE COMPLETE</div><h2 id="resultTitle">VICTORY!</h2><p id="resultText">You won the battle.</p><div class="result-rewards" id="resultRewards"><div class="reward-tile"><span>✨</span><small>XP EARNED</small><strong>+50</strong></div><div class="reward-tile"><span>💰</span><small>COINS EARNED</small><strong>+25</strong></div><div class="reward-tile"><span>🔥</span><small>BEST COMBO</small><strong>x3</strong></div></div><div class="result-footer" id="resultFooter">Your legend grows stronger with every battle.</div><button class="primary result-play-again" id="playAgain" type="button">⚔️ BATTLE AGAIN</button></div></div>
+<style>
+/* Build 1.9.0: cinematic battle results */
+.result-modal{position:relative;overflow:hidden;max-width:460px;padding:26px 24px 22px;border:1px solid #ffe18a99;background:radial-gradient(ellipse at 50% 0%,#4a568e 0%,#202b52 48%,#111a36 100%);box-shadow:0 0 0 1px #ffffff12,0 28px 100px #000b,0 0 55px #8c76ff22;animation:resultEnter .62s cubic-bezier(.18,.88,.24,1.18) both}
+.result-modal:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.42;background:radial-gradient(circle at 12% 22%,#fff 0 1px,transparent 2px),radial-gradient(circle at 82% 14%,#ffe18a 0 1px,transparent 2px),radial-gradient(circle at 77% 72%,#71f3ff 0 1px,transparent 2px),radial-gradient(circle at 21% 76%,#fff 0 1px,transparent 2px);background-size:95px 87px}
+.result-modal>*{position:relative}.result-emblem{font-size:3.4rem;line-height:1.1;margin:0 auto 7px;filter:drop-shadow(0 0 16px #ffe18a88);animation:emblemPop .85s cubic-bezier(.16,1.4,.3,1) both}.result-kicker{font-size:.72rem;letter-spacing:.22em;font-weight:900;color:#a9b9f8;margin-bottom:7px}.result-modal h2{font-size:clamp(2rem,7vw,2.8rem);letter-spacing:.04em;text-shadow:0 3px 0 #0004,0 0 22px #ffe18a33}.result-modal p{line-height:1.5;margin:8px 0 17px}.result-rewards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:18px 0 14px}.reward-tile{min-width:0;padding:12px 5px 10px;border:1px solid #8294d555;border-radius:14px;background:#0b1439a8;display:flex;align-items:center;flex-direction:column;gap:4px}.reward-tile span{font-size:1.35rem}.reward-tile small{font-size:.61rem;letter-spacing:.04em;color:#aebbe8;font-weight:800}.reward-tile strong{font-size:1.35rem;color:#ffe18a}.result-footer{font-size:.82rem;color:#c4d0f6;margin:8px 0 13px}.result-play-again{width:100%;font-weight:1000;letter-spacing:.04em;box-shadow:0 6px 0 #9b5d27,0 0 25px #ffcb6550;transition:transform .15s,filter .15s}.result-play-again:hover{filter:brightness(1.12);transform:translateY(-2px)}
+#overlay.result-win{background:radial-gradient(ellipse at 50% 48%,#3a2e58c9,#050817ed 72%)}#overlay.result-win .result-modal{border-color:#ffe18acc;box-shadow:0 0 0 1px #ffe18a22,0 28px 100px #000c,0 0 70px #ffcf5550}#overlay.result-win .result-modal h2{color:#ffe18a}#overlay.result-lose{background:radial-gradient(ellipse at 50% 48%,#41243dcc,#050817f2 72%)}#overlay.result-lose .result-modal{border-color:#ff8c9c88;background:radial-gradient(ellipse at 50% 0%,#65394f 0%,#20213f 48%,#111426 100%)}#overlay.result-lose .result-emblem{filter:drop-shadow(0 0 16px #ff607a88)}#overlay.result-lose .result-modal h2{color:#ff9baa}#overlay.result-lose .reward-tile strong{color:#d8e0ff}
+.avatar.celebrate{animation:heroCelebrate 1.1s ease-in-out 2 both}.avatar.fallen{animation:heroFall .8s ease-in both;transform-origin:bottom center}
+@keyframes resultEnter{from{opacity:0;transform:translateY(24px) scale(.84)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes emblemPop{0%{transform:scale(.2) rotate(-22deg);opacity:0}65%{transform:scale(1.18) rotate(7deg);opacity:1}100%{transform:scale(1) rotate(0)}}@keyframes heroCelebrate{0%,100%{transform:translateY(0) rotate(0) scale(1);filter:drop-shadow(0 0 0 transparent)}35%{transform:translateY(-13px) rotate(-8deg) scale(1.12);filter:drop-shadow(0 0 14px #ffe18a)}70%{transform:translateY(0) rotate(7deg) scale(1.04)}}@keyframes heroFall{0%{transform:rotate(0) translateY(0);filter:brightness(1)}45%{transform:rotate(-18deg) translateY(3px);filter:brightness(.75)}100%{transform:rotate(-32deg) translateY(8px);filter:grayscale(.55) brightness(.6)}}
+@media(max-width:480px){.result-modal{padding:20px 14px 16px}.result-emblem{font-size:2.8rem}.result-rewards{gap:5px}.reward-tile{padding:10px 2px}.reward-tile small{font-size:.53rem}.reward-tile strong{font-size:1.15rem}.result-modal p{font-size:.93rem}}
+@media(prefers-reduced-motion:reduce){.result-modal,.result-emblem,.avatar.celebrate,.avatar.fallen{animation:none!important}.result-play-again{transition:none}}
+</style>
+<script> (() => {
 const SIZE=8, COLORS=['🔴','🔵','🟢','🟡','🟣','🟠'];
 const RIVALS={
  Blaze:{avatar:'🔥',style:'Aggressive rival',hp:100,attack:9,rate:0.82,ability:'Blaze hits harder but leaves openings.'},
@@ -324,7 +359,12 @@ function render(){
 }
 function updateUI(){
  $('playerHpText').textContent=`${playerHp} / ${maxHealth()}`;$('enemyHpText').textContent=`${enemyHp} / ${RIVALS[rival].hp}`;
- $('playerHpBar').style.width=Math.max(0,playerHp/maxHealth()*100)+'%';$('enemyHpBar').style.width=Math.max(0,enemyHp/RIVALS[rival].hp*100)+'%';
+ const playerPct=Math.max(0,Math.min(100,playerHp/maxHealth()*100));const enemyPct=Math.max(0,Math.min(100,enemyHp/RIVALS[rival].hp*100));
+ $('playerHpBar').style.width=playerPct+'%';$('enemyHpBar').style.width=enemyPct+'%';
+ if($('playerBattleHpText'))$('playerBattleHpText').textContent=`${playerHp} / ${maxHealth()}`;
+ if($('enemyBattleHpText'))$('enemyBattleHpText').textContent=`${enemyHp} / ${RIVALS[rival].hp}`;
+ if($('playerBattleHpBar')){$('playerBattleHpBar').style.width=playerPct+'%';$('playerBattleHpBar').classList.toggle('low-health',playerPct<=25)}
+ if($('enemyBattleHpBar')){$('enemyBattleHpBar').style.width=enemyPct+'%';$('enemyBattleHpBar').classList.toggle('low-health',enemyPct<=25)}
  $('energyText').textContent=`${energy} / 100`;$('energyBar').style.width=energy+'%';
  $('ultimate').disabled=over||busy||energy<100;$('heal').disabled=over||busy||energy<60||playerHp>=maxHealth();
  $('timer').textContent=`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`;if($('moveTimer'))$('moveTimer').textContent=turnState==='player'?`${moveSeconds}s`:(turnState==='enemy'?'AI…':'—');if($('turnLabel')){ $('turnLabel').textContent=turnState==='player'?'🟦 Your turn — make a match':turnState==='enemy'?`🔴 ${rival} is moving…`:'✨ Resolving match';$('turnLabel').className='turnbadge'+(turnState==='enemy'?' enemy':'');} 
@@ -417,12 +457,46 @@ function animateMatches(matches){
  for(const group of matches.groups){const cls=group.len>=4?'match-four':'match-three';for(const [r,c] of group.cells){const el=boardRoot.querySelector(`[data-r="${r}"][data-c="${c}"]`);if(el){el.classList.remove('match-three','match-four');void el.offsetWidth;el.classList.add(cls);}}}
 }
 function setTurn(state){turnState=state;if(state==='player')moveSeconds=10;updateUI();}
+function scoreAIMove(matches){
+ // Evaluate both immediate damage and tactical value instead of choosing only by match size.
+ let score=matches.set.size*10;
+ for(const group of matches.groups){
+  if(group.len===4)score+=12;
+  if(group.len>=5)score+=28+(group.len-5)*5;
+ }
+ const rows=new Set(),cols=new Set();
+ for(const group of matches.groups)for(const [r,c] of group.cells){rows.add(r);cols.add(c);const cell=board[r][c];
+  if(cell?.special==='prism')score+=24;
+  else if(cell?.special==='cross')score+=14;
+  else if(cell?.special==='row')score+=10;
+ }
+ if(rows.size>=2&&cols.size>=2)score+=14;
+ // Frost favours reliable, smaller tactical moves; Blaze favours maximum damage; Nexus hunts special gems.
+ if(rival==='Blaze')score+=matches.set.size*1.5;
+ if(rival==='Frost'&&matches.set.size<=4)score+=3;
+ if(rival==='Nexus'&&(matches.set.size>=5||[...matches.set].some(i=>{const cell=board[Math.floor(i/SIZE)][i%SIZE];return cell?.special;})))score+=12;
+ return score;
+}
 function getAIMove(){
  const moves=[];
  for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++)for(const [dr,dc] of [[0,1],[1,0]]){const rr=r+dr,cc=c+dc;if(rr>=SIZE||cc>=SIZE)continue;
-  [board[r][c],board[rr][cc]]=[board[rr][cc],board[r][c]];const m=getMatches();if(m.set.size)moves.push({a:{r,c},b:{r:rr,c:cc},score:m.set.size});[board[r][c],board[rr][cc]]=[board[rr][cc],board[r][c]];
+  [board[r][c],board[rr][cc]]=[board[rr][cc],board[r][c]];
+  const m=getMatches();if(m.set.size)moves.push({a:{r,c},b:{r:rr,c:cc},score:scoreAIMove(m),count:m.set.size});
+  [board[r][c],board[rr][cc]]=[board[rr][cc],board[r][c]];
  }
- if(!moves.length)return null;moves.sort((a,b)=>b.score-a.score);const top=moves.filter(m=>m.score===moves[0].score);return top[Math.floor(Math.random()*top.length)];
+ if(!moves.length)return null;
+ moves.sort((a,b)=>b.score-a.score);
+ // Casual opponents sometimes make imperfect moves; Expert opponents usually take the best tactical option.
+ if(difficulty==='Casual'){
+  const pool=moves.filter(m=>m.score>=moves[0].score*.62).slice(0,Math.min(8,moves.length));
+  return pool[Math.floor(Math.random()*pool.length)];
+ }
+ if(difficulty==='Expert'){
+  const pool=moves.filter(m=>m.score>=moves[0].score*.9).slice(0,3);
+  return pool[Math.floor(Math.random()*pool.length)];
+ }
+ const pool=moves.filter(m=>m.score>=moves[0].score*.78).slice(0,5);
+ return pool[Math.floor(Math.random()*pool.length)];
 }
 // Pointer dragging is the primary touch/mouse interaction; tapping remains available as an alternative.
 const boardRoot=$('board');
@@ -501,9 +575,16 @@ async function enemyTurn(turn){
  if(move&&Math.random()<Math.min(.96,chance+.15)){
   const {a,b}=move;const first=$('board').querySelector(`[data-r="${a.r}"][data-c="${a.c}"]`);const second=$('board').querySelector(`[data-r="${b.r}"][data-c="${b.c}"]`);if(first)first.classList.add('drag-source');if(second)second.classList.add('drag-source');say(`${profile.avatar} ${rival} swaps two gems…`);await sleep(420);
   [board[a.r][a.c],board[b.r][b.c]]=[board[b.r][b.c],board[a.r][a.c]];let matches=getMatches();render();animateMatches(matches);await sleep(420);
-  const count=matches.set.size;for(const idx of matches.set){board[Math.floor(idx/SIZE)][idx%SIZE]=null;}
+  let clear=new Set(matches.set);
+  // Rival special gems can trigger too, making the AI's chosen move matter beyond its first match.
+  for(const idx of [...clear]){const r=Math.floor(idx/SIZE),c=idx%SIZE,cell=board[r][c];if(!cell?.special)continue;
+   if(cell.special==='row'){for(let x=0;x<SIZE;x++)clear.add(r*SIZE+x);}
+   if(cell.special==='cross'){for(let x=0;x<SIZE;x++){clear.add(r*SIZE+x);clear.add(x*SIZE+c);}}
+   if(cell.special==='prism'){for(let rr=0;rr<SIZE;rr++)for(let cc=0;cc<SIZE;cc++)if(board[rr][cc]?.color===cell.color)clear.add(rr*SIZE+cc);}
+  }
+  const count=clear.size;for(const idx of clear){board[Math.floor(idx/SIZE)][idx%SIZE]=null;}
   for(let c=0;c<SIZE;c++){let vals=[];for(let r=SIZE-1;r>=0;r--)if(board[r][c])vals.push(board[r][c]);while(vals.length<SIZE)vals.push(randomCell());for(let r=SIZE-1,i=0;r>=0;r--,i++)board[r][c]=vals[i];}
-  const dmg=Math.max(4,Math.round(count*(1.4+(difficulty==='Expert'?.35:0))+(rival==='Blaze'?2:0)));await animateShot('enemyAvatar','playerAvatar',count>=5?'lightning':count>=4?'fire':'magic',count);playerHp=Math.max(0,playerHp-dmg);impactFeedback('playerAvatar',dmg);say(`${profile.avatar} ${rival} matched ${count} gems and dealt ${dmg} damage!`);playSound('attack');beep(260,.12);
+  const dmg=Math.max(4,Math.round(count*(1.4+(difficulty==='Expert'?.45:0))+(rival==='Blaze'?2:0)+(rival==='Nexus'&&count>=5?3:0)));await animateShot('enemyAvatar','playerAvatar',count>=5?'lightning':count>=4?'fire':'magic',count);playerHp=Math.max(0,playerHp-dmg);impactFeedback('playerAvatar',dmg);say(`${profile.avatar} ${rival} made a tactical match (${count} gems) and dealt ${dmg} damage!`);playSound('attack');beep(260,.12);
  }else{
   let dmg=profile.attack+(difficulty==='Expert'?3:difficulty==='Casual'?-2:0);if(mode==='Survival')dmg+=3;if(rival==='Blaze'&&turn%3===0)dmg+=5;if(rival==='Nexus'&&comboBest>=3)dmg+=2;if(rival==='Frost'&&playerHp<40)dmg=Math.max(3,dmg-1);await animateShot('enemyAvatar','playerAvatar',rival==='Blaze'?'fire':rival==='Frost'?'ice':'lightning',1);playerHp=Math.max(0,playerHp-dmg);impactFeedback('playerAvatar',dmg);say(`${profile.avatar} ${rival} strikes for ${dmg} damage!`);playSound('attack');beep(230,.12);
  }
@@ -512,7 +593,31 @@ async function enemyTurn(turn){
 async function useUltimate(){if(energy<100||busy||over)return;busy=true;championAbility('ultimate');ultimateEffects();ultimateBanner('ULTIMATE BLAST!');energy=0;await animateShot('playerAvatar','enemyAvatar','lightning',5);const ultimateDamage=Math.round(35*(1+powerBonus()));enemyHp=Math.max(0,enemyHp-ultimateDamage);impactFeedback('enemyAvatar',ultimateDamage);say(`⚡ ULTIMATE BLAST! A massive arcane strike deals ${ultimateDamage} damage!`);playSound('magic');beep(880,.18);busy=false;render();checkEnd();if(!over){setTurn('enemy');enemyTurn(turnCount+1);}}
 function useHeal(){if(energy<60||busy||over||playerHp>=maxHealth())return;championAbility('heal');energy-=60;let before=playerHp;playerHp=Math.min(maxHealth(),playerHp+22+profile.vitality*2);impactFeedback('playerAvatar',playerHp-before,'heal');say(`🛡️ SHIELD BURST restores ${playerHp-before} health!`);playSound('heal');beep(620,.12);render();setTurn('enemy');enemyTurn(turnCount+1);}
 function checkEnd(){if(over)return;if(enemyHp<=0){endGame(true);}else if(playerHp<=0){endGame(false);}else if(seconds<=0){endGame(playerHp>=enemyHp/RIVALS[rival].hp*100);}}
-function endGame(win){over=true;clearInterval(timerId);const bonus=mode==='Classic'?1:mode==='TimeAttack'?1.5:1.35;const xpReward=win?Math.round((50+comboBest*5)*bonus):15;const coinReward=win?Math.round(25*bonus):0;if(win){profile.wins++;profile.xp+=xpReward;profile.coins+=coinReward;while(profile.xp>=profile.level*100){profile.xp-=profile.level*100;profile.level++;profile.coins+=50;}}else{profile.losses++;profile.xp+=xpReward;}saveProfile();$('resultTitle').textContent=win?'🏆 VICTORY!':'💥 DEFEAT';$('resultText').textContent=win?`You defeated ${rival} in ${modeLabel()} mode! +${xpReward} XP and ${coinReward} coins. Best combo: x${comboBest}.`:`Your rival won this round. You earned ${xpReward} XP. Try a different mode or upgrade your champion!`;$('overlay').classList.add('show');if(win){victoryConfetti();playSound('victory');}else{playSound('defeat');}stopMusic();updateUI();}
+function endGame(win){
+ if(over)return;
+ over=true;clearInterval(timerId);
+ const bonus=mode==='Classic'?1:mode==='TimeAttack'?1.5:1.35;
+ const xpReward=win?Math.round((50+comboBest*5)*bonus):15;
+ const coinReward=win?Math.round(25*bonus):0;
+ let levelsGained=0,levelCoins=0;
+ if(win){profile.wins++;profile.xp+=xpReward;profile.coins+=coinReward;while(profile.xp>=profile.level*100){profile.xp-=profile.level*100;profile.level++;levelsGained++;profile.coins+=50;levelCoins+=50;}}
+ else{profile.losses++;profile.xp+=xpReward;}
+ saveProfile();
+ const overlay=$('overlay'),playerAvatar=$('playerAvatar'),enemyAvatar=$('enemyAvatar');
+ overlay.classList.remove('result-win','result-lose');overlay.classList.add(win?'result-win':'result-lose');
+ if(playerAvatar){playerAvatar.classList.remove('celebrate','fallen');playerAvatar.classList.add(win?'celebrate':'fallen');}
+ if(enemyAvatar){enemyAvatar.classList.remove('celebrate','fallen');enemyAvatar.classList.add(win?'fallen':'celebrate');}
+ $('resultEmblem').textContent=win?'🏆':'💔';
+ $('resultKicker').textContent=win?'CHAMPION VICTORY':'BATTLE ENDED';
+ $('resultTitle').textContent=win?'VICTORY!':'DEFEAT';
+ $('resultText').textContent=win?`You defeated ${rival} in ${modeLabel()} mode! The arena is yours.`:`${rival} won this round. Regroup, upgrade, and come back stronger!`;
+ $('resultRewards').innerHTML=`<div class="reward-tile"><span>✨</span><small>XP EARNED</small><strong>+${xpReward}</strong></div><div class="reward-tile"><span>💰</span><small>COINS EARNED</small><strong>+${coinReward}</strong></div><div class="reward-tile"><span>🔥</span><small>BEST COMBO</small><strong>x${comboBest}</strong></div>`;
+ $('resultFooter').textContent=win?(levelsGained?`LEVEL UP! You reached Level ${profile.level} and earned ${levelCoins} bonus coins.`:'Your legend grows stronger with every victory.'):`You still earned ${xpReward} XP. Every battle helps you grow.`;
+ $('playAgain').disabled=false;$('playAgain').textContent='⚔️ BATTLE AGAIN';
+ overlay.classList.add('show');
+ if(win){victoryConfetti();playSound('victory');}else{playSound('defeat');}
+ stopMusic();updateUI();
+}
 function modeLabel(){return mode==='TimeAttack'?'Time Attack':mode==='Survival'?'Survival':'Classic';}
 function updateModeStatus(){const labels={Classic:'Classic mode: 120 seconds and standard rewards.',TimeAttack:'Time Attack: defeat the rival in 75 seconds. Wins earn 50% extra XP and coins.',Survival:'Survival: last 180 seconds against more frequent, stronger counterattacks. Wins earn 35% extra XP and coins.'};$('modeStatus').textContent=labels[mode];document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));}
 function heroSVG(type, side='player'){
@@ -544,7 +649,7 @@ function setBattleHeroes(){
 }
 function start(){
  applyArena();updateChampions();updateModeStatus();clearInterval(timerId);playerHp=maxHealth();enemyHp=RIVALS[rival].hp;energy=0;seconds=mode==='TimeAttack'?75:mode==='Survival'?180:120;if(mode==='TimeAttack')enemyHp=Math.round(enemyHp*.8);comboBest=0;turnCount=0;selected=null;busy=false;over=false;
- $('overlay').classList.remove('show');setBattleHeroes();$('playerChampionName').textContent=CHAMPIONS[champion].name;$('playerChampionRole').textContent=CHAMPIONS[champion].desc;$('enemyName').textContent=rival;$('enemyStyle').textContent=RIVALS[rival].style;
+ $('overlay').classList.remove('show','result-win','result-lose');['playerAvatar','enemyAvatar'].forEach(id=>{const el=$(id);if(el)el.classList.remove('celebrate','fallen');});setBattleHeroes();$('playerChampionName').textContent=CHAMPIONS[champion].name;$('playerChampionRole').textContent=CHAMPIONS[champion].desc;$('enemyName').textContent=rival;$('enemyStyle').textContent=RIVALS[rival].style;
  createBoard();setTurn('player');render();say(`${rival}: ${RIVALS[rival].ability}`);timerId=setInterval(()=>{if(over)return;seconds--;if(!busy&&turnState==='player'){moveSeconds--;if(moveSeconds<=0){setTurn('enemy');say(`⏱️ Time is up! ${rival} takes the turn.`);enemyTurn(turnCount+1);}}updateUI();if(seconds<=0)checkEnd();},1000);
 }
 document.querySelectorAll('[data-arena]').forEach(b=>b.addEventListener('click',()=>{arena=b.dataset.arena;profile.arena=arena;applyArena();saveProfile();say(`Arena changed to ${arena}. Your next battle is ready!`);start();}));
@@ -622,7 +727,7 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
 <div id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle" style="display:none;position:fixed;inset:0;z-index:9999;background:#050817dd;padding:18px;overflow:auto;align-items:center;justify-content:center">
  <div style="width:min(620px,100%);background:#1b2342;border:1px solid #5ee7ff66;border-radius:20px;padding:22px;box-shadow:0 20px 80px #0009;color:#f4f7ff">
   <div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><h2 id="helpTitle" style="margin:0">💎 How to Play</h2><button id="closeHelp" class="topbtn" type="button" aria-label="Close help">✕ Close</button></div>
-  <p>Drag a gem onto a neighbouring gem, or tap two adjacent gems, to match <b>three or more gems of the same colour</b>. Matches damage your rival and build ultimate energy. You have <b>10 seconds per move</b>; when time expires, the AI takes its turn and makes a visible gem move when possible.</p>
+  <p>Drag a gem onto a neighbouring gem, or tap two adjacent gems, to match <b>three or more gems of the same colour</b>. Matches damage your rival and build ultimate energy. You have <b>10 seconds per move</b>; when time expires, the AI takes its turn and makes a visible gem move when possible. Rivals now weigh match size and special-gem opportunities when choosing moves.</p>
   <ul style="line-height:1.8;padding-left:22px"><li><b>Choose your setup:</b> select a champion, arena, rival, difficulty and battle mode.</li><li><b>Row Blaster:</b> clear a row. <b>Prism:</b> swap it with a gem to clear that colour. <b>Cross Bomb:</b> clear a row and column.</li><li><b>Ultimate Blast:</b> spend 100 energy for a powerful attack.</li><li><b>Shield Burst:</b> spend energy to recover health.</li><li><b>Earn rewards:</b> wins give coins and XP. Spend coins on champions and upgrades.</li><li><b>Progress:</b> saved in this browser on this device. Clearing browser data may erase it.</li></ul>
   <p style="color:#aab5d6;font-size:13px">This is a local browser game with scripted computer opponents. Online multiplayer and a native Android/iOS app are not included in this build.</p>
  </div>

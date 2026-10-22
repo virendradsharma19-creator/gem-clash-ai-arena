@@ -1,4 +1,4 @@
-const CACHE_NAME = "gem-clash-ai-arena-v1-6-0";
+const CACHE_NAME = "gem-clash-ai-arena-v1-9-0";
 const APP_FILES = [
   "./",
   "./index.html",
