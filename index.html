@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 1.2.0</title>
+<title>Gem Clash: AI Arena — Build 1.5.0</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -136,6 +136,35 @@ body.ultimate-flash{animation:arenaFlash .42s ease-out 2}body.ultimate-flash:bef
 
 @media(prefers-reduced-motion:reduce){.fx-burst,.fx-spark,.fx-lightning,.fx-flame,.fx-confetti,body.ultimate-flash{animation-duration:.01ms!important;animation-iteration-count:1!important}}
 
+
+/* Build 1.4.0: animated fantasy battle arena */
+.battlehead{position:relative;isolation:isolate;min-height:112px;padding:13px 12px;border-radius:18px;border:1px solid #7182bd88;background:radial-gradient(ellipse at 20% 50%,#314b82 0%,#182447 58%,#281d43 100%);box-shadow:inset 0 1px #ffffff18,0 8px 22px #0004;overflow:hidden}
+.battlehead:before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,#5ee7ff12,transparent 42%,#ff7b6818);pointer-events:none}
+.battlehead:after{content:"✦      ✧                ✧      ✦";position:absolute;inset:6px 8px auto;color:#fff6;font-size:.72rem;letter-spacing:1.1rem;pointer-events:none;white-space:nowrap}
+.battlehead .fighter{position:relative;z-index:1;flex:1;min-width:0;gap:9px}
+.battlehead .fighter:last-child{justify-content:flex-end;text-align:right}
+.battlehead .avatar{display:block;flex:0 0 clamp(76px,15vw,116px);width:clamp(76px,15vw,116px);height:clamp(88px,17vw,128px);font-size:1rem;line-height:1;filter:drop-shadow(0 7px 6px #0009);animation:heroIdle 2.3s ease-in-out infinite;position:relative;overflow:visible;transform-origin:50% 82%}
+.battlehead .avatar .hero-art{display:block;width:100%;height:100%;overflow:visible}
+.battlehead .avatar .hero-shadow{fill:#050914;opacity:.5}
+.battlehead .avatar .hero-weapon{transform-box:fill-box;transform-origin:80% 85%;animation:weaponSway 2.1s ease-in-out infinite}
+.battlehead .avatar .hero-cape{transform-box:fill-box;transform-origin:50% 0%;animation:capeFlow 2.6s ease-in-out infinite}
+.battlehead .fighter:last-child .avatar{animation-delay:-1.1s}
+.battlehead .fighter:last-child .hero-art{transform:scaleX(-1)}
+@keyframes weaponSway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(5deg)}}
+@keyframes capeFlow{0%,100%{transform:skewX(0)}50%{transform:skewX(-4deg)}}
+.battlehead .fighter strong{font-size:clamp(.78rem,2.5vw,1rem);text-shadow:0 2px 8px #0008}
+.battlehead .fighter small{display:block;max-width:130px;font-size:.68rem;line-height:1.25}
+@keyframes heroIdle{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-5px) rotate(2deg)}}
+.battle-vs{position:relative;z-index:2;flex:0 0 auto;display:grid;place-items:center;width:35px;height:35px;border-radius:50%;font-size:.78rem;font-weight:1000;color:#ffe18a;background:#10162ddd;border:1px solid #ffe18a88;box-shadow:0 0 16px #ffe18a35}
+.battlehead .fighter:last-child .avatar.champion-hit{animation:heroHit .48s ease-out both}
+@keyframes heroHit{0%,100%{transform:translateX(0) scale(1)}20%{transform:translateX(8px) rotate(9deg) scale(1.08);filter:brightness(2) drop-shadow(0 0 16px #ff465e)}45%{transform:translateX(-7px) rotate(-7deg)}70%{transform:translateX(3px)}}
+.battle-projectile{position:fixed;z-index:9002;left:var(--sx);top:var(--sy);font-size:clamp(1.4rem,4vw,2.4rem);line-height:1;filter:drop-shadow(0 0 10px var(--shot-glow,#ffe18a));pointer-events:none;animation:shotTravel .48s cubic-bezier(.2,.7,.25,1) forwards}
+@keyframes shotTravel{0%{opacity:0;transform:translate(-50%,-50%) translate(0,0) scale(.35) rotate(0)}15%{opacity:1;transform:translate(-50%,-50%) translate(calc(var(--dx)*.12),calc(var(--dy)*.12 - 22px)) scale(1.2) rotate(25deg)}80%{opacity:1;transform:translate(-50%,-50%) translate(calc(var(--dx)*.82),calc(var(--dy)*.82)) scale(1.1) rotate(180deg)}100%{opacity:0;transform:translate(-50%,-50%) translate(var(--dx),var(--dy)) scale(.45) rotate(270deg)}}
+.battlehead .fighter.attacking .avatar{animation:heroAttack .42s ease-out both}
+@keyframes heroAttack{0%,100%{transform:translateX(0) scale(1)}35%{transform:translateX(9px) scale(1.2) rotate(7deg);filter:brightness(1.7) drop-shadow(0 0 15px var(--champ-glow,#65eaff))}65%{transform:translateX(-3px) scale(.95)}}
+@media(max-width:520px){.battlehead{padding:11px 7px;gap:5px;min-height:94px}.battlehead .fighter{gap:5px}.battlehead .fighter small{max-width:92px}.battle-vs{width:28px;height:28px;font-size:.66rem}.battlehead:after{letter-spacing:.45rem}}
+@media(prefers-reduced-motion:reduce){.battlehead .avatar{animation:none!important}.battle-projectile{animation-duration:.01ms!important}}
+
 </style>
 <meta name="theme-color" content="#10152b"><meta name="description" content="A colorful match-3 fantasy battle arena with three selectable arenas. Challenge rivals, unlock upgrades, and build your champion."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml">
 </head>
@@ -154,7 +183,7 @@ body.ultimate-flash{animation:arenaFlash .42s ease-out 2}body.ultimate-flash:bef
   </div>
   <div class="battlehead">
     <div class="fighter"><span class="avatar" id="playerAvatar">🧙</span><div><strong id="playerChampionName">You</strong><small id="playerChampionRole">Gem Guardian</small></div></div>
-    <div style="font-weight:1000;color:var(--gold)">VS</div>
+    <div class="battle-vs" aria-hidden="true">VS</div>
     <div class="fighter"><span class="avatar" id="enemyAvatar">🔥</span><div><strong id="enemyName">Blaze</strong><small id="enemyStyle">Aggressive rival</small></div></div>
   </div>
   <div class="turnbanner"><span id="turnLabel" class="turnbadge">🟦 Your turn — drag or tap gems</span><span>Move time: <strong id="moveTimer" class="move-clock">10s</strong></span></div>
@@ -201,7 +230,7 @@ body.ultimate-flash{animation:arenaFlash .42s ease-out 2}body.ultimate-flash:bef
   <div class="rules"><b>Progression:</b> Wins grant XP and coins; level-ups award bonus coins. Your progress is saved locally in this browser. <b>Combo chain:</b> matches that cascade build your combo multiplier. Longer combos deal more damage and charge energy faster. Special gem symbols: 💥 row blast, 🌈 prism, ✖️ cross bomb.</div>
 </aside>
 </div>
-<div class="footer">Gem Clash: AI Arena · Build 1.1.1 · Progress saves in this browser on this device</div>
+<div class="footer">Gem Clash: AI Arena · Build 1.5.0 · 3D Cartoon Heroes</div>
 </div>
 <div id="fxLayer" aria-hidden="true"></div>
 <div class="overlay" id="overlay"><div class="modal"><h2 id="resultTitle">VICTORY!</h2><p id="resultText">You won the battle.</p><button class="primary" id="playAgain" type="button">PLAY AGAIN</button></div></div>
@@ -284,6 +313,21 @@ function updateUI(){
 }
 function say(t){$('log').textContent=t;}
 function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+async function animateShot(sourceId,targetId,kind='magic',power=1){
+ const source=$(sourceId),target=$(targetId);if(!source||!target)return;
+ const sr=source.getBoundingClientRect(),tr=target.getBoundingClientRect();
+ const sx=sr.left+sr.width/2,sy=sr.top+sr.height/2,tx=tr.left+tr.width/2,ty=tr.top+tr.height/2;
+ const playerSide=sourceId==='playerAvatar';const owner=source.closest('.fighter');
+ if(owner){owner.classList.remove('attacking');void owner.offsetWidth;owner.classList.add('attacking');setTimeout(()=>owner.classList.remove('attacking'),500);}
+ source.style.setProperty('--champ-glow',playerSide?'#70eaff':'#ff687b');source.classList.remove('champion-cast');void source.offsetWidth;source.classList.add('champion-cast');setTimeout(()=>source.classList.remove('champion-cast'),780);
+ const projectile=document.createElement('div');projectile.className='battle-projectile';
+ const shotKinds={magic:['✨','#b6a5ff'],fire:['🔥','#ff7138'],ice:['❄️','#80eaff'],lightning:['⚡','#fff18a'],strong:['💥','#ffe18a']};
+ const shot=shotKinds[kind]||shotKinds.magic;projectile.textContent=shot[0];projectile.style.setProperty('--shot-glow',shot[1]);projectile.style.setProperty('--sx',sx+'px');projectile.style.setProperty('--sy',sy+'px');projectile.style.setProperty('--dx',(tx-sx)+'px');projectile.style.setProperty('--dy',(ty-sy)+'px');
+ fxLayer().appendChild(projectile);await sleep(390);projectile.remove();
+ target.classList.remove('champion-hit');void target.offsetWidth;target.classList.add('champion-hit');setTimeout(()=>target.classList.remove('champion-hit'),520);
+ fxPoint(tx,ty,'fx-burst',shot[1]);
+}
+function attackKind(matchSize,chain=1){if(matchSize>=5||chain>=3)return 'lightning';if(matchSize>=4)return 'fire';return 'magic';}
 
 function fxLayer(){return $('fxLayer');}
 function fxPoint(x,y,kind='burst',color='#5ee7ff'){
@@ -400,6 +444,7 @@ async function resolveCascade(first,a,b){
    if(cell.special==='prism'){for(let rr=0;rr<SIZE;rr++)for(let cc=0;cc<SIZE;cc++)if(board[rr][cc]?.color===cell.color)clear.add(rr*SIZE+cc);}
   }
   const damage=Math.round(clear.size*(2+chain*.6)*(1+powerBonus())+(spec?5:0));
+  await animateShot('playerAvatar','enemyAvatar',spec?'strong':attackKind(clear.size,chain),clear.size);
   enemyHp=Math.max(0,enemyHp-damage);energy=Math.min(100,energy+clear.size*4+chain*3);
   total+=damage;if(spec)playSound('special');else beep(Math.min(900,320+clear.size*35),.07);
   say(`${chain>1?'COMBO x'+chain+'! ':''}${spec==='prism'?'🌈 PRISM GEM CREATED!':spec==='cross'?'✖️ CROSS BOMB CREATED!':spec==='row'?'💥 ROW BLASTER CREATED!':`Match x${clear.size}!`} ${damage} damage.`);
@@ -431,21 +476,48 @@ async function enemyTurn(turn){
   [board[a.r][a.c],board[b.r][b.c]]=[board[b.r][b.c],board[a.r][a.c]];let matches=getMatches();render();animateMatches(matches);await sleep(420);
   const count=matches.set.size;for(const idx of matches.set){board[Math.floor(idx/SIZE)][idx%SIZE]=null;}
   for(let c=0;c<SIZE;c++){let vals=[];for(let r=SIZE-1;r>=0;r--)if(board[r][c])vals.push(board[r][c]);while(vals.length<SIZE)vals.push(randomCell());for(let r=SIZE-1,i=0;r>=0;r--,i++)board[r][c]=vals[i];}
-  const dmg=Math.max(4,Math.round(count*(1.4+(difficulty==='Expert'?.35:0))+(rival==='Blaze'?2:0)));playerHp=Math.max(0,playerHp-dmg);const pa=$('playerAvatar');if(pa){pa.classList.remove('champion-hit');void pa.offsetWidth;pa.classList.add('champion-hit');setTimeout(()=>pa.classList.remove('champion-hit'),500);}say(`${profile.avatar} ${rival} matched ${count} gems and dealt ${dmg} damage!`);playSound('attack');beep(260,.12);
+  const dmg=Math.max(4,Math.round(count*(1.4+(difficulty==='Expert'?.35:0))+(rival==='Blaze'?2:0)));await animateShot('enemyAvatar','playerAvatar',count>=5?'lightning':count>=4?'fire':'magic',count);playerHp=Math.max(0,playerHp-dmg);say(`${profile.avatar} ${rival} matched ${count} gems and dealt ${dmg} damage!`);playSound('attack');beep(260,.12);
  }else{
-  let dmg=profile.attack+(difficulty==='Expert'?3:difficulty==='Casual'?-2:0);if(mode==='Survival')dmg+=3;if(rival==='Blaze'&&turn%3===0)dmg+=5;if(rival==='Nexus'&&comboBest>=3)dmg+=2;if(rival==='Frost'&&playerHp<40)dmg=Math.max(3,dmg-1);playerHp=Math.max(0,playerHp-dmg);const pa=$('playerAvatar');if(pa){pa.classList.remove('champion-hit');void pa.offsetWidth;pa.classList.add('champion-hit');setTimeout(()=>pa.classList.remove('champion-hit'),500);}say(`${profile.avatar} ${rival} strikes for ${dmg} damage!`);playSound('attack');beep(230,.12);
+  let dmg=profile.attack+(difficulty==='Expert'?3:difficulty==='Casual'?-2:0);if(mode==='Survival')dmg+=3;if(rival==='Blaze'&&turn%3===0)dmg+=5;if(rival==='Nexus'&&comboBest>=3)dmg+=2;if(rival==='Frost'&&playerHp<40)dmg=Math.max(3,dmg-1);await animateShot('enemyAvatar','playerAvatar',rival==='Blaze'?'fire':rival==='Frost'?'ice':'lightning',1);playerHp=Math.max(0,playerHp-dmg);say(`${profile.avatar} ${rival} strikes for ${dmg} damage!`);playSound('attack');beep(230,.12);
  }
  $('board').classList.remove('enemy-thinking');busy=false;turnCount=Math.max(turnCount,turn);checkEnd();if(!over){setTurn('player');render();}
 }
-function useUltimate(){if(energy<100||busy||over)return;championAbility('ultimate');ultimateEffects();energy=0;enemyHp=Math.max(0,enemyHp-Math.round(35*(1+powerBonus())));say(`⚡ ULTIMATE BLAST! A massive arcane strike deals ${Math.round(35*(1+powerBonus()))} damage!`);playSound('magic');beep(880,.18);render();checkEnd();if(!over){setTurn('enemy');enemyTurn(turnCount+1);}}
+async function useUltimate(){if(energy<100||busy||over)return;busy=true;championAbility('ultimate');ultimateEffects();energy=0;await animateShot('playerAvatar','enemyAvatar','lightning',5);const ultimateDamage=Math.round(35*(1+powerBonus()));enemyHp=Math.max(0,enemyHp-ultimateDamage);say(`⚡ ULTIMATE BLAST! A massive arcane strike deals ${ultimateDamage} damage!`);playSound('magic');beep(880,.18);busy=false;render();checkEnd();if(!over){setTurn('enemy');enemyTurn(turnCount+1);}}
 function useHeal(){if(energy<60||busy||over||playerHp>=maxHealth())return;championAbility('heal');energy-=60;let before=playerHp;playerHp=Math.min(maxHealth(),playerHp+22+profile.vitality*2);say(`🛡️ SHIELD BURST restores ${playerHp-before} health!`);playSound('heal');beep(620,.12);render();setTurn('enemy');enemyTurn(turnCount+1);}
 function checkEnd(){if(over)return;if(enemyHp<=0){endGame(true);}else if(playerHp<=0){endGame(false);}else if(seconds<=0){endGame(playerHp>=enemyHp/RIVALS[rival].hp*100);}}
 function endGame(win){over=true;clearInterval(timerId);const bonus=mode==='Classic'?1:mode==='TimeAttack'?1.5:1.35;const xpReward=win?Math.round((50+comboBest*5)*bonus):15;const coinReward=win?Math.round(25*bonus):0;if(win){profile.wins++;profile.xp+=xpReward;profile.coins+=coinReward;while(profile.xp>=profile.level*100){profile.xp-=profile.level*100;profile.level++;profile.coins+=50;}}else{profile.losses++;profile.xp+=xpReward;}saveProfile();$('resultTitle').textContent=win?'🏆 VICTORY!':'💥 DEFEAT';$('resultText').textContent=win?`You defeated ${rival} in ${modeLabel()} mode! +${xpReward} XP and ${coinReward} coins. Best combo: x${comboBest}.`:`Your rival won this round. You earned ${xpReward} XP. Try a different mode or upgrade your champion!`;$('overlay').classList.add('show');if(win){victoryConfetti();playSound('victory');}else{playSound('defeat');}stopMusic();updateUI();}
 function modeLabel(){return mode==='TimeAttack'?'Time Attack':mode==='Survival'?'Survival':'Classic';}
 function updateModeStatus(){const labels={Classic:'Classic mode: 120 seconds and standard rewards.',TimeAttack:'Time Attack: defeat the rival in 75 seconds. Wins earn 50% extra XP and coins.',Survival:'Survival: last 180 seconds against more frequent, stronger counterattacks. Wins earn 35% extra XP and coins.'};$('modeStatus').textContent=labels[mode];document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));}
+function heroSVG(type, side='player'){
+ const palettes={
+  Mage:{main:'#5969e8',light:'#a6b4ff',dark:'#29327e',metal:'#e5eaff',skin:'#ffd2ad',gem:'#73f6ff',weapon:'#7be9ff',kind:'mage'},
+  Knight:{main:'#c3d5e8',light:'#ffffff',dark:'#536b91',metal:'#e9f3ff',skin:'#efbd98',gem:'#ffe18a',weapon:'#ffe18a',kind:'knight'},
+  Ranger:{main:'#26b98c',light:'#9cffd9',dark:'#176a61',metal:'#c8ffe7',skin:'#f2c49d',gem:'#ffe18a',weapon:'#8cffd8',kind:'ranger'},
+  Phoenix:{main:'#f05a36',light:'#ffc15e',dark:'#8d2446',metal:'#ffe0a1',skin:'#e9a77d',gem:'#fff08a',weapon:'#ff8a3d',kind:'phoenix'},
+  Blaze:{main:'#df4b32',light:'#ffb34c',dark:'#7b203d',metal:'#ffd17d',skin:'#d87b62',gem:'#fff08a',weapon:'#ff6a35',kind:'blaze'},
+  Frost:{main:'#54bde8',light:'#d8fbff',dark:'#225b9b',metal:'#e6ffff',skin:'#b9e4f4',gem:'#a3f6ff',weapon:'#8cecff',kind:'frost'},
+  Nexus:{main:'#7564c8',light:'#d4baff',dark:'#312e70',metal:'#dce8ff',skin:'#a5b8d9',gem:'#6bfff0',weapon:'#75fff0',kind:'nexus'}
+ };
+ const p=palettes[type]||palettes.Mage, id='h'+type.toLowerCase();
+ const cape=(p.kind==='mage'||p.kind==='phoenix'||p.kind==='blaze'||p.kind==='frost')?`<path class="hero-cape" d="M30 46 Q13 65 24 94 L43 82 L55 100 L72 83 L84 95 Q91 64 70 45Z" fill="${p.dark}" stroke="${p.main}" stroke-width="3"/>`:'';
+ let headgear='';
+ if(p.kind==='mage') headgear=`<path d="M28 31 L47 2 L67 31 L60 28 L55 33 L48 26 L39 34Z" fill="${p.main}" stroke="${p.light}" stroke-width="2.5"/><path d="M43 13 L49 5 L54 17Z" fill="${p.gem}"/>`;
+ else if(p.kind==='knight') headgear=`<path d="M28 29 Q27 6 49 7 Q72 7 70 30 L61 26 L57 34 L40 34 L36 26Z" fill="url(#${id}metal)" stroke="${p.dark}" stroke-width="3"/><path d="M31 26 L67 26 L62 34 L37 34Z" fill="${p.dark}"/><path d="M42 27 L56 27" stroke="${p.gem}" stroke-width="4" stroke-linecap="round"/>`;
+ else if(p.kind==='ranger') headgear=`<path d="M27 27 Q31 5 49 8 Q68 6 72 27 L61 22 L49 25 L37 22Z" fill="${p.dark}" stroke="${p.light}" stroke-width="3"/><path d="M28 24 L15 31 L37 29" fill="${p.main}" stroke="${p.light}" stroke-width="2"/>`;
+ else if(p.kind==='phoenix'||p.kind==='blaze') headgear=`<path d="M29 26 Q16 12 28 4 Q29 17 39 15 Q37 4 49 0 Q50 15 63 5 Q76 16 68 29 L60 22 L38 23Z" fill="${p.light}" stroke="${p.main}" stroke-width="2.5"/>`;
+ else if(p.kind==='frost') headgear=`<path d="M29 28 L22 10 L38 19 L49 2 L59 19 L76 10 L68 30Z" fill="${p.light}" stroke="${p.main}" stroke-width="2.5"/>`;
+ else headgear=`<path d="M28 27 L25 11 L39 19 L49 4 L59 19 L74 10 L69 29Z" fill="${p.main}" stroke="${p.gem}" stroke-width="2.5"/>`;
+ const weapon=(p.kind==='knight'||p.kind==='ranger')?`<g class="hero-weapon"><path d="M76 54 L89 13" stroke="${p.dark}" stroke-width="6" stroke-linecap="round"/><path d="M89 13 L96 3 L96 24Z" fill="${p.weapon}" stroke="${p.metal}" stroke-width="2"/><path d="M76 51 L86 54" stroke="${p.metal}" stroke-width="4" stroke-linecap="round"/></g>`:`<g class="hero-weapon"><path d="M77 51 L87 20" stroke="${p.dark}" stroke-width="5" stroke-linecap="round"/><circle cx="89" cy="16" r="10" fill="${p.weapon}" opacity=".92"/><circle cx="89" cy="16" r="5" fill="#fff9"/></g>`;
+ return `<svg class="hero-art" viewBox="0 0 100 112" role="img" aria-label="${type} fantasy hero" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="${id}body" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${p.light}"/><stop offset=".48" stop-color="${p.main}"/><stop offset="1" stop-color="${p.dark}"/></linearGradient><linearGradient id="${id}metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".5" stop-color="${p.metal}"/><stop offset="1" stop-color="${p.dark}"/></linearGradient><radialGradient id="${id}orb"><stop stop-color="#fff"/><stop offset=".45" stop-color="${p.gem}"/><stop offset="1" stop-color="${p.weapon}" stop-opacity=".2"/></radialGradient></defs><ellipse class="hero-shadow" cx="50" cy="103" rx="30" ry="6"/>${cape}<g class="hero-body"><path d="M29 48 Q17 54 21 73 L30 77 L35 60 L65 60 L70 77 L79 73 Q83 54 69 48Z" fill="url(#${id}body)" stroke="${p.dark}" stroke-width="3"/><path d="M35 55 Q50 64 65 55 L61 83 L39 83Z" fill="${p.main}" stroke="${p.light}" stroke-width="2"/><path d="M39 80 L36 99 L46 99 L50 83 L54 99 L64 99 L61 80Z" fill="url(#${id}metal)" stroke="${p.dark}" stroke-width="2.5"/><path d="M27 55 L17 73 L23 79 L37 64Z" fill="${p.skin}" stroke="${p.dark}" stroke-width="2.5"/><path d="M68 54 L78 68 L73 75 L62 63Z" fill="${p.skin}" stroke="${p.dark}" stroke-width="2.5"/><path d="M35 43 Q34 30 49 29 Q65 30 64 44 L60 54 Q49 61 39 53Z" fill="${p.skin}" stroke="${p.dark}" stroke-width="2.5"/><path d="M36 39 Q49 32 62 39 L60 47 Q50 43 39 47Z" fill="${p.dark}"/><ellipse cx="43" cy="43" rx="3" ry="4" fill="#fff"/><ellipse cx="56" cy="43" rx="3" ry="4" fill="#fff"/><circle cx="44" cy="44" r="1.7" fill="#1b2342"/><circle cx="55" cy="44" r="1.7" fill="#1b2342"/><path d="M45 51 Q50 55 55 51" fill="none" stroke="#8e3f43" stroke-width="2" stroke-linecap="round"/>${headgear}<path d="M39 65 L50 72 L61 65" fill="none" stroke="${p.gem}" stroke-width="3" stroke-linecap="round"/><circle cx="50" cy="70" r="5" fill="url(#${id}orb)" stroke="${p.metal}" stroke-width="1.5"/></g>${weapon}<path d="M37 99 L46 99 M54 99 L64 99" stroke="${p.dark}" stroke-width="4" stroke-linecap="round"/><path d="M39 101 L46 101 M54 101 L62 101" stroke="${p.light}" stroke-width="2" stroke-linecap="round"/></svg>`;
+}
+function setBattleHeroes(){
+ const player=$('playerAvatar'),enemy=$('enemyAvatar');
+ if(player)player.innerHTML=heroSVG(champion,'player');
+ if(enemy)enemy.innerHTML=heroSVG(rival,'enemy');
+}
 function start(){
  applyArena();updateChampions();updateModeStatus();clearInterval(timerId);playerHp=maxHealth();enemyHp=RIVALS[rival].hp;energy=0;seconds=mode==='TimeAttack'?75:mode==='Survival'?180:120;if(mode==='TimeAttack')enemyHp=Math.round(enemyHp*.8);comboBest=0;turnCount=0;selected=null;busy=false;over=false;
- $('overlay').classList.remove('show');$('playerAvatar').textContent=CHAMPIONS[champion].icon;$('playerChampionName').textContent=CHAMPIONS[champion].name;$('playerChampionRole').textContent=CHAMPIONS[champion].desc;$('enemyName').textContent=rival;$('enemyAvatar').textContent=RIVALS[rival].avatar;$('enemyStyle').textContent=RIVALS[rival].style;
+ $('overlay').classList.remove('show');setBattleHeroes();$('playerChampionName').textContent=CHAMPIONS[champion].name;$('playerChampionRole').textContent=CHAMPIONS[champion].desc;$('enemyName').textContent=rival;$('enemyStyle').textContent=RIVALS[rival].style;
  createBoard();setTurn('player');render();say(`${rival}: ${RIVALS[rival].ability}`);timerId=setInterval(()=>{if(over)return;seconds--;if(!busy&&turnState==='player'){moveSeconds--;if(moveSeconds<=0){setTurn('enemy');say(`⏱️ Time is up! ${rival} takes the turn.`);enemyTurn(turnCount+1);}}updateUI();if(seconds<=0)checkEnd();},1000);
 }
 document.querySelectorAll('[data-arena]').forEach(b=>b.addEventListener('click',()=>{arena=b.dataset.arena;profile.arena=arena;applyArena();saveProfile();say(`Arena changed to ${arena}. Your next battle is ready!`);start();}));
