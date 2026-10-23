@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 2.2.0 Campaign Story & Missions</title>
+<title>Gem Clash: AI Arena — Build 2.3.0 Battle UI Polish</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -307,7 +307,7 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
 <div class="footer">Gem Clash: AI Arena · Build 2.2.0 · Campaign Story & Missions</div>
 </div>
 <div id="fxLayer" aria-hidden="true"></div>
-<div class="overlay" id="overlay" aria-live="assertive" aria-modal="true" role="dialog" aria-labelledby="resultTitle"><div class="modal result-modal"><div class="result-emblem" id="resultEmblem" aria-hidden="true">🏆</div><div class="result-kicker" id="resultKicker">BATTLE COMPLETE</div><h2 id="resultTitle">VICTORY!</h2><p id="resultText">You won the battle.</p><div class="result-rewards" id="resultRewards"><div class="reward-tile"><span>✨</span><small>XP EARNED</small><strong>+50</strong></div><div class="reward-tile"><span>💰</span><small>COINS EARNED</small><strong>+25</strong></div><div class="reward-tile"><span>🔥</span><small>BEST COMBO</small><strong>x3</strong></div></div><div class="result-footer" id="resultFooter">Your legend grows stronger with every battle.</div><button class="primary result-play-again" id="playAgain" type="button">⚔️ BATTLE AGAIN</button></div></div>
+<div class="overlay" id="overlay" aria-live="assertive" aria-modal="true" role="dialog" aria-labelledby="resultTitle"><div class="modal result-modal"><div class="result-emblem" id="resultEmblem" aria-hidden="true">🏆</div><div class="result-kicker" id="resultKicker">BATTLE COMPLETE</div><h2 id="resultTitle">VICTORY!</h2><p id="resultText">You won the battle.</p><div class="result-rewards" id="resultRewards"><div class="reward-tile"><span>✨</span><small>XP EARNED</small><strong>+50</strong></div><div class="reward-tile"><span>💰</span><small>COINS EARNED</small><strong>+25</strong></div><div class="reward-tile"><span>🔥</span><small>BEST COMBO</small><strong>x3</strong></div></div><div class="result-profile" id="resultProfile"><div class="profile-result-card"><span>🛡️</span><div><small>GUARDIAN LEVEL</small><strong id="resultGuardianLevel">Level 1</strong><em id="resultGuardianXp">0 / 100 XP</em></div></div><div class="profile-result-card"><span>📖</span><div><small>BATTLE RECORD</small><strong id="resultBattleRecord">0 wins · 0 losses</strong><em>Saved on this device</em></div></div></div><div class="result-footer" id="resultFooter">Your legend grows stronger with every battle.</div><button class="primary result-play-again" id="playAgain" type="button">⚔️ BATTLE AGAIN</button></div></div>
 <style>
 /* Build 1.9.0: cinematic battle results */
 .result-modal{position:relative;overflow:hidden;max-width:460px;padding:26px 24px 22px;border:1px solid #ffe18a99;background:radial-gradient(ellipse at 50% 0%,#4a568e 0%,#202b52 48%,#111a36 100%);box-shadow:0 0 0 1px #ffffff12,0 28px 100px #000b,0 0 55px #8c76ff22;animation:resultEnter .62s cubic-bezier(.18,.88,.24,1.18) both}
@@ -318,6 +318,29 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
 @keyframes resultEnter{from{opacity:0;transform:translateY(24px) scale(.84)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes emblemPop{0%{transform:scale(.2) rotate(-22deg);opacity:0}65%{transform:scale(1.18) rotate(7deg);opacity:1}100%{transform:scale(1) rotate(0)}}@keyframes heroCelebrate{0%,100%{transform:translateY(0) rotate(0) scale(1);filter:drop-shadow(0 0 0 transparent)}35%{transform:translateY(-13px) rotate(-8deg) scale(1.12);filter:drop-shadow(0 0 14px #ffe18a)}70%{transform:translateY(0) rotate(7deg) scale(1.04)}}@keyframes heroFall{0%{transform:rotate(0) translateY(0);filter:brightness(1)}45%{transform:rotate(-18deg) translateY(3px);filter:brightness(.75)}100%{transform:rotate(-32deg) translateY(8px);filter:grayscale(.55) brightness(.6)}}
 @media(max-width:480px){.result-modal{padding:20px 14px 16px}.result-emblem{font-size:2.8rem}.result-rewards{gap:5px}.reward-tile{padding:10px 2px}.reward-tile small{font-size:.53rem}.reward-tile strong{font-size:1.15rem}.result-modal p{font-size:.93rem}}
 @media(prefers-reduced-motion:reduce){.result-modal,.result-emblem,.avatar.celebrate,.avatar.fallen{animation:none!important}.result-play-again{transition:none}}
+</style>
+<style>
+/* Build 2.3.0: cleaner battle HUD, draggable gem feedback, and result profile */
+.stats .stat:nth-child(-n+4){display:none!important}
+.stats{grid-template-columns:repeat(2,minmax(0,1fr));margin-bottom:12px}
+.result-profile{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:10px 0 14px}
+.profile-result-card{display:flex;align-items:center;gap:9px;min-width:0;text-align:left;padding:11px 10px;border-radius:13px;border:1px solid #8b9fe066;background:linear-gradient(145deg,#111b3d,#0b122b);box-shadow:inset 0 1px #ffffff12}
+.profile-result-card>span{font-size:1.45rem;filter:drop-shadow(0 0 8px #8beaff55)}
+.profile-result-card>div{min-width:0;display:flex;flex-direction:column;gap:2px}
+.profile-result-card small{font-size:.58rem;letter-spacing:.08em;color:#b9c8f5;font-weight:900}
+.profile-result-card strong{font-size:.92rem;line-height:1.25;color:#fff;overflow-wrap:anywhere}
+.profile-result-card em{font-size:.67rem;font-style:normal;color:#aebbe8}
+.cell.drag-target{z-index:3;outline:3px solid #ffe18a;border-color:#fff2b5;filter:brightness(1.45) saturate(1.25);box-shadow:0 0 0 4px #ffd16644,0 0 22px #ffd166bb,inset 0 0 16px #fff8;animation:dragTargetPulse .42s ease-in-out infinite alternate}
+@keyframes dragTargetPulse{from{transform:scale(1)}to{transform:scale(1.07)}}
+.cell.match-three,.cell.match-four{overflow:visible;isolation:isolate}
+.cell.match-three:before,.cell.match-four:before{content:"";position:absolute;inset:-5px;border-radius:inherit;pointer-events:none;z-index:-1;background:radial-gradient(circle,#fff9 0 10%,#8bf7ff88 28%,transparent 72%);animation:candySparkle .44s ease-out both}
+.cell.match-four:before{background:radial-gradient(circle,#fff 0 8%,#ffe18a 18%,#ff9d5caa 42%,transparent 72%);inset:-8px;animation:candySparkle .56s ease-out both}
+.cell.match-three{animation:candyMatchPop .44s cubic-bezier(.18,.8,.22,1) both!important}
+.cell.match-four{animation:candyMatchPower .56s cubic-bezier(.18,.8,.22,1) both!important}
+@keyframes candyMatchPop{0%{transform:scale(1) rotate(0);filter:brightness(1)}18%{transform:scale(1.16) rotate(-5deg);filter:brightness(2.1) saturate(1.4)}38%{transform:scale(1.28) rotate(4deg);filter:brightness(2.4);box-shadow:0 0 22px #8bf7ff}62%{transform:scale(.92) rotate(-3deg);filter:brightness(1.6)}100%{transform:scale(.05) rotate(12deg);opacity:0;filter:blur(2px)}}
+@keyframes candyMatchPower{0%{transform:scale(1);filter:brightness(1)}18%{transform:scale(1.2) rotate(-6deg);filter:brightness(2.4)}38%{transform:scale(1.36) rotate(6deg);filter:brightness(3);box-shadow:0 0 0 3px #fff,0 0 32px #ffe18a}62%{transform:scale(.94) rotate(-4deg);filter:brightness(2)}100%{transform:scale(.02) rotate(18deg);opacity:0;filter:blur(4px)}}
+@keyframes candySparkle{0%{opacity:0;transform:scale(.25)}30%{opacity:1;transform:scale(1.2)}100%{opacity:0;transform:scale(1.65)}}
+@media(max-width:420px){.result-profile{grid-template-columns:1fr}.profile-result-card{padding:9px}.stats{gap:7px}}
 </style>
 <script> (() => {
 const SIZE=8, COLORS=['🔴','🔵','🟢','🟡','🟣','🟠'];
@@ -531,9 +554,10 @@ function getAIMove(){
 }
 // Pointer dragging is the primary touch/mouse interaction; tapping remains available as an alternative.
 const boardRoot=$('board');
-boardRoot.addEventListener('pointerdown',e=>{const cell=e.target.closest('.cell');if(!cell||over||busy||turnState!=='player')return;dragStart={r:+cell.dataset.r,c:+cell.dataset.c,pointerId:e.pointerId};try{cell.setPointerCapture(e.pointerId)}catch(_){}cell.classList.add('drag-source');});
-boardRoot.addEventListener('pointerup',e=>{if(!dragStart)return;const from=dragStart;dragStart=null;boardRoot.querySelectorAll('.drag-source').forEach(el=>el.classList.remove('drag-source'));const cell=document.elementFromPoint(e.clientX,e.clientY)?.closest('.cell');if(!cell)return;const r=+cell.dataset.r,c=+cell.dataset.c;if(r===from.r&&c===from.c)return;if(!adjacent(from,{r,c}))return;suppressClickUntil=Date.now()+500;selected=null;swapAndResolve(from,{r,c});});
-boardRoot.addEventListener('pointercancel',()=>{dragStart=null;boardRoot.querySelectorAll('.drag-source').forEach(el=>el.classList.remove('drag-source'));});
+boardRoot.addEventListener('pointerdown',e=>{const cell=e.target.closest('.cell');if(!cell||over||busy||turnState!=='player')return;dragStart={r:+cell.dataset.r,c:+cell.dataset.c,pointerId:e.pointerId,startX:e.clientX,startY:e.clientY};try{boardRoot.setPointerCapture(e.pointerId)}catch(_){}cell.classList.add('drag-source');});
+boardRoot.addEventListener('pointermove',e=>{if(!dragStart)return;const source=boardRoot.querySelector('.drag-source');if(source){source.style.setProperty('--drag-distance',String(Math.hypot(e.clientX-dragStart.startX,e.clientY-dragStart.startY)));}boardRoot.querySelectorAll('.drag-target').forEach(el=>el.classList.remove('drag-target'));const target=document.elementFromPoint(e.clientX,e.clientY)?.closest('.cell');if(target&&(+target.dataset.r!==dragStart.r||+target.dataset.c!==dragStart.c)&&adjacent(dragStart,{r:+target.dataset.r,c:+target.dataset.c}))target.classList.add('drag-target');});
+boardRoot.addEventListener('pointerup',e=>{if(!dragStart)return;const from=dragStart;dragStart=null;boardRoot.querySelectorAll('.drag-source,.drag-target').forEach(el=>{el.classList.remove('drag-source','drag-target');el.style.removeProperty('--drag-distance');});const cell=document.elementFromPoint(e.clientX,e.clientY)?.closest('.cell');if(!cell)return;const r=+cell.dataset.r,c=+cell.dataset.c;if(r===from.r&&c===from.c)return;if(!adjacent(from,{r,c}))return;suppressClickUntil=Date.now()+500;selected=null;swapAndResolve(from,{r,c});});
+boardRoot.addEventListener('pointercancel',()=>{dragStart=null;boardRoot.querySelectorAll('.drag-source,.drag-target').forEach(el=>{el.classList.remove('drag-source','drag-target');el.style.removeProperty('--drag-distance');});});
 async function tap(r,c){
  if(over||busy||turnState!=='player')return;
  if(board[r][c]?.special==='prism'&&selected&&adjacent(selected,{r,c})){await prismSwap({r,c},selected);return;}
@@ -555,8 +579,16 @@ async function prismSwap(prismPos,targetPos){
  const m=getMatches();if(m.set.size)await resolveCascade(m,prismPos,targetPos);
  busy=false;render();turnCount++;if(!over){setTurn('enemy');await enemyTurn(turnCount);}checkEnd();
 }
+async function animateGemSwap(a,b){
+ const first=$(`board` ).querySelector(`[data-r="${a.r}"][data-c="${a.c}"]`);
+ const second=$(`board` ).querySelector(`[data-r="${b.r}"][data-c="${b.c}"]`);
+ if(!first||!second||typeof first.animate!=='function'){await sleep(100);return;}
+ const ra=first.getBoundingClientRect(),rb=second.getBoundingClientRect();
+ const dx=rb.left-ra.left,dy=rb.top-ra.top;
+ try{await Promise.all([first.animate([{transform:'translate(0,0) scale(1)'},{transform:`translate(${dx}px,${dy}px) scale(1.05)`}],{duration:165,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'}).finished,second.animate([{transform:'translate(0,0) scale(1)'},{transform:`translate(${-dx}px,${-dy}px) scale(1.05)`}],{duration:165,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'}).finished]);}catch(_){await sleep(100);}
+}
 async function swapAndResolve(a,b){
- if(over||busy||turnState!=='player')return;busy=true;setTurn('resolving');[board[a.r][a.c],board[b.r][b.c]]=[board[b.r][b.c],board[a.r][a.c]];
+ if(over||busy||turnState!=='player')return;busy=true;setTurn('resolving');await animateGemSwap(a,b);[board[a.r][a.c],board[b.r][b.c]]=[board[b.r][b.c],board[a.r][a.c]];render();
  if(board[a.r][a.c]?.special==='prism'){busy=false;await prismSwap(a,b);return;}
  if(board[b.r][b.c]?.special==='prism'){busy=false;await prismSwap(b,a);return;}
  let m=getMatches();
@@ -649,6 +681,7 @@ function endGame(win){
  $('resultTitle').textContent=bossWin?'BOSS DEFEATED!':(win?'VICTORY!':'DEFEAT');
  $('resultText').textContent=campaignMode?(win?(campaignStage===9?'The Inferno Dragon has fallen! The crystal corruption fades, and peace returns to all three kingdoms.':`Stage ${campaignStage} cleared! ${rival} has been defeated${CAMPAIGN_STAGES[campaignStage-1].boss?' in a mighty boss battle':''}. ${CAMPAIGN_STAGES[campaignStage].story}`):`Stage ${campaignStage} remains unfinished. ${CAMPAIGN_STAGES[campaignStage-1].story} Regroup and try again.`):(win?`You defeated ${rival} in ${modeLabel()} mode! The arena is yours.`:`${rival} won this round. Regroup, upgrade, and come back stronger!`);
  $('resultRewards').innerHTML=`<div class="reward-tile"><span>✨</span><small>XP EARNED</small><strong>+${xpReward}</strong></div><div class="reward-tile"><span>💰</span><small>COINS EARNED</small><strong>+${coinReward+campaignBonus}</strong></div><div class="reward-tile"><span>🔥</span><small>BEST COMBO</small><strong>x${comboBest}</strong></div>`;
+ $('resultGuardianLevel').textContent=`Level ${profile.level}`;$('resultGuardianXp').textContent=`${profile.xp} / ${profile.level*100} XP · 💰 ${profile.coins}`;$('resultBattleRecord').textContent=`${profile.wins} wins · ${profile.losses} losses`;
  $('resultFooter').textContent=campaignMode?(win?`Campaign reward: +${campaignBonus} bonus coins. ${campaignStage===9?'The Adventure Campaign is complete!':`Next: Stage ${Math.min(9,profile.campaignUnlocked)}.`}`:`Your campaign progress is safe. You can retry this stage or upgrade in the Armory.`):(win?(levelsGained?`LEVEL UP! You reached Level ${profile.level} and earned ${levelCoins} bonus coins.`:'Your legend grows stronger with every victory.'):`You still earned ${xpReward} XP. Every battle helps you grow.`);
  $('playAgain').disabled=false;$('playAgain').textContent=campaignMode?'⚔️ RETRY STAGE':'⚔️ BATTLE AGAIN';
  overlay.classList.add('show');
