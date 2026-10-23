@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 2.4.0 Chain Reactions & Combo Attacks</title>
+<title>Gem Clash: AI Arena — Build 2.5.4 Prism Reliability Fix</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -79,6 +79,9 @@ header{padding:12px 14px;border:1px solid #7182bd70;border-radius:18px;backgroun
 .cell:hover{filter:brightness(1.16);border-color:#eff6ff;z-index:1}
 .cell.selected,.cell.drag-source{outline:3px solid #fff;border-color:#9ff8ff;box-shadow:0 0 0 3px #5ee7ff50,0 0 24px #5ee7ff88,inset 0 0 14px #ffffff30}
 .cell.special{border-color:#ffe18a;background:radial-gradient(circle at 35% 25%,#fff8c9 0%,#ffe18a 8%,#7b5eb9 34%,#2c2759 72%);box-shadow:inset 0 0 0 2px #ffe18a,0 0 16px #ffd16685,0 3px 0 #070b19}
+.cell.special[data-mark="RAINBOW"]{border:3px solid transparent;background:linear-gradient(#231b4d,#231b4d) padding-box,conic-gradient(from 0deg,#ff5d78,#ffd166,#72f1b8,#5ee7ff,#a78bfa,#ff5d78) border-box;box-shadow:0 0 9px #fff,0 0 22px #d58bff,inset 0 0 12px #ffffff70,0 3px 0 #070b19;font-size:clamp(1.8rem,5vw,2.5rem);animation:prismPulse 1s ease-in-out infinite alternate}
+@keyframes prismPulse{from{filter:brightness(1);transform:scale(1)}to{filter:brightness(1.55) saturate(1.35);transform:scale(1.04)}}
+.cell.special[data-mark="ROW LIGHTNING"],.cell.special[data-mark="COLUMN LIGHTNING"]{border-color:#a7f6ff;background:radial-gradient(circle at 35% 25%,#ffffff 0%,#a7f6ff 12%,#3d8edb 40%,#172c67 78%);box-shadow:inset 0 0 0 2px #c7fbff,0 0 24px #58eaffcc,0 0 8px #fff,0 3px 0 #070b19;font-size:clamp(1.8rem,5vw,2.5rem)}
 .cell.match-three{animation:gemShatter .44s cubic-bezier(.2,.8,.2,1) both}.cell.match-four{animation:gemShatterGold .54s cubic-bezier(.2,.8,.2,1) both}
 @keyframes gemShatter{0%{transform:scale(1) rotate(0);filter:brightness(1)}28%{transform:scale(1.22) rotate(-7deg);filter:brightness(2.2) saturate(1.4);box-shadow:0 0 18px #8bf7ff}58%{transform:scale(.82) rotate(7deg);filter:brightness(1.8)}100%{transform:scale(.08) rotate(25deg);opacity:0;filter:blur(2px)}}
 @keyframes gemShatterGold{0%{transform:scale(1);filter:brightness(1)}25%{transform:scale(1.3) rotate(-8deg);filter:brightness(2.6);box-shadow:0 0 0 3px #fff,0 0 30px #ffe18a}55%{transform:scale(.9) rotate(8deg);filter:brightness(2)}100%{transform:scale(.05) rotate(35deg);opacity:0;filter:blur(3px)}}
@@ -311,10 +314,10 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
     <div class="power"><span class="ico">⚡</span><strong>Ultimate Blast</strong><small>At 100 energy, unleash a huge strike for 35 damage.</small></div>
     <div class="power"><span class="ico">🛡️</span><strong>Shield Burst</strong><small>Spend 60 energy to restore 22 health, up to 100.</small></div>
   </div>
-  <div class="rules"><b>Progression:</b> Wins grant XP and coins; level-ups award bonus coins. Your progress is saved locally in this browser. <b>Combo chain:</b> matches that cascade trigger a big on-screen combo banner, board impact shake, and a rising damage bonus. Longer chains deal more damage and charge energy faster. Special gem symbols: 💥 row blast, 🌈 prism, ✖️ cross bomb.</div>
+  <div class="rules"><b>Progression:</b> Wins grant XP and coins; level-ups award bonus coins. Your progress is saved locally in this browser. <b>Combo chain:</b> matches that cascade trigger a big on-screen combo banner, board impact shake, and a rising damage bonus. Longer chains deal more damage and charge energy faster. <b>Craft special gems:</b> match 4 in a straight line for a glowing ⚡ Lightning Gem (horizontal or vertical), match 5 for 🌈 rainbow prism, or make a T/L-shaped match for 💣 blast bomb. Lightning clears a full row/column, the bomb blasts a 3×3 area, and swapping the rainbow prism with a gem clears that colour.</div>
 </aside>
 </div>
-<div class="footer">Gem Clash: AI Arena · Build 2.4.0 · Chain Reactions & Combo Attacks</div>
+<div class="footer">Gem Clash: AI Arena · Build 2.5.4 · Prism Reliability Fix</div>
 </div>
 <div id="fxLayer" aria-hidden="true"></div>
 <div class="overlay" id="overlay" aria-live="assertive" aria-modal="true" role="dialog" aria-labelledby="resultTitle"><div class="modal result-modal"><div class="result-emblem" id="resultEmblem" aria-hidden="true">🏆</div><div class="result-kicker" id="resultKicker">BATTLE COMPLETE</div><h2 id="resultTitle">VICTORY!</h2><p id="resultText">You won the battle.</p><div class="result-rewards" id="resultRewards"><div class="reward-tile"><span>✨</span><small>XP EARNED</small><strong>+50</strong></div><div class="reward-tile"><span>💰</span><small>COINS EARNED</small><strong>+25</strong></div><div class="reward-tile"><span>🔥</span><small>BEST COMBO</small><strong>x3</strong></div></div><div class="result-profile" id="resultProfile"><div class="profile-result-card"><span>🛡️</span><div><small>GUARDIAN LEVEL</small><strong id="resultGuardianLevel">Level 1</strong><em id="resultGuardianXp">0 / 100 XP</em></div></div><div class="profile-result-card"><span>📖</span><div><small>BATTLE RECORD</small><strong id="resultBattleRecord">0 wins · 0 losses</strong><em>Saved on this device</em></div></div></div><div class="result-footer" id="resultFooter">Your legend grows stronger with every battle.</div><button class="primary result-play-again" id="playAgain" type="button">⚔️ BATTLE AGAIN</button></div></div>
@@ -361,6 +364,10 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
 @keyframes dragGemLift{from{opacity:.55;transform:translate(-50%,-45%) scale(.82)}to{opacity:1;transform:translate(-50%,-58%) scale(1.12) rotate(-5deg)}}
 @keyframes dragSpark{from{opacity:.45;transform:scale(.75) rotate(-15deg)}to{opacity:1;transform:scale(1.2) rotate(20deg)}}
 @media(prefers-reduced-motion:reduce){.drag-ghost:before,.drag-ghost:after{animation:none!important}.drag-ghost{animation:none!important}}
+
+/* Build 2.5.4: make the Rainbow Prism unmistakable on the board. */
+[data-mark="RAINBOW"] { outline: 3px solid #ff4de1 !important; box-shadow: 0 0 0 3px #55f7ff, 0 0 16px 6px rgba(255,77,225,.95), inset 0 0 12px rgba(255,255,255,.9) !important; animation: prismCraftGlow 1s ease-in-out infinite alternate !important; position: relative; z-index: 2; }
+@keyframes prismCraftGlow { from { filter: saturate(1.2) brightness(1.05); } to { filter: saturate(1.8) brightness(1.45); } }
 </style>
 <script> (() => {
 const SIZE=8, COLORS=['🔴','🔵','🟢','🟡','🟣','🟠'];
@@ -424,8 +431,8 @@ function render(){
  const root=$('board');root.innerHTML='';$('boardError').style.display='none';
  for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++){
   const cell=board[r][c]||{color:'',special:null};const b=document.createElement('button');b.className='cell'+(selected&&selected.r===r&&selected.c===c?' selected':'')+(cell.special?' special':'');b.dataset.r=r;b.dataset.c=c;
-  b.textContent=cell.special==='row'?'💥':cell.special==='prism'?'🌈':cell.special==='cross'?'✖️':cell.color;
-  if(cell.special)b.dataset.mark=cell.special==='row'?'ROW':cell.special==='prism'?'WILD':'X';
+  b.textContent=cell.special==='row'?'💥':cell.special==='lightningH'?'⚡':cell.special==='lightningV'?'⚡':cell.special==='bomb'?'💣':cell.special==='prism'?'🌈':cell.special==='cross'?'✖️':cell.color;
+  if(cell.special)b.dataset.mark=cell.special==='row'?'ROW BLAST':cell.special==='lightningH'?'ROW LIGHTNING':cell.special==='lightningV'?'COLUMN LIGHTNING':cell.special==='bomb'?'BOMB':cell.special==='prism'?'RAINBOW':'CROSS';
   b.setAttribute('aria-label',cell.special?cell.special+' special gem':cell.color+' gem');
   b.addEventListener('click',()=>{if(Date.now()<suppressClickUntil)return;tap(r,c)});root.appendChild(b);
  }
@@ -527,12 +534,25 @@ function getMatches(){
  return {set,groups};
 }
 function specialType(matches){
- const cells=matches.groups.flatMap(g=>g.cells);const unique=[...new Map(cells.map(([r,c])=>[r*SIZE+c,[r,c]])).values()];
- const rows=new Set(cells.map(x=>x[0])),cols=new Set(cells.map(x=>x[1]));
- if(unique.length>=5)return 'prism';
- if(rows.size>=2&&cols.size>=2)return 'cross';
- if(matches.groups.some(g=>g.len>=4))return 'row';
- return null;
+  // Build 2.5.4: evaluate the longest straight run first. Any run of five or more
+  // must craft a Prism, even when it also intersects another matching run.
+  const straightGroups=(matches.groups||[]).filter(g=>g && (g.dir==='row'||g.dir==='col'));
+  const prismGroup=straightGroups.filter(g=>Number(g.len)>=5).sort((x,y)=>y.len-x.len)[0];
+  if(prismGroup)return 'prism';
+  const cells=(matches.groups||[]).flatMap(g=>g.cells||[]);
+  const rows=new Set(cells.map(x=>x[0])),cols=new Set(cells.map(x=>x[1]));
+  if(matches.groups.length>=2&&rows.size>=2&&cols.size>=2)return 'bomb';
+  const longGroup=straightGroups.filter(g=>Number(g.len)>=4).sort((x,y)=>y.len-x.len)[0];
+  if(longGroup)return longGroup.dir==='row'?'lightningH':'lightningV';
+  return null;
+}
+function addSpecialBlast(clear,r,c,cell){
+ if(!cell?.special)return;
+ if(cell.special==='row'||cell.special==='lightningH'){for(let x=0;x<SIZE;x++)clear.add(r*SIZE+x);}
+ if(cell.special==='lightningV'){for(let x=0;x<SIZE;x++)clear.add(x*SIZE+c);}
+ if(cell.special==='cross'){for(let x=0;x<SIZE;x++){clear.add(r*SIZE+x);clear.add(x*SIZE+c);}}
+ if(cell.special==='bomb'){for(let rr=Math.max(0,r-1);rr<=Math.min(SIZE-1,r+1);rr++)for(let cc=Math.max(0,c-1);cc<=Math.min(SIZE-1,c+1);cc++)clear.add(rr*SIZE+cc);}
+ if(cell.special==='prism'){for(let rr=0;rr<SIZE;rr++)for(let cc=0;cc<SIZE;cc++)if(board[rr][cc]?.color===cell.color)clear.add(rr*SIZE+cc);}
 }
 function adjacent(a,b){return Math.abs(a.r-b.r)+Math.abs(a.c-b.c)===1;}
 function animateMatches(matches){
@@ -551,7 +571,7 @@ function scoreAIMove(matches){
  const rows=new Set(),cols=new Set();
  for(const group of matches.groups)for(const [r,c] of group.cells){rows.add(r);cols.add(c);const cell=board[r][c];
   if(cell?.special==='prism')score+=24;
-  else if(cell?.special==='cross')score+=14;
+  else if(cell?.special==='cross'||cell?.special==='bomb')score+=14;else if(cell?.special==='lightningH'||cell?.special==='lightningV')score+=12;
   else if(cell?.special==='row')score+=10;
  }
  if(rows.size>=2&&cols.size>=2)score+=14;
@@ -676,24 +696,30 @@ async function resolveCascade(first,a,b){
   chain++;comboBest=Math.max(comboBest,chain);
   let spec=specialType(matches);let clear=new Set(matches.set);
   // Detonate special gems touched by a match.
-  for(const idx of [...clear]){let r=Math.floor(idx/SIZE),c=idx%SIZE,cell=board[r][c];if(!cell?.special)continue;
-   if(cell.special==='row'){for(let x=0;x<SIZE;x++)clear.add(r*SIZE+x);}
-   if(cell.special==='cross'){for(let x=0;x<SIZE;x++){clear.add(r*SIZE+x);clear.add(x*SIZE+c);}}
-   if(cell.special==='prism'){for(let rr=0;rr<SIZE;rr++)for(let cc=0;cc<SIZE;cc++)if(board[rr][cc]?.color===cell.color)clear.add(rr*SIZE+cc);}
-  }
+  // Detonate any crafted gems touched by the match; iterate until chained blasts stop expanding.
+  const processedSpecials=new Set();let expanded=true;
+  while(expanded){expanded=false;for(const idx of [...clear]){if(processedSpecials.has(idx))continue;const r=Math.floor(idx/SIZE),c=idx%SIZE,cell=board[r][c];if(!cell?.special)continue;processedSpecials.add(idx);const before=clear.size;addSpecialBlast(clear,r,c,cell);if(clear.size>before)expanded=true;}}
   const comboMultiplier=1+Math.min(5,chain-1)*0.12;
   const damage=Math.round(clear.size*(2+chain*.6)*(1+powerBonus())*comboMultiplier+(spec?5:0));
   await animateShot('playerAvatar','enemyAvatar',spec?'strong':attackKind(clear.size,chain),clear.size);
   enemyHp=Math.max(0,enemyHp-damage);impactFeedback('enemyAvatar',damage);energy=Math.min(100,energy+clear.size*4+chain*3);
   total+=damage;if(spec)playSound('special');else beep(Math.min(900,320+clear.size*35+chain*35),.07);
   if(chain>=2)showComboToast(chain,damage);
-  say(`${chain>1?'COMBO x'+chain+'! ':''}${spec==='prism'?'🌈 PRISM GEM CREATED!':spec==='cross'?'✖️ CROSS BOMB CREATED!':spec==='row'?'💥 ROW BLASTER CREATED!':`Match x${clear.size}!`} ${damage} damage${chain>1?' (combo bonus!)':''}.`);
+  say(`${chain>1?'COMBO x'+chain+'! ':''}${spec==='prism'?'🌈 RAINBOW PRISM CRAFTED!':spec==='bomb'?'💣 BLAST BOMB CRAFTED!':spec==='lightningH'?'⚡ ROW LIGHTNING CRAFTED!':spec==='lightningV'?'⚡ COLUMN LIGHTNING CRAFTED!':spec==='cross'?'✖️ CROSS BOMB CREATED!':spec==='row'?'💥 ROW BLASTER CREATED!':`Match x${clear.size}!`} ${damage} damage${chain>1?' (combo bonus!)':''}.`);
   if(spec){
-   let place=(a&&board[a.r][a.c]&&clear.has(a.r*SIZE+a.c))?a:(b&&board[b.r][b.c]&&clear.has(b.r*SIZE+b.c))?b:null;
+   let place=null;
+   if(spec==='prism'){
+    const g=(matches.groups||[]).filter(g=>(g.dir==='row'||g.dir==='col')&&g.len>=5).sort((x,y)=>y.len-x.len)[0];
+    // Put the Prism in the middle of the actual five-gem run so it is easy to spot.
+    if(g){const [r,c]=g.cells[Math.floor(g.cells.length/2)];place={r,c};}
+   }
+   if(!place)place=(a&&clear.has(a.r*SIZE+a.c))?a:(b&&clear.has(b.r*SIZE+b.c))?b:null;
    if(!place){const firstCell=[...matches.set][0];place={r:Math.floor(firstCell/SIZE),c:firstCell%SIZE};}
-   // Keep a special at the chosen match location, unless it is a prism that already detonated.
-   clear.delete(place.r*SIZE+place.c);
-   board[place.r][place.c]={color:board[place.r][place.c]?.color||randColor(),special:spec};
+   const idx=place.r*SIZE+place.c;
+   clear.delete(idx);
+   const existing=board[place.r][place.c];
+   board[place.r][place.c]={color:existing?.color||randColor(),special:spec};
+   if(spec==='prism')say('🌈 RAINBOW PRISM CREATED! It is marked with a rainbow glow. Swap it with an adjacent gem to clear every gem of that colour.');
   }
   for(const idx of clear){let r=Math.floor(idx/SIZE),c=idx%SIZE;board[r][c]=null;}
   render();await sleep(180);
@@ -720,11 +746,8 @@ async function enemyTurn(turn){
   [board[a.r][a.c],board[b.r][b.c]]=[board[b.r][b.c],board[a.r][a.c]];let matches=getMatches();render();animateMatches(matches);await sleep(420);
   let clear=new Set(matches.set);
   // Rival special gems can trigger too, making the AI's chosen move matter beyond its first match.
-  for(const idx of [...clear]){const r=Math.floor(idx/SIZE),c=idx%SIZE,cell=board[r][c];if(!cell?.special)continue;
-   if(cell.special==='row'){for(let x=0;x<SIZE;x++)clear.add(r*SIZE+x);}
-   if(cell.special==='cross'){for(let x=0;x<SIZE;x++){clear.add(r*SIZE+x);clear.add(x*SIZE+c);}}
-   if(cell.special==='prism'){for(let rr=0;rr<SIZE;rr++)for(let cc=0;cc<SIZE;cc++)if(board[rr][cc]?.color===cell.color)clear.add(rr*SIZE+cc);}
-  }
+  const processedSpecials=new Set();let expanded=true;
+  while(expanded){expanded=false;for(const idx of [...clear]){if(processedSpecials.has(idx))continue;const r=Math.floor(idx/SIZE),c=idx%SIZE,cell=board[r][c];if(!cell?.special)continue;processedSpecials.add(idx);const before=clear.size;addSpecialBlast(clear,r,c,cell);if(clear.size>before)expanded=true;}}
   const count=clear.size;for(const idx of clear){board[Math.floor(idx/SIZE)][idx%SIZE]=null;}
   for(let c=0;c<SIZE;c++){let vals=[];for(let r=SIZE-1;r>=0;r--)if(board[r][c])vals.push(board[r][c]);while(vals.length<SIZE)vals.push(randomCell());for(let r=SIZE-1,i=0;r>=0;r--,i++)board[r][c]=vals[i];}
   const dmg=Math.max(4,Math.round(count*(1.4+(difficulty==='Expert'?.45:0))+(rival==='Blaze'?2:0)+(rival==='Nexus'&&count>=5?3:0)+(bossMove?12:0)));await animateShot('enemyAvatar','playerAvatar',bossMove?'strong':count>=5?'lightning':count>=4?'fire':'magic',count);playerHp=Math.max(0,playerHp-dmg);impactFeedback('playerAvatar',dmg);say(bossMove?`👑 BOSS SPECIAL! ${bossIdentity().warning} deals ${dmg} damage!`:`${profile.avatar} ${rival} made a tactical match (${count} gems) and dealt ${dmg} damage!`);playSound('attack');beep(260,.12);
