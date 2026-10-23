@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 2.3.0 Battle UI Polish</title>
+<title>Gem Clash: AI Arena — Build 2.3.1 Drag Visual Feedback</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -341,6 +341,16 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
 @keyframes candyMatchPower{0%{transform:scale(1);filter:brightness(1)}18%{transform:scale(1.2) rotate(-6deg);filter:brightness(2.4)}38%{transform:scale(1.36) rotate(6deg);filter:brightness(3);box-shadow:0 0 0 3px #fff,0 0 32px #ffe18a}62%{transform:scale(.94) rotate(-4deg);filter:brightness(2)}100%{transform:scale(.02) rotate(18deg);opacity:0;filter:blur(4px)}}
 @keyframes candySparkle{0%{opacity:0;transform:scale(.25)}30%{opacity:1;transform:scale(1.2)}100%{opacity:0;transform:scale(1.65)}}
 @media(max-width:420px){.result-profile{grid-template-columns:1fr}.profile-result-card{padding:9px}.stats{gap:7px}}
+
+/* Build 2.3.1: floating, lifted gem makes the drag action obvious on mouse and touch. */
+.cell.drag-source{opacity:.32;filter:saturate(.7) brightness(1.25);transform:scale(.9);outline:2px dashed var(--cyan);}
+.drag-ghost{position:fixed;z-index:99999;left:0;top:0;width:clamp(42px,8vw,68px);height:clamp(42px,8vw,68px);display:grid;place-items:center;pointer-events:none;user-select:none;font-size:clamp(1.8rem,5vw,2.8rem);border-radius:15px;border:2px solid #d9fcff;background:linear-gradient(145deg,#53699fef,#1b2859f5);box-shadow:0 0 0 4px #5ee7ff45,0 12px 26px #0009,0 0 26px #5ee7ffcc,inset 0 2px 10px #fff7;transform:translate(-50%,-58%) scale(1.12) rotate(-5deg);animation:dragGemLift .16s ease-out both;filter:brightness(1.35) saturate(1.2);}
+.drag-ghost:before{content:"✦";position:absolute;right:-5px;top:-10px;color:#fff3a8;font-size:1rem;text-shadow:0 0 9px #ffe18a;animation:dragSpark .48s ease-in-out infinite alternate;}
+.drag-ghost:after{content:"✧";position:absolute;left:-8px;bottom:-5px;color:#8bf7ff;font-size:.9rem;text-shadow:0 0 10px #5ee7ff;animation:dragSpark .38s ease-in-out infinite alternate-reverse;}
+.drag-ghost.special{border-color:#ffe18a;box-shadow:0 0 0 4px #ffd16666,0 12px 28px #0009,0 0 32px #ffd166,inset 0 2px 12px #fff9;}
+@keyframes dragGemLift{from{opacity:.55;transform:translate(-50%,-45%) scale(.82)}to{opacity:1;transform:translate(-50%,-58%) scale(1.12) rotate(-5deg)}}
+@keyframes dragSpark{from{opacity:.45;transform:scale(.75) rotate(-15deg)}to{opacity:1;transform:scale(1.2) rotate(20deg)}}
+@media(prefers-reduced-motion:reduce){.drag-ghost:before,.drag-ghost:after{animation:none!important}.drag-ghost{animation:none!important}}
 </style>
 <script> (() => {
 const SIZE=8, COLORS=['🔴','🔵','🟢','🟡','🟣','🟠'];
@@ -552,12 +562,56 @@ function getAIMove(){
  const pool=moves.filter(m=>m.score>=moves[0].score*.78).slice(0,5);
  return pool[Math.floor(Math.random()*pool.length)];
 }
-// Pointer dragging is the primary touch/mouse interaction; tapping remains available as an alternative.
+// Build 2.3.1: show a lifted gem that visibly follows the pointer, with a glow and sparkle trail.
+// Tapping two gems remains available as an accessible alternative to dragging.
 const boardRoot=$('board');
-boardRoot.addEventListener('pointerdown',e=>{const cell=e.target.closest('.cell');if(!cell||over||busy||turnState!=='player')return;dragStart={r:+cell.dataset.r,c:+cell.dataset.c,pointerId:e.pointerId,startX:e.clientX,startY:e.clientY};try{boardRoot.setPointerCapture(e.pointerId)}catch(_){}cell.classList.add('drag-source');});
-boardRoot.addEventListener('pointermove',e=>{if(!dragStart)return;const source=boardRoot.querySelector('.drag-source');if(source){source.style.setProperty('--drag-distance',String(Math.hypot(e.clientX-dragStart.startX,e.clientY-dragStart.startY)));}boardRoot.querySelectorAll('.drag-target').forEach(el=>el.classList.remove('drag-target'));const target=document.elementFromPoint(e.clientX,e.clientY)?.closest('.cell');if(target&&(+target.dataset.r!==dragStart.r||+target.dataset.c!==dragStart.c)&&adjacent(dragStart,{r:+target.dataset.r,c:+target.dataset.c}))target.classList.add('drag-target');});
-boardRoot.addEventListener('pointerup',e=>{if(!dragStart)return;const from=dragStart;dragStart=null;boardRoot.querySelectorAll('.drag-source,.drag-target').forEach(el=>{el.classList.remove('drag-source','drag-target');el.style.removeProperty('--drag-distance');});const cell=document.elementFromPoint(e.clientX,e.clientY)?.closest('.cell');if(!cell)return;const r=+cell.dataset.r,c=+cell.dataset.c;if(r===from.r&&c===from.c)return;if(!adjacent(from,{r,c}))return;suppressClickUntil=Date.now()+500;selected=null;swapAndResolve(from,{r,c});});
-boardRoot.addEventListener('pointercancel',()=>{dragStart=null;boardRoot.querySelectorAll('.drag-source,.drag-target').forEach(el=>{el.classList.remove('drag-source','drag-target');el.style.removeProperty('--drag-distance');});});
+let dragGhost=null, dragHasMoved=false;
+function placeDragGhost(x,y){if(dragGhost){dragGhost.style.left=x+'px';dragGhost.style.top=y+'px';}}
+function clearDragVisual(){
+ if(dragGhost){dragGhost.remove();dragGhost=null;}
+ boardRoot.querySelectorAll('.drag-source,.drag-target').forEach(el=>{el.classList.remove('drag-source','drag-target');el.style.removeProperty('--drag-distance');});
+ dragHasMoved=false;
+}
+boardRoot.addEventListener('pointerdown',e=>{
+ const cell=e.target.closest('.cell');if(!cell||over||busy||turnState!=='player')return;
+ dragStart={r:+cell.dataset.r,c:+cell.dataset.c,pointerId:e.pointerId,startX:e.clientX,startY:e.clientY,cell};
+ try{boardRoot.setPointerCapture(e.pointerId)}catch(_){}
+});
+boardRoot.addEventListener('pointermove',e=>{
+ if(!dragStart)return;
+ const distance=Math.hypot(e.clientX-dragStart.startX,e.clientY-dragStart.startY);
+ if(distance>5&&!dragHasMoved){
+  dragHasMoved=true;
+  dragStart.cell.classList.add('drag-source');
+  dragGhost=document.createElement('div');
+  dragGhost.className='drag-ghost'+(dragStart.cell.classList.contains('special')?' special':'');
+  dragGhost.textContent=dragStart.cell.textContent;
+  dragGhost.setAttribute('aria-hidden','true');
+  document.body.appendChild(dragGhost);
+ }
+ if(dragHasMoved){
+  placeDragGhost(e.clientX,e.clientY);
+  const source=boardRoot.querySelector('.drag-source');
+  if(source)source.style.setProperty('--drag-distance',String(distance));
+  boardRoot.querySelectorAll('.drag-target').forEach(el=>el.classList.remove('drag-target'));
+  const target=document.elementFromPoint(e.clientX,e.clientY)?.closest('.cell');
+  if(target&&(+target.dataset.r!==dragStart.r||+target.dataset.c!==dragStart.c)&&adjacent(dragStart,{r:+target.dataset.r,c:+target.dataset.c}))target.classList.add('drag-target');
+ }
+});
+boardRoot.addEventListener('pointerup',e=>{
+ if(!dragStart)return;
+ const from=dragStart;dragStart=null;
+ const wasDragging=dragHasMoved;
+ const cell=document.elementFromPoint(e.clientX,e.clientY)?.closest('.cell');
+ clearDragVisual();
+ if(wasDragging)suppressClickUntil=Date.now()+500;
+ if(!cell)return;
+ const r=+cell.dataset.r,c=+cell.dataset.c;
+ if(r===from.r&&c===from.c)return;
+ if(!adjacent(from,{r,c}))return;
+ selected=null;swapAndResolve({r:from.r,c:from.c},{r,c});
+});
+boardRoot.addEventListener('pointercancel',()=>{dragStart=null;clearDragVisual();});
 async function tap(r,c){
  if(over||busy||turnState!=='player')return;
  if(board[r][c]?.special==='prism'&&selected&&adjacent(selected,{r,c})){await prismSwap({r,c},selected);return;}
