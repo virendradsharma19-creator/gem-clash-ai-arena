@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 2.5.4 Prism Reliability Fix</title>
+<title>Gem Clash: AI Arena — Build 2.6.0 Hero Collection & Upgrades</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -290,6 +290,12 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
     <button class="champion-card" data-champion="Phoenix"><span class="champ-icon">🔥</span><strong>Solar Phoenix · 250 coins</strong><small>Elite: +10 health and 10% stronger attacks.</small></button>
   </div>
   <div class="rules" id="championStatus" style="margin:-4px 0 12px">Mystic Mage selected.</div>
+  <section class="power" id="heroMasteryPanel" style="margin:0 0 14px;border-color:#ffd16666;background:linear-gradient(145deg,#28264b,#151c37)">
+    <div style="display:flex;align-items:center;gap:10px"><span id="masteryIcon" style="font-size:2rem">🧙</span><div><strong>🌟 Hero Mastery · <span id="masteryLevel">Lv. 0</span></strong><small id="masteryDescription">Train your selected hero to improve health and attack power.</small></div></div>
+    <div class="campaign-progress-track" style="margin:10px 0"><div id="masteryProgress" style="width:0%;background:linear-gradient(90deg,#ffe18a,#ff9f43)"></div></div>
+    <small id="masteryNext" style="display:block;margin:7px 0 9px">Next upgrade: +5% attack and +5 max health.</small>
+    <button class="topbtn" id="upgradeHero" type="button" style="width:100%">Train Hero · 100 coins</button>
+  </section>
   <h3 class="side-title">Battle mode</h3>
   <div class="modegrid" id="modeGrid">
     <button class="mode active" data-mode="Classic">⚔️ Classic<small>120 seconds · standard battle</small></button>
@@ -314,10 +320,10 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
     <div class="power"><span class="ico">⚡</span><strong>Ultimate Blast</strong><small>At 100 energy, unleash a huge strike for 35 damage.</small></div>
     <div class="power"><span class="ico">🛡️</span><strong>Shield Burst</strong><small>Spend 60 energy to restore 22 health, up to 100.</small></div>
   </div>
-  <div class="rules"><b>Progression:</b> Wins grant XP and coins; level-ups award bonus coins. Your progress is saved locally in this browser. <b>Combo chain:</b> matches that cascade trigger a big on-screen combo banner, board impact shake, and a rising damage bonus. Longer chains deal more damage and charge energy faster. <b>Craft special gems:</b> match 4 in a straight line for a glowing ⚡ Lightning Gem (horizontal or vertical), match 5 for 🌈 rainbow prism, or make a T/L-shaped match for 💣 blast bomb. Lightning clears a full row/column, the bomb blasts a 3×3 area, and swapping the rainbow prism with a gem clears that colour.</div>
+  <div class="rules"><b>Progression:</b> Wins grant XP and coins; level-ups award bonus coins. Train each unlocked hero up to Mastery Level 5 for +5% attack and +5 max health per level. Hero mastery and your other progress save locally in this browser. <b>Combo chain:</b> matches that cascade trigger a big on-screen combo banner, board impact shake, and a rising damage bonus. Longer chains deal more damage and charge energy faster. <b>Craft special gems:</b> match 4 in a straight line for a glowing ⚡ Lightning Gem (horizontal or vertical), match 5 for 🌈 rainbow prism, or make a T/L-shaped match for 💣 blast bomb. Lightning clears a full row/column, the bomb blasts a 3×3 area, and swapping the rainbow prism with a gem clears that colour.</div>
 </aside>
 </div>
-<div class="footer">Gem Clash: AI Arena · Build 2.5.4 · Prism Reliability Fix</div>
+<div class="footer">Gem Clash: AI Arena · Build 2.6.0 · Hero Collection & Upgrades</div>
 </div>
 <div id="fxLayer" aria-hidden="true"></div>
 <div class="overlay" id="overlay" aria-live="assertive" aria-modal="true" role="dialog" aria-labelledby="resultTitle"><div class="modal result-modal"><div class="result-emblem" id="resultEmblem" aria-hidden="true">🏆</div><div class="result-kicker" id="resultKicker">BATTLE COMPLETE</div><h2 id="resultTitle">VICTORY!</h2><p id="resultText">You won the battle.</p><div class="result-rewards" id="resultRewards"><div class="reward-tile"><span>✨</span><small>XP EARNED</small><strong>+50</strong></div><div class="reward-tile"><span>💰</span><small>COINS EARNED</small><strong>+25</strong></div><div class="reward-tile"><span>🔥</span><small>BEST COMBO</small><strong>x3</strong></div></div><div class="result-profile" id="resultProfile"><div class="profile-result-card"><span>🛡️</span><div><small>GUARDIAN LEVEL</small><strong id="resultGuardianLevel">Level 1</strong><em id="resultGuardianXp">0 / 100 XP</em></div></div><div class="profile-result-card"><span>📖</span><div><small>BATTLE RECORD</small><strong id="resultBattleRecord">0 wins · 0 losses</strong><em>Saved on this device</em></div></div></div><div class="result-footer" id="resultFooter">Your legend grows stronger with every battle.</div><button class="primary result-play-again" id="playAgain" type="button">⚔️ BATTLE AGAIN</button></div></div>
@@ -396,8 +402,9 @@ function playSound(kind){if(!soundOn)return;const sounds={match:[[520,.07,'sine'
 function stopMusic(){if(musicTimer){clearTimeout(musicTimer);musicTimer=null;}}
 function musicTick(){if(!soundOn||!audioCtx){stopMusic();return;}const chords=[[130.81,164.81,196],[110,130.81,164.81],[146.83,174.61,220],[98,123.47,146.83]],chord=chords[musicStep%chords.length];chord.forEach((f,i)=>tone(f,1.55,'triangle',.008,i*.025));tone([261.63,329.63,392,329.63][musicStep%4],.32,'sine',.006,.22);musicStep++;musicTimer=setTimeout(musicTick,1650);}
 function startMusic(){if(!soundOn||musicTimer)return;getAudio();musicTick();}
-function maxHealth(){return 100+profile.vitality*10+(CHAMPIONS[champion]?.hp||0)}
-function powerBonus(){return profile.power*0.12+((CHAMPIONS[champion]?.damage||1)-1)}
+function heroMasteryLevel(id=champion){return Math.max(0,Math.min(5,Number(profile.heroLevels?.[id])||0));}
+function maxHealth(){return 100+profile.vitality*10+(CHAMPIONS[champion]?.hp||0)+heroMasteryLevel()*5}
+function powerBonus(){return profile.power*0.12+((CHAMPIONS[champion]?.damage||1)-1)+heroMasteryLevel()*0.05}
 
 function updateChampions(){
   document.querySelectorAll('[data-champion]').forEach(b=>{
@@ -409,10 +416,20 @@ function updateChampions(){
     if(label) label.textContent=CHAMPIONS[id].name+' · '+(owned?'UNLOCKED':cost+' coins');
   });
   if($('championStatus')) $('championStatus').textContent=CHAMPIONS[champion].name+' selected — '+CHAMPIONS[champion].desc;
+  updateHeroMastery();
+}
+function updateHeroMastery(){
+ const lvl=heroMasteryLevel(), cost=100+lvl*100, owned=profile.unlockedChampions.includes(champion);
+ if($('masteryIcon'))$('masteryIcon').textContent=CHAMPIONS[champion].icon;
+ if($('masteryLevel'))$('masteryLevel').textContent='Lv. '+lvl+' / 5';
+ if($('masteryDescription'))$('masteryDescription').textContent=CHAMPIONS[champion].name+' gains +5% attack and +5 max health per mastery level.';
+ if($('masteryProgress'))$('masteryProgress').style.width=(lvl/5*100)+'%';
+ if($('masteryNext'))$('masteryNext').textContent=lvl>=5?'Maximum mastery reached! This hero is fully trained.':`Next upgrade: +5% attack and +5 max health · Cost: ${cost} coins.`;
+ const btn=$('upgradeHero');if(btn){btn.textContent=lvl>=5?'✓ HERO FULLY TRAINED':`🌟 Train ${CHAMPIONS[champion].name} · ${cost} coins`;btn.disabled=!owned||lvl>=5||profile.coins<cost;btn.style.opacity=btn.disabled?'.55':'1';}
 }
 function updateArmory(){const pc=40+profile.power*35,vc=40+profile.vitality*35;$('powerLevel').textContent='Lv. '+profile.power;$('vitalityLevel').textContent='Lv. '+profile.vitality;$('powerCost').textContent=pc;$('vitalityCost').textContent=vc;$('buyPower').disabled=profile.coins<pc||profile.power>=10;$('buyVitality').disabled=profile.coins<vc||profile.vitality>=10;$('buyPower').style.opacity=$('buyPower').disabled?'.5':'1';$('buyVitality').style.opacity=$('buyVitality').disabled?'.5':'1';}
-function saveProfile(){profile.arena=arena;profile.champion=champion;try{localStorage.setItem('gemClashSave',JSON.stringify(profile))}catch(e){} updateProfileUI();}
-function updateProfileUI(){ $('levelText').textContent=`Level ${profile.level}`; $('xpText').textContent=`${profile.xp} / ${profile.level*100} XP · 💰 ${profile.coins}`; $('recordText').textContent=`${profile.wins} wins · ${profile.losses} losses`; if($('powerLevel'))updateArmory(); }
+function saveProfile(){profile.arena=arena;profile.champion=champion;if(!profile.heroLevels||typeof profile.heroLevels!=='object')profile.heroLevels={};try{localStorage.setItem('gemClashSave',JSON.stringify(profile))}catch(e){} updateProfileUI();}
+function updateProfileUI(){ $('levelText').textContent=`Level ${profile.level}`; $('xpText').textContent=`${profile.xp} / ${profile.level*100} XP · 💰 ${profile.coins}`; $('recordText').textContent=`${profile.wins} wins · ${profile.losses} losses`; if($('powerLevel'))updateArmory(); if($('upgradeHero'))updateHeroMastery(); }
 const $=id=>document.getElementById(id);
 const randColor=()=>COLORS[Math.floor(Math.random()*COLORS.length)];
 function randomCell(){return {color:randColor(),special:null};}
@@ -857,6 +874,7 @@ $('soundToggle').addEventListener('click',()=>{soundOn=!soundOn;$('soundToggle')
 $('dailyReward').addEventListener('click',()=>{const today=new Date().toLocaleDateString('en-CA');if(profile.lastGift===today){say('🎁 Daily gift already claimed. Come back tomorrow!');return;}profile.lastGift=today;profile.coins+=50;profile.xp+=20;while(profile.xp>=profile.level*100){profile.xp-=profile.level*100;profile.level++;profile.coins+=50;}saveProfile();say('🎁 Daily gift claimed: +50 coins and +20 XP!');playSound('gift');beep(740,.16);});
 $('buyPower').addEventListener('click',()=>{const cost=40+profile.power*35;if(profile.power>=10||profile.coins<cost){say('Not enough coins for that Power Rune upgrade.');return;}profile.coins-=cost;profile.power++;saveProfile();say(`⚔️ Power Rune upgraded to level ${profile.power}. Match attacks are stronger!`);beep(520,.12);});
 $('buyVitality').addEventListener('click',()=>{const cost=40+profile.vitality*35;if(profile.vitality>=10||profile.coins<cost){say('Not enough coins for that Vitality Rune upgrade.');return;}profile.coins-=cost;profile.vitality++;saveProfile();say(`❤️ Vitality Rune upgraded to level ${profile.vitality}. Your max health increases next battle.`);beep(520,.12);});
+$('upgradeHero').addEventListener('click',()=>{const lvl=heroMasteryLevel(),cost=100+lvl*100;if(lvl>=5){say(CHAMPIONS[champion].name+' has reached maximum mastery!');return;}if(!profile.unlockedChampions.includes(champion)){say('Unlock this hero before training them.');return;}if(profile.coins<cost){say(`You need ${cost} coins to train ${CHAMPIONS[champion].name}. Win battles or claim your daily gift.`);return;}profile.coins-=cost;profile.heroLevels=profile.heroLevels||{};profile.heroLevels[champion]=lvl+1;saveProfile();updateChampions();say(`🌟 ${CHAMPIONS[champion].name} reached Mastery Level ${lvl+1}! +5% attack and +5 max health per level.`);playSound('magic');});
 // The help dialog is declared after this script in the HTML. Wait until parsing
 // finishes before looking up its elements; otherwise null.addEventListener throws
 // and prevents the replay handler below from being registered.
@@ -918,7 +936,7 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
  <div style="width:min(620px,100%);background:#1b2342;border:1px solid #5ee7ff66;border-radius:20px;padding:22px;box-shadow:0 20px 80px #0009;color:#f4f7ff">
   <div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><h2 id="helpTitle" style="margin:0">💎 How to Play</h2><button id="closeHelp" class="topbtn" type="button" aria-label="Close help">✕ Close</button></div>
   <p>Drag a gem onto a neighbouring gem, or tap two adjacent gems, to match <b>three or more gems of the same colour</b>. Matches damage your rival and build ultimate energy. You have <b>10 seconds per move</b>; when time expires, the AI takes its turn and makes a visible gem move when possible. Rivals now weigh match size and special-gem opportunities when choosing moves.</p>
-  <ul style="line-height:1.8;padding-left:22px"><li><b>Choose your setup:</b> select a champion, arena, rival, difficulty and battle mode.</li><li><b>Row Blaster:</b> clear a row. <b>Prism:</b> swap it with a gem to clear that colour. <b>Cross Bomb:</b> clear a row and column.</li><li><b>Ultimate Blast:</b> spend 100 energy for a powerful attack.</li><li><b>Shield Burst:</b> spend energy to recover health.</li><li><b>Earn rewards:</b> wins give coins and XP. Spend coins on champions and upgrades.</li><li><b>Campaign story:</b> choose an unlocked stage to read its story and mission objective before starting. Clear stages to continue the story.</li><li><b>Boss battles:</b> stages 3, 6 and 9 have extra health. Watch for a warning every third boss turn—special attacks deal heavy damage.</li><li><b>Progress:</b> saved in this browser on this device. Clearing browser data may erase it.</li></ul>
+  <ul style="line-height:1.8;padding-left:22px"><li><b>Choose your setup:</b> select a champion, arena, rival, difficulty and battle mode.</li><li><b>Row Blaster:</b> clear a row. <b>Prism:</b> swap it with a gem to clear that colour. <b>Cross Bomb:</b> clear a row and column.</li><li><b>Ultimate Blast:</b> spend 100 energy for a powerful attack.</li><li><b>Shield Burst:</b> spend energy to recover health.</li><li><b>Hero collection & mastery:</b> unlock champions with coins, then train each hero up to Mastery Level 5 for +5% attack and +5 max health per level. Each hero has separate mastery progress.</li><li><b>Earn rewards:</b> wins give coins and XP. Spend coins on champions and upgrades.</li><li><b>Campaign story:</b> choose an unlocked stage to read its story and mission objective before starting. Clear stages to continue the story.</li><li><b>Boss battles:</b> stages 3, 6 and 9 have extra health. Watch for a warning every third boss turn—special attacks deal heavy damage.</li><li><b>Progress:</b> saved in this browser on this device. Clearing browser data may erase it.</li></ul>
   <p style="color:#aab5d6;font-size:13px">This is a local browser game with scripted computer opponents. Online multiplayer and a native Android/iOS app are not included in this build.</p>
  </div>
 </div>
