@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 2.6.0 Hero Collection & Upgrades</title>
+<title>Gem Clash: AI Arena — Build 2.7.0 Hero Skills & Ultimate Attacks</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -44,6 +44,9 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px;fl
 .actionrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
 .attack{background:linear-gradient(90deg,#ffb347,#ff6b6b);color:#32131b;padding:13px 8px;box-shadow:0 4px 0 #a33b4c;}.attack:disabled{filter:grayscale(1);opacity:.45;cursor:not-allowed}
 .heal{background:linear-gradient(90deg,#8cf7c5,#43c7b2);color:#073b39;padding:13px 8px;box-shadow:0 4px 0 #247f78}.heal:disabled{filter:grayscale(1);opacity:.45;cursor:not-allowed}
+.hero-skill{background:linear-gradient(110deg,#d6a8ff,#8e7bff 58%,#58d8ff);color:#17133d;padding:13px 8px;box-shadow:0 4px 0 #5144a8,0 0 18px #9d8aff45}.hero-skill:disabled{filter:grayscale(1);opacity:.45;cursor:not-allowed}
+.actionrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media(max-width:520px){.actionrow button{font-size:.76rem;padding:10px 5px}}
 .log{min-height:58px;padding:10px;border-radius:12px;background:#0e1530;color:#dce5ff;font-size:.9rem;margin-top:12px;border:1px solid #303e6a}
 .side-title{margin:0 0 8px;font-size:1.1rem}.rivalrow{display:flex;gap:8px;margin-bottom:12px}.rival{flex:1;padding:9px 4px;background:#303b68;color:#e9eeff;border:1px solid transparent}.rival.active{border-color:var(--gold);background:#594b46}
 .diffrow{display:flex;gap:6px;margin-bottom:12px}.modegrid{display:grid;grid-template-columns:1fr;gap:7px;margin-bottom:8px}.mode{padding:10px;text-align:left;background:#111832;color:#e8edff;border:1px solid #35436f}.mode.active{border-color:var(--gold);background:#594b46}.mode small{display:block;color:#bdc9eb;font-size:.72rem;margin-top:3px}.diff{flex:1;padding:8px 3px;background:#111832;color:#d6def8}.diff.active{background:#5969a6;color:white}
@@ -267,7 +270,7 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
   <div class="turnbanner"><span id="turnLabel" class="turnbadge">🟦 Your turn — drag or tap gems</span><span>Move time: <strong id="moveTimer" class="move-clock">10s</strong></span></div>
   <div class="board" id="board" aria-label="Match 3 game board"></div><div id="boardError" style="display:none;margin-top:10px;padding:10px;background:#5b2033;border-radius:10px;color:#fff">The gem board could not start. Press New Battle to retry.</div>
   <p class="hint">Drag a gem onto a neighbour, or tap two adjacent gems. Match 3+ to attack. You have 10 seconds per move; if time runs out, your rival takes a turn.</p>
-  <div class="actionrow"><button class="attack" id="ultimate" disabled>⚡ ULTIMATE BLAST · 100</button><button class="heal" id="heal" disabled>💚 SHIELD BURST · 60</button></div>
+  <div class="actionrow"><button class="hero-skill" id="heroSkill" disabled>✨ HERO SKILL · 40</button><button class="attack" id="ultimate" disabled>⚡ ULTIMATE · 100</button><button class="heal" id="heal" disabled>💚 SHIELD BURST · 60</button></div>
   <div class="log" id="log" aria-live="polite">Make your first match. Four gems create a ROW BLAST; five create a PRISM gem!</div>
 </section>
 <aside class="panel">
@@ -464,7 +467,7 @@ function updateUI(){
  if($('playerBattleHpBar')){$('playerBattleHpBar').style.width=playerPct+'%';$('playerBattleHpBar').classList.toggle('low-health',playerPct<=25)}
  if($('enemyBattleHpBar')){$('enemyBattleHpBar').style.width=enemyPct+'%';$('enemyBattleHpBar').classList.toggle('low-health',enemyPct<=25)}
  $('energyText').textContent=`${energy} / 100`;$('energyBar').style.width=energy+'%';
- $('ultimate').disabled=over||busy||energy<100;$('heal').disabled=over||busy||energy<60||playerHp>=maxHealth();
+ $('ultimate').disabled=over||busy||energy<100;$('heal').disabled=over||busy||energy<60||playerHp>=maxHealth();if($('heroSkill')){$('heroSkill').disabled=over||busy||energy<40||turnState!=='player';const skillNames={Mage:'✨ ARCANE PULSE',Knight:'🛡️ SHIELD BASH',Ranger:'🏹 STAR VOLLEY',Phoenix:'🔥 FLAME BURST'};$('heroSkill').textContent=(skillNames[champion]||skillNames.Mage)+' · 40';}
  $('timer').textContent=`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`;if($('moveTimer'))$('moveTimer').textContent=turnState==='player'?`${moveSeconds}s`:(turnState==='enemy'?'AI…':'—');if($('turnLabel')){ $('turnLabel').textContent=turnState==='player'?'🟦 Your turn — make a match':turnState==='enemy'?`🔴 ${rival} is moving…`:'✨ Resolving match';$('turnLabel').className='turnbadge'+(turnState==='enemy'?' enemy':'');} 
  $('comboText').textContent=`Best combo: x${comboBest}`;updateProfileUI();
 }
@@ -527,10 +530,10 @@ function ultimateEffects(){
 }
 function championAbility(kind){
  const cfg={
-  Mage:{color:'#8f9bff',ultimate:'ARCANE NOVA',heal:'MYSTIC WARD',icon:'✨'},
-  Knight:{color:'#ffe18a',ultimate:'IRONSTAR STRIKE',heal:'AEGIS BARRIER',icon:'🛡️'},
-  Ranger:{color:'#78ffd4',ultimate:'STARFALL VOLLEY',heal:'NATURE’S VEIL',icon:'🏹'},
-  Phoenix:{color:'#ff7848',ultimate:'PHOENIX INFERNO',heal:'REBIRTH FLAME',icon:'🔥'}
+  Mage:{color:'#8f9bff',ultimate:'ARCANE NOVA',heal:'MYSTIC WARD',skill:'ARCANE PULSE',icon:'✨'},
+  Knight:{color:'#ffe18a',ultimate:'IRONSTAR STRIKE',heal:'AEGIS BARRIER',skill:'SHIELD BASH',icon:'🛡️'},
+  Ranger:{color:'#78ffd4',ultimate:'STARFALL VOLLEY',heal:'NATURE’S VEIL',skill:'STAR VOLLEY',icon:'🏹'},
+  Phoenix:{color:'#ff7848',ultimate:'PHOENIX INFERNO',heal:'REBIRTH FLAME',skill:'FLAME BURST',icon:'🔥'}
  };
  const c=cfg[champion]||cfg.Mage, player=$('playerAvatar'), enemy=$('enemyAvatar');
  const target=kind==='ultimate'?enemy:player;
@@ -774,6 +777,18 @@ async function enemyTurn(turn){
  $('board').classList.remove('enemy-thinking');busy=false;turnCount=Math.max(turnCount,turn);checkEnd();if(!over){setTurn('player');render();}
 }
 async function useUltimate(){if(energy<100||busy||over)return;busy=true;championAbility('ultimate');ultimateEffects();ultimateBanner('ULTIMATE BLAST!');energy=0;await animateShot('playerAvatar','enemyAvatar','lightning',5);const ultimateDamage=Math.round(35*(1+powerBonus()));enemyHp=Math.max(0,enemyHp-ultimateDamage);impactFeedback('enemyAvatar',ultimateDamage);say(`⚡ ULTIMATE BLAST! A massive arcane strike deals ${ultimateDamage} damage!`);playSound('magic');beep(880,.18);busy=false;render();checkEnd();if(!over){setTurn('enemy');enemyTurn(turnCount+1);}}
+
+async function useHeroSkill(){
+ if(energy<40||busy||over||turnState!=='player')return;
+ busy=true;energy-=40;championAbility('skill');
+ const cfg={Mage:{damage:22,kind:'magic',extra:0,text:'Arcane Pulse blasts the rival with focused magic.'},Knight:{damage:15,kind:'strong',extra:12,text:'Shield Bash strikes the rival and restores 12 health.'},Ranger:{damage:18,kind:'lightning',extra:10,text:'Star Volley hits hard and restores 10 energy.'},Phoenix:{damage:20,kind:'fire',extra:8,text:'Flame Burst scorches the rival and restores 8 health.'}};
+ const skill=cfg[champion]||cfg.Mage;ultimateBanner(skill.text.toUpperCase());await animateShot('playerAvatar','enemyAvatar',skill.kind,3);
+ const damage=Math.round(skill.damage*(1+powerBonus()));enemyHp=Math.max(0,enemyHp-damage);impactFeedback('enemyAvatar',damage);
+ if(champion==='Knight'||champion==='Phoenix'){const before=playerHp;playerHp=Math.min(maxHealth(),playerHp+skill.extra);if(playerHp>before)impactFeedback('playerAvatar',playerHp-before,'heal');}
+ if(champion==='Ranger')energy=Math.min(100,energy+skill.extra);
+ say(`✨ ${CHAMPIONS[champion].name}: ${skill.text} Deals ${damage} damage.`);playSound(champion==='Phoenix'?'attack':'magic');beep(champion==='Phoenix'?760:680,.14);busy=false;render();checkEnd();if(!over){setTurn('enemy');enemyTurn(turnCount+1);}
+}
+
 function useHeal(){if(energy<60||busy||over||playerHp>=maxHealth())return;championAbility('heal');energy-=60;let before=playerHp;playerHp=Math.min(maxHealth(),playerHp+22+profile.vitality*2);impactFeedback('playerAvatar',playerHp-before,'heal');say(`🛡️ SHIELD BURST restores ${playerHp-before} health!`);playSound('heal');beep(620,.12);render();setTurn('enemy');enemyTurn(turnCount+1);}
 function checkEnd(){if(over)return;if(enemyHp<=0){endGame(true);}else if(playerHp<=0){endGame(false);}else if(seconds<=0){endGame(playerHp>=enemyHp/RIVALS[rival].hp*100);}}
 function endGame(win){
@@ -891,7 +906,7 @@ document.addEventListener('DOMContentLoaded', () => {
   helpModal.addEventListener('click', (e) => { if (e.target===helpModal) helpModal.style.display='none'; });
   document.addEventListener('keydown', (e) => { if (e.key==='Escape' && helpModal.style.display==='flex') helpModal.style.display='none'; });
 });
-$('ultimate').addEventListener('click',useUltimate);$('heal').addEventListener('click',useHeal);$('newGame').addEventListener('click',()=>{campaignMode=false;start();});
+$('ultimate').addEventListener('click',useUltimate);$('heal').addEventListener('click',useHeal);if($('heroSkill'))$('heroSkill').addEventListener('click',useHeroSkill);$('newGame').addEventListener('click',()=>{campaignMode=false;start();});
 $('startCampaign').addEventListener('click',()=>launchCampaignStage(selectedCampaignStage));
 // Replay handler: a single registered listener (no inline handler) with a complete reset.
 function replayBattle(event) {
@@ -936,7 +951,7 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
  <div style="width:min(620px,100%);background:#1b2342;border:1px solid #5ee7ff66;border-radius:20px;padding:22px;box-shadow:0 20px 80px #0009;color:#f4f7ff">
   <div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><h2 id="helpTitle" style="margin:0">💎 How to Play</h2><button id="closeHelp" class="topbtn" type="button" aria-label="Close help">✕ Close</button></div>
   <p>Drag a gem onto a neighbouring gem, or tap two adjacent gems, to match <b>three or more gems of the same colour</b>. Matches damage your rival and build ultimate energy. You have <b>10 seconds per move</b>; when time expires, the AI takes its turn and makes a visible gem move when possible. Rivals now weigh match size and special-gem opportunities when choosing moves.</p>
-  <ul style="line-height:1.8;padding-left:22px"><li><b>Choose your setup:</b> select a champion, arena, rival, difficulty and battle mode.</li><li><b>Row Blaster:</b> clear a row. <b>Prism:</b> swap it with a gem to clear that colour. <b>Cross Bomb:</b> clear a row and column.</li><li><b>Ultimate Blast:</b> spend 100 energy for a powerful attack.</li><li><b>Shield Burst:</b> spend energy to recover health.</li><li><b>Hero collection & mastery:</b> unlock champions with coins, then train each hero up to Mastery Level 5 for +5% attack and +5 max health per level. Each hero has separate mastery progress.</li><li><b>Earn rewards:</b> wins give coins and XP. Spend coins on champions and upgrades.</li><li><b>Campaign story:</b> choose an unlocked stage to read its story and mission objective before starting. Clear stages to continue the story.</li><li><b>Boss battles:</b> stages 3, 6 and 9 have extra health. Watch for a warning every third boss turn—special attacks deal heavy damage.</li><li><b>Progress:</b> saved in this browser on this device. Clearing browser data may erase it.</li></ul>
+  <ul style="line-height:1.8;padding-left:22px"><li><b>Choose your setup:</b> select a champion, arena, rival, difficulty and battle mode.</li><li><b>Row Blaster:</b> clear a row. <b>Prism:</b> swap it with a gem to clear that colour. <b>Cross Bomb:</b> clear a row and column.</li><li><b>Hero Skills:</b> spend 40 energy for a champion-specific skill: Arcane Pulse (Mage), Shield Bash (Knight), Star Volley (Ranger), or Flame Burst (Phoenix).</li><li><b>Ultimate:</b> spend 100 energy for your selected hero’s signature ultimate attack.</li><li><b>Shield Burst:</b> spend 60 energy to recover health.</li><li><b>Hero collection & mastery:</b> unlock champions with coins, then train each hero up to Mastery Level 5 for +5% attack and +5 max health per level. Each hero has separate mastery progress.</li><li><b>Earn rewards:</b> wins give coins and XP. Spend coins on champions and upgrades.</li><li><b>Campaign story:</b> choose an unlocked stage to read its story and mission objective before starting. Clear stages to continue the story.</li><li><b>Boss battles:</b> stages 3, 6 and 9 have extra health. Watch for a warning every third boss turn—special attacks deal heavy damage.</li><li><b>Progress:</b> saved in this browser on this device. Clearing browser data may erase it.</li></ul>
   <p style="color:#aab5d6;font-size:13px">This is a local browser game with scripted computer opponents. Online multiplayer and a native Android/iOS app are not included in this build.</p>
  </div>
 </div>
