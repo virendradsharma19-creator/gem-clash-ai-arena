@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 2.3.1 Drag Visual Feedback</title>
+<title>Gem Clash: AI Arena — Build 2.4.0 Chain Reactions & Combo Attacks</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -229,12 +229,22 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
 .campaign-heading{display:flex;align-items:center;gap:11px}.campaign-icon{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:#111b3c;border:1px solid #7ee9ff66;font-size:1.65rem;box-shadow:0 0 18px #5ee7ff18}.campaign-heading h3{margin:0;font-size:1.05rem;color:#fff}.campaign-heading p{margin:4px 0 0;font-size:.74rem;line-height:1.35;color:#b9c8f5}.campaign-progress{margin:14px 0 10px;font-size:.72rem;font-weight:800;color:#d9e3ff}.campaign-progress-track{height:7px;border-radius:999px;background:#070d21;margin-top:6px;overflow:hidden}.campaign-progress-track div{height:100%;width:11.11%;border-radius:999px;background:linear-gradient(90deg,#5ee7ff,#b6a0ff,#ffe18a);transition:width .3s}.campaign-map{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.campaign-stage{min-width:0;min-height:75px;padding:8px 3px;border-radius:12px;border:1px solid #8294d544;background:#111a35;color:#dce5ff;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:3px;cursor:pointer;transition:transform .15s,border-color .15s,background .15s}.campaign-stage:hover:not(:disabled){transform:translateY(-2px);border-color:#5ee7ff}.campaign-stage .stage-number{font-size:.67rem;letter-spacing:.06em;color:#aab9ed;font-weight:900}.campaign-stage .stage-symbol{font-size:1.35rem;line-height:1.15}.campaign-stage .stage-name{font-size:.63rem;font-weight:800;line-height:1.15;text-align:center}.campaign-stage.boss{border-color:#ff8b7166;background:linear-gradient(145deg,#47233b,#211a37)}.campaign-stage.boss .stage-symbol{filter:drop-shadow(0 0 7px #ff714a)}.campaign-stage.selected{outline:2px solid #ffe18a;border-color:#ffe18a;background:linear-gradient(145deg,#3c4472,#202b52);box-shadow:0 0 18px #ffe18a22}.campaign-stage:disabled{opacity:.42;cursor:not-allowed;filter:grayscale(.55)}.campaign-selected{margin:11px 0 9px;padding:9px 10px;border-radius:10px;background:#070d21a8;border:1px solid #8294d533;font-size:.78rem;font-weight:900;color:#ffe8a3}.campaign-start{width:100%;font-weight:1000;letter-spacing:.04em}.campaign-note{margin-top:9px;font-size:.68rem;line-height:1.45;color:#aebce7}.campaign-badge{display:inline-block;margin-top:6px;padding:4px 8px;border-radius:999px;background:#3c2a54;border:1px solid #ffb58a66;color:#ffd0b8;font-size:.68rem;font-weight:900}
 .campaign-briefing{margin:10px 0;padding:11px;border:1px solid #ffe18a55;border-radius:12px;background:linear-gradient(145deg,#141d3a,#202342);box-shadow:inset 0 1px #ffffff10}.briefing-label{font-size:.7rem;font-weight:1000;letter-spacing:.08em;color:#ffe18a}.campaign-briefing p{margin:7px 0 10px;font-size:.76rem;line-height:1.5;color:#e0e7ff}.mission-objective{display:flex;flex-direction:column;gap:4px;padding-top:8px;border-top:1px solid #8294d533;font-size:.73rem;line-height:1.4}.mission-objective b{color:#72f1b8;font-size:.65rem;letter-spacing:.06em}.mission-objective span{color:#f4f7ff}
 @media(max-width:520px){.campaign-panel{padding:12px}.campaign-stage{min-height:69px}.campaign-stage .stage-name{font-size:.59rem}}
+
+/* Build 2.4.0: visible cascade and combo feedback */
+.combo-toast{position:fixed;left:50%;top:38%;z-index:10000;transform:translate(-50%,-50%) scale(.55) rotate(-5deg);opacity:0;pointer-events:none;padding:12px 22px;border:2px solid #fff2a8;border-radius:18px;background:linear-gradient(135deg,#ff7b28,#ffcf45 48%,#ff5c89);color:#24112a;font-size:clamp(1.25rem,5vw,2.3rem);font-weight:1000;letter-spacing:.04em;text-shadow:0 1px #fff8;box-shadow:0 0 0 4px #ffcf4533,0 10px 36px #ff7b2877;white-space:nowrap}
+.combo-toast.show{animation:comboPop .95s cubic-bezier(.18,.85,.25,1) both}
+@keyframes comboPop{0%{opacity:0;transform:translate(-50%,-35%) scale(.45) rotate(-8deg)}18%{opacity:1;transform:translate(-50%,-50%) scale(1.14) rotate(3deg)}32%{transform:translate(-50%,-50%) scale(1) rotate(0)}75%{opacity:1}100%{opacity:0;transform:translate(-50%,-70%) scale(.9)}}
+.board.combo-shake{animation:comboBoardShake .34s ease-in-out}
+@keyframes comboBoardShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-3px) rotate(-.25deg)}45%{transform:translateX(3px) rotate(.25deg)}70%{transform:translateX(-2px)}}
+@media(prefers-reduced-motion:reduce){.combo-toast.show,.board.combo-shake{animation:none!important}.combo-toast.show{opacity:1;transform:translate(-50%,-50%)}}
+
 </style>
 <meta name="theme-color" content="#10152b"><meta name="description" content="A colorful match-3 fantasy battle arena with three selectable arenas. Challenge rivals, unlock upgrades, and build your champion."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml">
 </head>
 <body>
+<div id="comboToast" class="combo-toast" aria-live="polite" aria-atomic="true"></div>
 <div class="wrap">
-<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 2.2.0 · CAMPAIGN STORY & MISSIONS</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn" id="dailyReward">🎁 Daily Gift</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
+<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 2.4.0 · CHAIN REACTIONS & COMBO ATTACKS</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn" id="dailyReward">🎁 Daily Gift</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
 <div class="layout">
 <section class="panel">
   <div class="stats">
@@ -301,10 +311,10 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
     <div class="power"><span class="ico">⚡</span><strong>Ultimate Blast</strong><small>At 100 energy, unleash a huge strike for 35 damage.</small></div>
     <div class="power"><span class="ico">🛡️</span><strong>Shield Burst</strong><small>Spend 60 energy to restore 22 health, up to 100.</small></div>
   </div>
-  <div class="rules"><b>Progression:</b> Wins grant XP and coins; level-ups award bonus coins. Your progress is saved locally in this browser. <b>Combo chain:</b> matches that cascade build your combo multiplier. Longer combos deal more damage and charge energy faster. Special gem symbols: 💥 row blast, 🌈 prism, ✖️ cross bomb.</div>
+  <div class="rules"><b>Progression:</b> Wins grant XP and coins; level-ups award bonus coins. Your progress is saved locally in this browser. <b>Combo chain:</b> matches that cascade trigger a big on-screen combo banner, board impact shake, and a rising damage bonus. Longer chains deal more damage and charge energy faster. Special gem symbols: 💥 row blast, 🌈 prism, ✖️ cross bomb.</div>
 </aside>
 </div>
-<div class="footer">Gem Clash: AI Arena · Build 2.2.0 · Campaign Story & Missions</div>
+<div class="footer">Gem Clash: AI Arena · Build 2.4.0 · Chain Reactions & Combo Attacks</div>
 </div>
 <div id="fxLayer" aria-hidden="true"></div>
 <div class="overlay" id="overlay" aria-live="assertive" aria-modal="true" role="dialog" aria-labelledby="resultTitle"><div class="modal result-modal"><div class="result-emblem" id="resultEmblem" aria-hidden="true">🏆</div><div class="result-kicker" id="resultKicker">BATTLE COMPLETE</div><h2 id="resultTitle">VICTORY!</h2><p id="resultText">You won the battle.</p><div class="result-rewards" id="resultRewards"><div class="reward-tile"><span>✨</span><small>XP EARNED</small><strong>+50</strong></div><div class="reward-tile"><span>💰</span><small>COINS EARNED</small><strong>+25</strong></div><div class="reward-tile"><span>🔥</span><small>BEST COMBO</small><strong>x3</strong></div></div><div class="result-profile" id="resultProfile"><div class="profile-result-card"><span>🛡️</span><div><small>GUARDIAN LEVEL</small><strong id="resultGuardianLevel">Level 1</strong><em id="resultGuardianXp">0 / 100 XP</em></div></div><div class="profile-result-card"><span>📖</span><div><small>BATTLE RECORD</small><strong id="resultBattleRecord">0 wins · 0 losses</strong><em>Saved on this device</em></div></div></div><div class="result-footer" id="resultFooter">Your legend grows stronger with every battle.</div><button class="primary result-play-again" id="playAgain" type="button">⚔️ BATTLE AGAIN</button></div></div>
@@ -436,6 +446,16 @@ function updateUI(){
 }
 function say(t){$('log').textContent=t;}
 function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+let comboToastTimer=null;
+function showComboToast(chain,damage){
+ const toast=$('comboToast');if(!toast)return;
+ const labels={2:'🔥 COMBO x2!',3:'💥 SUPER COMBO x3!',4:'⚡ MEGA COMBO x4!',5:'🌟 EPIC COMBO x5!',6:'👑 LEGENDARY COMBO x6!',7:'💎 ULTIMATE CHAIN x7!'};
+ toast.textContent=(labels[Math.min(7,chain)]||`🔥 COMBO x${chain}!`)+`  +${damage} DAMAGE`;
+ toast.classList.remove('show');void toast.offsetWidth;toast.classList.add('show');
+ clearTimeout(comboToastTimer);comboToastTimer=setTimeout(()=>toast.classList.remove('show'),1050);
+ const boardEl=$('board');if(boardEl){boardEl.classList.remove('combo-shake');void boardEl.offsetWidth;boardEl.classList.add('combo-shake');setTimeout(()=>boardEl.classList.remove('combo-shake'),380);}
+ if(chain>=3)playSound('special');
+}
 function impactFeedback(targetId,amount,kind='damage'){
  const target=$(targetId);if(!target)return;const rect=target.getBoundingClientRect();
  const number=document.createElement('div');number.className='damage-number'+(kind==='heal'?' heal-number':'');number.textContent=(kind==='heal'?'+':'−')+Math.round(amount);number.style.setProperty('--x',(rect.left+rect.width/2)+'px');number.style.setProperty('--y',(rect.top+rect.height*.25)+'px');fxLayer().appendChild(number);setTimeout(()=>number.remove(),1000);
@@ -661,11 +681,13 @@ async function resolveCascade(first,a,b){
    if(cell.special==='cross'){for(let x=0;x<SIZE;x++){clear.add(r*SIZE+x);clear.add(x*SIZE+c);}}
    if(cell.special==='prism'){for(let rr=0;rr<SIZE;rr++)for(let cc=0;cc<SIZE;cc++)if(board[rr][cc]?.color===cell.color)clear.add(rr*SIZE+cc);}
   }
-  const damage=Math.round(clear.size*(2+chain*.6)*(1+powerBonus())+(spec?5:0));
+  const comboMultiplier=1+Math.min(5,chain-1)*0.12;
+  const damage=Math.round(clear.size*(2+chain*.6)*(1+powerBonus())*comboMultiplier+(spec?5:0));
   await animateShot('playerAvatar','enemyAvatar',spec?'strong':attackKind(clear.size,chain),clear.size);
   enemyHp=Math.max(0,enemyHp-damage);impactFeedback('enemyAvatar',damage);energy=Math.min(100,energy+clear.size*4+chain*3);
-  total+=damage;if(spec)playSound('special');else beep(Math.min(900,320+clear.size*35),.07);
-  say(`${chain>1?'COMBO x'+chain+'! ':''}${spec==='prism'?'🌈 PRISM GEM CREATED!':spec==='cross'?'✖️ CROSS BOMB CREATED!':spec==='row'?'💥 ROW BLASTER CREATED!':`Match x${clear.size}!`} ${damage} damage.`);
+  total+=damage;if(spec)playSound('special');else beep(Math.min(900,320+clear.size*35+chain*35),.07);
+  if(chain>=2)showComboToast(chain,damage);
+  say(`${chain>1?'COMBO x'+chain+'! ':''}${spec==='prism'?'🌈 PRISM GEM CREATED!':spec==='cross'?'✖️ CROSS BOMB CREATED!':spec==='row'?'💥 ROW BLASTER CREATED!':`Match x${clear.size}!`} ${damage} damage${chain>1?' (combo bonus!)':''}.`);
   if(spec){
    let place=(a&&board[a.r][a.c]&&clear.has(a.r*SIZE+a.c))?a:(b&&board[b.r][b.c]&&clear.has(b.r*SIZE+b.c))?b:null;
    if(!place){const firstCell=[...matches.set][0];place={r:Math.floor(firstCell/SIZE),c:firstCell%SIZE};}
