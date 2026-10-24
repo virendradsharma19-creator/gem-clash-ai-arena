@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 2.7.0 Hero Skills & Ultimate Attacks</title>
+<title>Gem Clash: AI Arena — Build 2.9.0 Dramatic Battle Effects</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -265,6 +265,28 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
 .cell.special[data-mark="ROW BLAST"]{box-shadow:0 0 0 2px #fff,0 0 22px #ffe18a,0 0 38px #ffb84d,inset 0 0 16px #fff!important;animation:prismPulse .55s ease-in-out infinite alternate}
 @media(prefers-reduced-motion:reduce){.special-fx-banner{animation-duration:.01ms!important}#board.fx-shake{animation:none!important}}
 
+
+/* Build 2.9.0: cinematic battle effects and a roomier board */
+.wrap{max-width:1240px}
+.layout{grid-template-columns:minmax(0,1.32fr) minmax(270px,.68fr);gap:16px}
+.board{gap:6px;padding:10px}
+.cell{font-size:clamp(1.2rem,4.5vw,2.35rem);border-radius:12px;box-shadow:inset 0 1px #ffffff22,0 4px 0 #080d1d,0 0 0 1px #8296d844;transition:transform .14s,filter .14s,box-shadow .14s}
+.cell.special{box-shadow:inset 0 0 0 2px var(--gold),0 0 18px #ffd16699,0 4px 0 #080d1d}
+.cell.special[data-mark="BOMB"],.cell.special[data-mark="BOMB GEM"]{animation:bombCharge .8s ease-in-out infinite alternate}
+@keyframes bombCharge{from{filter:brightness(1);box-shadow:inset 0 0 0 2px #ffd166,0 0 12px #ff7b45aa,0 4px 0 #080d1d}to{filter:brightness(1.6);box-shadow:inset 0 0 0 3px #fff2b5,0 0 28px #ff623dcc,0 0 44px #ffb34788,0 4px 0 #080d1d}}
+.cell.special[data-mark="RAINBOW PRISM"],.cell.special[data-mark="PRISM"]{box-shadow:inset 0 0 0 2px #fff,0 0 18px #e7a0ff,0 0 30px #68eaff99,0 4px 0 #080d1d}
+#board.fx-bomb{animation:bigBombShock .65s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 0 3px #fff2a8,0 0 28px #ff6c36,0 0 62px #ffb347,inset 0 0 32px #ff7b45!important}
+#board.fx-lightning{animation:bigLightningShock .6s ease-out;box-shadow:0 0 0 3px #eaffff,0 0 30px #7df5ff,0 0 64px #399eff,inset 0 0 30px #75f5ff!important}
+#board.fx-prism{animation:bigPrismWave .85s ease-out;box-shadow:0 0 0 3px #fff,0 0 28px #ed9cff,0 0 70px #9c7bff,inset 0 0 35px #f09cff!important}
+#board.fx-combo{box-shadow:0 0 0 3px #ffe18a,0 0 34px #ffb84d,0 0 70px #ff6f4b!important}
+@keyframes bigBombShock{0%{transform:scale(1);filter:brightness(1)}18%{transform:scale(1.035);filter:brightness(2.1)}42%{transform:translateX(-7px) scale(1.02);filter:brightness(1.7)}62%{transform:translateX(6px) scale(1.015)}100%{transform:scale(1);filter:brightness(1)}}
+@keyframes bigLightningShock{0%,100%{filter:brightness(1)}12%{filter:brightness(2.6) saturate(1.8);transform:scale(1.025)}30%{filter:brightness(1.2);transform:translateX(5px)}48%{filter:brightness(2);transform:translateX(-4px)}70%{filter:brightness(1.4)}}
+@keyframes bigPrismWave{0%{filter:hue-rotate(0deg) brightness(1);transform:scale(1)}35%{filter:hue-rotate(100deg) brightness(2);transform:scale(1.03)}70%{filter:hue-rotate(220deg) brightness(1.6)}100%{filter:hue-rotate(360deg) brightness(1);transform:scale(1)}}
+.combo-toast{font-size:clamp(1.15rem,4vw,2rem);padding:16px 26px;border-width:3px;text-shadow:0 0 12px #fff,0 2px 4px #000;box-shadow:0 0 0 5px #ffcf4544,0 12px 46px #ff7b28bb,0 0 55px #ffe18a88}
+.special-fx-banner{font-size:clamp(1.1rem,4vw,1.7rem);padding:16px 24px;border-width:3px;box-shadow:0 0 0 5px #ffffff22,0 0 35px var(--fx-accent,#ffe18a),0 0 70px var(--fx-accent,#ffe18a)}
+@media(max-width:760px){.wrap{padding:8px}.layout{grid-template-columns:minmax(0,1fr);gap:10px}.panel{padding:10px}.board{gap:4px;padding:7px}.cell{border-radius:8px;font-size:clamp(1.25rem,6.2vw,2.2rem)}.combo-toast{max-width:94vw;white-space:normal;text-align:center}}
+@media(prefers-reduced-motion:reduce){#board.fx-bomb,#board.fx-lightning,#board.fx-prism{animation:none!important}}
+
 </style>
 <meta name="theme-color" content="#10152b"><meta name="description" content="A colorful match-3 fantasy battle arena with three selectable arenas. Challenge rivals, unlock upgrades, and build your champion."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml">
 
@@ -383,7 +405,7 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
   <div class="rules"><b>Progression:</b> Wins grant XP and coins; level-ups award bonus coins. Train each unlocked hero up to Mastery Level 5 for +5% attack and +5 max health per level. Hero mastery and your other progress save locally in this browser. <b>Combo chain:</b> matches that cascade trigger a big on-screen combo banner, board impact shake, and a rising damage bonus. Longer chains deal more damage and charge energy faster. <b>Craft special gems:</b> match 4 in a straight line for a glowing ⚡ Lightning Gem (horizontal or vertical), match 5 for 🌈 rainbow prism, or make a T/L-shaped match for 💣 blast bomb. Lightning clears a full row/column, the bomb blasts a 3×3 area, and swapping the rainbow prism with a gem clears that colour.</div>
 </aside>
 </div>
-<div class="footer">Gem Clash: AI Arena · Build 2.6.0 · Hero Collection & Upgrades</div>
+<div class="footer">Gem Clash: AI Arena · Build 2.9.1 · Animated Special Gems</div>
 </div>
 <div id="fxLayer" aria-hidden="true"></div>
 <div class="overlay" id="overlay" aria-live="assertive" aria-modal="true" role="dialog" aria-labelledby="resultTitle"><div class="modal result-modal"><div class="result-emblem" id="resultEmblem" aria-hidden="true">🏆</div><div class="result-kicker" id="resultKicker">BATTLE COMPLETE</div><h2 id="resultTitle">VICTORY!</h2><p id="resultText">You won the battle.</p><div class="result-rewards" id="resultRewards"><div class="reward-tile"><span>✨</span><small>XP EARNED</small><strong>+50</strong></div><div class="reward-tile"><span>💰</span><small>COINS EARNED</small><strong>+25</strong></div><div class="reward-tile"><span>🔥</span><small>BEST COMBO</small><strong>x3</strong></div></div><div class="result-profile" id="resultProfile"><div class="profile-result-card"><span>🛡️</span><div><small>GUARDIAN LEVEL</small><strong id="resultGuardianLevel">Level 1</strong><em id="resultGuardianXp">0 / 100 XP</em></div></div><div class="profile-result-card"><span>📖</span><div><small>BATTLE RECORD</small><strong id="resultBattleRecord">0 wins · 0 losses</strong><em>Saved on this device</em></div></div></div><div class="result-footer" id="resultFooter">Your legend grows stronger with every battle.</div><button class="primary result-play-again" id="playAgain" type="button">⚔️ BATTLE AGAIN</button></div></div>
@@ -434,6 +456,41 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
 /* Build 2.5.4: make the Rainbow Prism unmistakable on the board. */
 [data-mark="RAINBOW"] { outline: 3px solid #ff4de1 !important; box-shadow: 0 0 0 3px #55f7ff, 0 0 16px 6px rgba(255,77,225,.95), inset 0 0 12px rgba(255,255,255,.9) !important; animation: prismCraftGlow 1s ease-in-out infinite alternate !important; position: relative; z-index: 2; }
 @keyframes prismCraftGlow { from { filter: saturate(1.2) brightness(1.05); } to { filter: saturate(1.8) brightness(1.45); } }
+
+/* Build 2.9.2: stronger cinematic special-gem animations, with no text banner. */
+.battle-visual-fx{position:fixed;inset:0;z-index:10030;pointer-events:none;display:grid;place-items:center;overflow:hidden;isolation:isolate}
+.battle-visual-fx:before{content:"";position:absolute;inset:0;opacity:0;background:radial-gradient(circle at center,#fff9 0,transparent 58%);animation:fxScreenFlash .72s ease-out forwards}
+.battle-visual-fx .fx-stage{position:relative;width:min(84vw,600px);height:min(84vw,600px);display:grid;place-items:center;isolation:isolate}
+.battle-visual-fx .fx-icon{position:absolute;font-family:system-ui,sans-serif;line-height:1;user-select:none;z-index:5}
+.battle-visual-fx.fx-bomb .fx-icon{font-size:clamp(4.5rem,14vw,8rem);filter:drop-shadow(0 0 12px #fff) drop-shadow(0 0 28px #ff7a1a);animation:bombPrime .7s cubic-bezier(.2,.8,.2,1) forwards}
+.battle-visual-fx.fx-bomb .fx-burst{font-size:clamp(7rem,28vw,17rem);opacity:0;filter:drop-shadow(0 0 22px #ff6a00);animation:bombBurstCine .9s cubic-bezier(.1,.7,.2,1) .28s forwards}
+.battle-visual-fx.fx-prism .fx-icon{font-size:clamp(4.8rem,15vw,8.5rem);filter:drop-shadow(0 0 12px #fff) drop-shadow(0 0 28px #ed62ff);animation:prismCharge .72s ease-in-out forwards}
+.battle-visual-fx .fx-ring{position:absolute;width:12%;aspect-ratio:1;border:8px solid white;border-radius:50%;opacity:0;box-shadow:0 0 28px currentColor,inset 0 0 20px currentColor;z-index:2}
+.battle-visual-fx.fx-bomb .fx-ring{color:#ff9b37;border-color:#fff3b0;animation:bombShockwave .88s cubic-bezier(.12,.65,.22,1) .25s forwards}
+.battle-visual-fx.fx-prism .fx-ring{color:#f09cff;border-color:#fff;animation:prismShockwave 1.15s ease-out .08s forwards}
+.battle-visual-fx .fx-spark{position:absolute;font-size:clamp(1.2rem,4vw,2.7rem);opacity:0;animation:fxSparkCine .9s cubic-bezier(.12,.6,.2,1) forwards;z-index:4;filter:drop-shadow(0 0 9px #fff)}
+.battle-visual-fx.fx-bomb .fx-spark{animation-name:emberFly}
+.battle-visual-fx.fx-prism .fx-spark{animation-name:prismFly;filter:drop-shadow(0 0 12px #fff)}
+.fx-core,.fx-flash,.fx-rainbow-beam,.fx-fragment{position:absolute;pointer-events:none}
+.fx-core{width:22%;aspect-ratio:1;border-radius:50%;opacity:0;z-index:3;background:radial-gradient(circle,#fff 0 5%,#fff8b0 12%,#ffb02e 28%,#ff4b12 48%,#d91632 62%,transparent 72%);filter:blur(.4px);animation:coreDetonate .72s ease-out .28s forwards}
+.fx-flash{inset:-10%;opacity:0;z-index:1;background:radial-gradient(circle,#fff 0, #fff5ba 9%,#ff9e35 20%,#f32e32 34%,transparent 68%);animation:flashDetonate .7s ease-out .28s forwards}
+.fx-fragment{width:clamp(7px,1.8vw,15px);height:clamp(15px,3vw,30px);border-radius:45% 10% 45% 10%;opacity:0;z-index:4;background:linear-gradient(#fff6a6,#ff6b1b 45%,#d51d2b);box-shadow:0 0 12px #ff7a1a;animation:fragmentFly .85s ease-out forwards}
+.fx-rainbow-beam{width:18%;height:18%;border-radius:50%;opacity:0;z-index:1;background:conic-gradient(#ff365e,#ffb13d,#f9f871,#50f18a,#4be5ff,#7272ff,#e66dff,#ff365e);filter:blur(3px) saturate(1.4);box-shadow:0 0 35px #f09cff,0 0 80px #57eaff;animation:rainbowBloom 1.2s cubic-bezier(.15,.7,.2,1) forwards}
+.battle-visual-fx.fx-prism .fx-stage:after{content:"";position:absolute;width:68%;height:68%;border-radius:50%;border:4px solid transparent;background:conic-gradient(#ff4b79,#ffc64b,#fff85e,#50f7a0,#4beaff,#7b72ff,#e76cff,#ff4b79) border-box;mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);mask-composite:exclude;opacity:0;animation:rainbowRing 1.1s ease-out .05s forwards;filter:drop-shadow(0 0 15px #f6aaff)}
+@keyframes fxScreenFlash{0%{opacity:0}12%{opacity:.8}35%{opacity:.24}100%{opacity:0}}
+@keyframes bombPrime{0%{opacity:0;transform:translateY(-45px) scale(.3) rotate(-35deg)}38%{opacity:1;transform:translateY(0) scale(1.2) rotate(12deg)}58%{transform:scale(.92) rotate(-7deg)}78%{opacity:1;transform:scale(1.05)}100%{opacity:0;transform:scale(.25) rotate(22deg)}}
+@keyframes bombBurstCine{0%{opacity:0;transform:scale(.08) rotate(-25deg)}18%{opacity:1;transform:scale(.82) rotate(5deg)}40%{opacity:1;transform:scale(1.16) rotate(-5deg)}100%{opacity:0;transform:scale(1.8) rotate(18deg);filter:blur(2px) drop-shadow(0 0 36px #ff5d00)}}
+@keyframes bombShockwave{0%{opacity:1;transform:scale(.15);border-width:12px}65%{opacity:.8}100%{opacity:0;transform:scale(8.5);border-width:1px}}
+@keyframes coreDetonate{0%{opacity:0;transform:scale(.05)}20%{opacity:1;transform:scale(1.4)}55%{opacity:.95;transform:scale(1.1)}100%{opacity:0;transform:scale(3.8);filter:blur(10px)}}
+@keyframes flashDetonate{0%{opacity:0;transform:scale(.1)}15%{opacity:1}50%{opacity:.65;transform:scale(1.1)}100%{opacity:0;transform:scale(1.7)}}
+@keyframes fragmentFly{0%{opacity:0;transform:translate(0,0) scale(.25) rotate(0)}18%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.15) rotate(var(--rot,240deg))}}
+@keyframes emberFly{0%{opacity:0;transform:translate(0,0) scale(.25) rotate(0)}18%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.25) rotate(300deg)}}
+@keyframes prismCharge{0%{opacity:0;transform:scale(.15) rotate(-45deg);filter:hue-rotate(0) drop-shadow(0 0 0 #fff)}35%{opacity:1;transform:scale(1.18) rotate(12deg)}65%{opacity:1;transform:scale(.98) rotate(-8deg);filter:hue-rotate(180deg) drop-shadow(0 0 36px #ff72f2)}100%{opacity:0;transform:scale(1.75) rotate(45deg);filter:hue-rotate(360deg) drop-shadow(0 0 40px #6af7ff)}}
+@keyframes prismShockwave{0%{opacity:0;transform:scale(.15)}22%{opacity:1}100%{opacity:0;transform:scale(8.5);border-color:#69f6ff}}
+@keyframes rainbowBloom{0%{opacity:0;transform:scale(.12) rotate(0)}25%{opacity:.95;transform:scale(1.8) rotate(70deg)}100%{opacity:0;transform:scale(5.5) rotate(210deg)}}
+@keyframes rainbowRing{0%{opacity:0;transform:scale(.25) rotate(-40deg)}28%{opacity:1}100%{opacity:0;transform:scale(1.65) rotate(210deg)}}
+@keyframes prismFly{0%{opacity:0;transform:translate(0,0) scale(.2) rotate(0)}20%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.9) rotate(300deg)}}
+@media(prefers-reduced-motion:reduce){.battle-visual-fx *{animation-duration:.01ms!important;animation-delay:0ms!important}}
 </style>
 <script> (() => {
 const SIZE=8, COLORS=['🔴','🔵','🟢','🟡','🟣','🟠'];
@@ -541,9 +598,24 @@ function showComboToast(chain,damage){
  if(chain>=3)playSound('special');
 }
 function showBattleFx(kind,title,subtitle){
- const boardEl=$('board'); if(boardEl){boardEl.classList.remove('fx-shake','fx-bomb','fx-lightning','fx-prism');boardEl.classList.add('fx-'+kind,'fx-shake');setTimeout(()=>boardEl.classList.remove('fx-shake','fx-'+kind),520);}
- const old=document.querySelector('.special-fx-banner');if(old)old.remove();
- const el=document.createElement('div');el.className='special-fx-banner fx-'+kind;el.innerHTML=`<div>${title}</div><small>${subtitle||''}</small>`;document.body.appendChild(el);setTimeout(()=>el.remove(),1400);
+ const boardEl=$('board');
+ if(boardEl){boardEl.classList.remove('fx-shake','fx-bomb','fx-lightning','fx-prism');void boardEl.offsetWidth;boardEl.classList.add('fx-'+kind,'fx-shake');setTimeout(()=>boardEl.classList.remove('fx-shake','fx-'+kind),720);}
+ // Cinematic visuals only: no rectangular activation announcement.
+ document.querySelectorAll('.battle-visual-fx,.special-fx-banner').forEach(el=>el.remove());
+ const fx=document.createElement('div');fx.className='battle-visual-fx fx-'+kind;fx.setAttribute('aria-hidden','true');
+ const stage=document.createElement('div');stage.className='fx-stage';
+ const icon=document.createElement('span');icon.className='fx-icon';icon.textContent=kind==='prism'?'🌈💎':kind==='lightning'?'⚡':'💣';stage.appendChild(icon);
+ if(kind==='bomb'){
+  const burst=document.createElement('span');burst.className='fx-icon fx-burst';burst.textContent='💥';stage.appendChild(burst);
+  ['fx-core','fx-flash'].forEach(cls=>{const layer=document.createElement('span');layer.className=cls;stage.appendChild(layer);});
+  for(let i=0;i<20;i++){const shard=document.createElement('span');shard.className='fx-fragment';const angle=(Math.PI*2*i)/20;const distance=150+(i%4)*42;shard.style.setProperty('--dx',Math.round(Math.cos(angle)*distance)+'px');shard.style.setProperty('--dy',Math.round(Math.sin(angle)*distance)+'px');shard.style.setProperty('--rot',(120+i*31)+'deg');shard.style.animationDelay=(.28+(i%5)*.012)+'s';stage.appendChild(shard);}
+ } else if(kind==='prism'){
+  const beam=document.createElement('span');beam.className='fx-rainbow-beam';stage.appendChild(beam);
+ }
+ const ring=document.createElement('span');ring.className='fx-ring';stage.appendChild(ring);
+ const symbols=kind==='prism'?['🌈','✨','💎','⭐','🟣','🔵','🟢','🟡','💠','✨','🌟','💎']:kind==='lightning'?['⚡','✨','⚡','✴️','⚡','✨']:['🔥','✨','🟠','⭐','🔥','✨','💥','🟡','🔥','💥','✨','🟠'];
+ symbols.forEach((symbol,i)=>{const sp=document.createElement('span');sp.className='fx-spark';sp.textContent=symbol;const angle=(Math.PI*2*i)/symbols.length;const distance=(kind==='prism'?145:kind==='bomb'?165:125)+(i%4)*32;sp.style.setProperty('--dx',Math.round(Math.cos(angle)*distance)+'px');sp.style.setProperty('--dy',Math.round(Math.sin(angle)*distance)+'px');sp.style.animationDelay=(kind==='bomb'?.28+(i%4)*.015:kind==='prism'?.05+(i%3)*.025:0)+'s';stage.appendChild(sp);});
+ fx.appendChild(stage);document.body.appendChild(fx);setTimeout(()=>fx.remove(),kind==='prism'?1450:kind==='bomb'?1300:1100);
 }
 function setupDisplayPreferences(){
  const config=[['campaignPanel','campaignPanel'],['heroMasteryPanel','heroMasteryPanel'],['armoryGroup','armoryGroup'],['gemGuideGroup','gemGuideGroup']];
