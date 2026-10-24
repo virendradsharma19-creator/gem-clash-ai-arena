@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 3.0.1 Visible Adaptive AI</title>
+<title>Gem Clash: AI Arena — Build 3.1.1 Balanced Coin Economy</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -342,7 +342,7 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 <body>
 <div id="comboToast" class="combo-toast" aria-live="polite" aria-atomic="true"></div>
 <div class="wrap">
-<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 3.0.1 · VISIBLE ADAPTIVE AI</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn" id="dailyReward">🎁 Daily Gift</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
+<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 3.1.1 · BALANCED COIN ECONOMY</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn" id="dailyReward">🎁 Daily Gift</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
 <div class="layout">
 <section class="panel">
   <div class="stats">
@@ -376,6 +376,15 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
       <label><input type="checkbox" data-hide-panel="gemGuideGroup"> Hide Special Gems & Attacks guide</label>
     </div>
     <button class="topbtn" id="resetDisplaySettings" type="button">Show all panels</button>
+  </section>
+  <section class="reward-panel" id="rewardsPanel" aria-labelledby="rewardsTitle">
+    <div class="reward-heading"><span class="reward-icon">🎁</span><div><h3 id="rewardsTitle">Daily Rewards</h3><p>Claim a gift each day and build your streak. Rewards are saved on this device.</p></div></div>
+    <div class="streak-summary"><span id="streakCount">🔥 Daily streak: 0 days</span><span id="nextRewardText">Next gift: 50 coins + 20 XP</span></div>
+    <div class="streak-strip" id="streakStrip" aria-label="Seven day reward calendar"></div>
+    <button class="reward-claim" id="claimDailyReward" type="button">🎁 CLAIM TODAY'S REWARD</button>
+    <h3 style="font-size:16px;margin:18px 0 4px">🏅 Achievements</h3>
+    <p style="font-size:12px;color:#b9c7e9;margin:0">Complete goals to earn bonus coins.</p>
+    <div class="achievement-list" id="achievementList" aria-live="polite"></div>
   </section>
   <section class="campaign-panel" id="campaignPanel" aria-labelledby="campaignTitle">
     <div class="campaign-heading"><span class="campaign-icon">🗺️</span><div><h3 id="campaignTitle">Adventure Campaign</h3><p>Uncover the realm’s story, complete missions, and defeat the bosses.</p></div></div>
@@ -430,10 +439,10 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
     <div class="power"><span class="ico">🛡️</span><strong>Shield Burst</strong><small>Spend 60 energy to restore 22 health, up to 100.</small></div>
   </div>
   </div>
-  <div class="rules"><b>Progression:</b> Wins grant XP and coins; level-ups award bonus coins. Train each unlocked hero up to Mastery Level 5 for +5% attack and +5 max health per level. Hero mastery and your other progress save locally in this browser. <b>Combo chain:</b> matches that cascade trigger a big on-screen combo banner, board impact shake, and a rising damage bonus. Longer chains deal more damage and charge energy faster. <b>Craft special gems:</b> match 4 in a straight line for a glowing ⚡ Lightning Gem (horizontal or vertical), match 5 for 🌈 rainbow prism, or make a T/L-shaped match for 💣 blast bomb. Lightning clears a full row/column, the bomb blasts a 3×3 area, and swapping the rainbow prism with a gem clears that colour.</div>
+  <div class="rules"><b>Progression:</b> Wins grant XP and coins; level-ups award bonus coins. Train each unlocked hero up to Mastery Level 5 for +5% attack and +5 max health per level; mastery costs rise to 100, 200, 350, 550 and 800 coins. Hero mastery and your other progress save locally in this browser. <b>Combo chain:</b> matches that cascade trigger a big on-screen combo banner, board impact shake, and a rising damage bonus. Longer chains deal more damage and charge energy faster. <b>Craft special gems:</b> match 4 in a straight line for a glowing ⚡ Lightning Gem (horizontal or vertical), match 5 for 🌈 rainbow prism, or make a T/L-shaped match for 💣 blast bomb. Lightning clears a full row/column, the bomb blasts a 3×3 area, and swapping the rainbow prism with a gem clears that colour.</div>
 </aside>
 </div>
-<div class="footer">Gem Clash: AI Arena · Build 3.0.1 · Visible Adaptive AI</div>
+<div class="footer">Gem Clash: AI Arena · Build 3.1.1 · Balanced Coin Economy</div>
 </div>
 <div id="fxLayer" aria-hidden="true"></div>
 <div class="overlay" id="overlay" aria-live="assertive" aria-modal="true" role="dialog" aria-labelledby="resultTitle"><div class="modal result-modal"><div class="result-emblem" id="resultEmblem" aria-hidden="true">🏆</div><div class="result-kicker" id="resultKicker">BATTLE COMPLETE</div><h2 id="resultTitle">VICTORY!</h2><p id="resultText">You won the battle.</p><div class="result-rewards" id="resultRewards"><div class="reward-tile"><span>✨</span><small>XP EARNED</small><strong>+50</strong></div><div class="reward-tile"><span>💰</span><small>COINS EARNED</small><strong>+25</strong></div><div class="reward-tile"><span>🔥</span><small>BEST COMBO</small><strong>x3</strong></div></div><div class="result-profile" id="resultProfile"><div class="profile-result-card"><span>🛡️</span><div><small>GUARDIAN LEVEL</small><strong id="resultGuardianLevel">Level 1</strong><em id="resultGuardianXp">0 / 100 XP</em></div></div><div class="profile-result-card"><span>📖</span><div><small>BATTLE RECORD</small><strong id="resultBattleRecord">0 wins · 0 losses</strong><em>Saved on this device</em></div></div></div><div class="result-footer" id="resultFooter">Your legend grows stronger with every battle.</div><button class="primary result-play-again" id="playAgain" type="button">⚔️ BATTLE AGAIN</button></div></div>
@@ -519,6 +528,13 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 @keyframes rainbowRing{0%{opacity:0;transform:scale(.25) rotate(-40deg)}28%{opacity:1}100%{opacity:0;transform:scale(1.65) rotate(210deg)}}
 @keyframes prismFly{0%{opacity:0;transform:translate(0,0) scale(.2) rotate(0)}20%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.9) rotate(300deg)}}
 @media(prefers-reduced-motion:reduce){.battle-visual-fx *{animation-duration:.01ms!important;animation-delay:0ms!important}}
+
+/* Build 3.1.0: daily streak and achievement cards */
+.reward-panel{margin:0 0 16px;padding:16px;border:1px solid rgba(255,209,102,.3);border-radius:18px;background:linear-gradient(145deg,rgba(57,40,87,.94),rgba(20,31,58,.96));box-shadow:0 12px 30px rgba(0,0,0,.18)}
+.reward-heading{display:flex;gap:11px;align-items:center;margin-bottom:10px}.reward-heading .reward-icon{font-size:30px}.reward-heading h3{margin:0;font-size:18px}.reward-heading p{margin:3px 0 0;color:#b9c7e9;font-size:12px;line-height:1.45}
+.streak-strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin:12px 0}.streak-day{min-width:0;text-align:center;padding:7px 1px;border-radius:9px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.045);font-size:10px;color:#c6d2ef}.streak-day b{display:block;font-size:15px;margin-bottom:3px}.streak-day.claimed{border-color:#7ce8c2;background:rgba(66,210,158,.15);color:#b5ffe2}.streak-day.today{border-color:#ffd166;background:rgba(255,209,102,.14);color:#ffe6a0}.streak-summary{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:12px;color:#d8e2fb;margin:8px 0 10px}.reward-claim{width:100%;border:0;border-radius:12px;padding:12px;font-weight:900;color:#24203a;background:linear-gradient(100deg,#ffe18a,#ffb84d);cursor:pointer;box-shadow:0 5px 16px rgba(255,184,77,.17)}.reward-claim:disabled{opacity:.58;cursor:default;filter:saturate(.65)}
+.achievement-list{display:grid;gap:8px;margin-top:12px}.achievement-card{display:grid;grid-template-columns:38px 1fr auto;gap:9px;align-items:center;padding:10px;border-radius:12px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}.achievement-card.unlocked{border-color:rgba(124,232,194,.5);background:rgba(48,160,124,.12)}.achievement-icon{font-size:25px;text-align:center}.achievement-copy b{display:block;font-size:12px;color:#f0f4ff}.achievement-copy small{display:block;font-size:11px;line-height:1.4;color:#aebcdd;margin-top:3px}.achievement-progress{font-size:10px;color:#ffe18a;white-space:nowrap;font-weight:800}.achievement-card.unlocked .achievement-progress{color:#8df2c7}
+@media(max-width:560px){.reward-panel{padding:12px}.streak-day{font-size:9px}.streak-day b{font-size:13px}.achievement-card{grid-template-columns:31px 1fr auto;gap:6px;padding:8px}.achievement-icon{font-size:22px}}
 </style>
 <script> (() => {
 const SIZE=8, COLORS=['🔴','🔵','🟢','🟡','🟣','🟠'];
@@ -546,7 +562,7 @@ const CHAMPIONS={
  Phoenix:{icon:'🔥',name:'Solar Phoenix',cost:250,hp:10,damage:1.10,desc:'Starts with +10 health and 10% stronger attacks.'}
 };
 const saved=(()=>{try{return JSON.parse(localStorage.getItem('gemClashSave')||'{}')}catch(e){return {}}})();
-let profile={level:saved.level||1,xp:saved.xp||0,coins:saved.coins||0,wins:saved.wins||0,losses:saved.losses||0,power:saved.power||0,vitality:saved.vitality||0,lastGift:saved.lastGift||'',arena:saved.arena||'Citadel',campaignUnlocked:Math.max(1,Math.min(9,Number(saved.campaignUnlocked)||1)),campaignWins:Array.isArray(saved.campaignWins)?saved.campaignWins:[]};
+let profile={level:saved.level||1,xp:saved.xp||0,coins:saved.coins||0,wins:saved.wins||0,losses:saved.losses||0,power:saved.power||0,vitality:saved.vitality||0,lastGift:saved.lastGift||'',dailyStreak:Number(saved.dailyStreak)||0,achievements:saved.achievements&&typeof saved.achievements==='object'?saved.achievements:{},arena:saved.arena||'Citadel',campaignUnlocked:Math.max(1,Math.min(9,Number(saved.campaignUnlocked)||1)),campaignWins:Array.isArray(saved.campaignWins)?saved.campaignWins:[]};
 selectedCampaignStage=profile.campaignUnlocked;
 arena=profile.arena; champion=CHAMPIONS[profile.champion]?profile.champion:'Mage'; if(!Array.isArray(profile.unlockedChampions))profile.unlockedChampions=['Mage']; if(!profile.unlockedChampions.includes('Mage'))profile.unlockedChampions.unshift('Mage'); if(!profile.unlockedChampions.includes(champion))champion='Mage';
 function applyArena(){document.body.dataset.arena=arena;document.querySelectorAll('[data-arena]').forEach(b=>b.classList.toggle('active',b.dataset.arena===arena));}
@@ -575,7 +591,7 @@ function updateChampions(){
   updateHeroMastery();
 }
 function updateHeroMastery(){
- const lvl=heroMasteryLevel(), cost=100+lvl*100, owned=profile.unlockedChampions.includes(champion);
+ const lvl=heroMasteryLevel(), cost=[100,200,350,550,800][lvl]||800, owned=profile.unlockedChampions.includes(champion);
  if($('masteryIcon'))$('masteryIcon').textContent=CHAMPIONS[champion].icon;
  if($('masteryLevel'))$('masteryLevel').textContent='Lv. '+lvl+' / 5';
  if($('masteryDescription'))$('masteryDescription').textContent=CHAMPIONS[champion].name+' gains +5% attack and +5 max health per mastery level.';
@@ -584,8 +600,23 @@ function updateHeroMastery(){
  const btn=$('upgradeHero');if(btn){btn.textContent=lvl>=5?'✓ HERO FULLY TRAINED':`🌟 Train ${CHAMPIONS[champion].name} · ${cost} coins`;btn.disabled=!owned||lvl>=5||profile.coins<cost;btn.style.opacity=btn.disabled?'.55':'1';}
 }
 function updateArmory(){const pc=40+profile.power*35,vc=40+profile.vitality*35;$('powerLevel').textContent='Lv. '+profile.power;$('vitalityLevel').textContent='Lv. '+profile.vitality;$('powerCost').textContent=pc;$('vitalityCost').textContent=vc;$('buyPower').disabled=profile.coins<pc||profile.power>=10;$('buyVitality').disabled=profile.coins<vc||profile.vitality>=10;$('buyPower').style.opacity=$('buyPower').disabled?'.5':'1';$('buyVitality').style.opacity=$('buyVitality').disabled?'.5':'1';}
+const ACHIEVEMENTS=[
+ {id:'first_win',icon:'🏆',title:'First Victory',desc:'Win your first battle.',goal:1,reward:10,progress:()=>Math.min(profile.wins,1)},
+ {id:'five_wins',icon:'⚔️',title:'Arena Regular',desc:'Win 5 battles.',goal:5,reward:20,progress:()=>Math.min(profile.wins,5)},
+ {id:'ten_wins',icon:'👑',title:'Champion of the Arena',desc:'Win 10 battles.',goal:10,reward:40,progress:()=>Math.min(profile.wins,10)},
+ {id:'combo_master',icon:'🔥',title:'Combo Master',desc:'Create a combo chain of x5 or higher in a battle.',goal:5,reward:15,progress:()=>Math.min(Number(profile.bestCombo)||0,5)},
+ {id:'boss_slayer',icon:'🐉',title:'Boss Slayer',desc:'Defeat any campaign boss.',goal:1,reward:25,progress:()=>profile.bossSlayer?1:0},
+ {id:'campaign_path',icon:'🗺️',title:'Pathfinder',desc:'Clear 3 different campaign stages.',goal:3,reward:25,progress:()=>Math.min((profile.campaignWins||[]).length,3)},
+ {id:'daily_three',icon:'📅',title:'A Good Habit',desc:'Claim daily rewards 3 days in a row.',goal:3,reward:20,progress:()=>Math.min(Number(profile.dailyStreak)||0,3)}
+];
+function localDateKey(date=new Date()){return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;}
+function dailyRewardForStreak(streak){const day=((Math.max(1,streak)-1)%7)+1;return [{coins:10,xp:20},{coins:15,xp:25},{coins:20,xp:30},{coins:25,xp:35},{coins:30,xp:40},{coins:40,xp:50},{coins:60,xp:75}][day-1];}
+function wasGiftClaimedToday(){return profile.lastGift===localDateKey();}
+function renderDailyRewards(){const strip=$('streakStrip');if(!strip)return;const currentDay=((Math.max(1,profile.dailyStreak||1)-1)%7)+1;const rewards=[10,15,20,25,30,40,60];strip.innerHTML=rewards.map((coins,i)=>{const day=i+1,claimed=wasGiftClaimedToday()&&day===currentDay;return `<div class="streak-day ${claimed?'claimed':day===currentDay?'today':''}"><b>${claimed?'✓':['🎁','💰','✨','💎','🪙','🌟','👑'][i]}</b>Day ${day}<br>${coins}c</div>`;}).join('');const count=$('streakCount');if(count)count.textContent=`🔥 Daily streak: ${profile.dailyStreak||0} day${profile.dailyStreak===1?'':'s'}`;const next=dailyRewardForStreak((profile.dailyStreak||0)+1);if($('nextRewardText'))$('nextRewardText').textContent=wasGiftClaimedToday()?`Tomorrow: ${next.coins} coins + ${next.xp} XP`:`Today: ${dailyRewardForStreak(profile.dailyStreak||1).coins} coins + ${dailyRewardForStreak(profile.dailyStreak||1).xp} XP`;const button=$('claimDailyReward');if(button){button.disabled=wasGiftClaimedToday();button.textContent=wasGiftClaimedToday()?'✓ TODAY’S REWARD CLAIMED':'🎁 CLAIM TODAY’S REWARD';}}
+function renderAchievements(){const list=$('achievementList');if(!list)return;list.innerHTML=ACHIEVEMENTS.map(a=>{const done=!!profile.achievements[a.id],progress=Math.min(a.goal,a.progress());return `<div class="achievement-card ${done?'unlocked':''}"><span class="achievement-icon">${done?'✅':a.icon}</span><span class="achievement-copy"><b>${a.title}</b><small>${a.desc} · Reward: ${a.reward} coins</small></span><span class="achievement-progress">${done?'UNLOCKED':`${progress}/${a.goal}`}</span></div>`;}).join('');}
+function checkAchievements(){profile.achievements=profile.achievements||{};let coinsEarned=0;const unlocked=[];for(const a of ACHIEVEMENTS){if(!profile.achievements[a.id]&&a.progress()>=a.goal){profile.achievements[a.id]=true;profile.coins+=a.reward;coinsEarned+=a.reward;unlocked.push(`${a.icon} ${a.title} (+${a.reward} coins)`);}}renderAchievements();renderDailyRewards();if(unlocked.length){saveProfile();say(`🏅 Achievement unlocked! ${unlocked.join(' · ')}${coinsEarned?` — +${coinsEarned} bonus coins`:''}`);playSound('gift');}return coinsEarned;}
 function saveProfile(){profile.arena=arena;profile.champion=champion;if(!profile.heroLevels||typeof profile.heroLevels!=='object')profile.heroLevels={};try{localStorage.setItem('gemClashSave',JSON.stringify(profile))}catch(e){} updateProfileUI();}
-function updateProfileUI(){ $('levelText').textContent=`Level ${profile.level}`; $('xpText').textContent=`${profile.xp} / ${profile.level*100} XP · 💰 ${profile.coins}`; $('recordText').textContent=`${profile.wins} wins · ${profile.losses} losses`; if($('powerLevel'))updateArmory(); if($('upgradeHero'))updateHeroMastery(); }
+function updateProfileUI(){ $('levelText').textContent=`Level ${profile.level}`; $('xpText').textContent=`${profile.xp} / ${profile.level*100} XP · 💰 ${profile.coins}`; $('recordText').textContent=`${profile.wins} wins · ${profile.losses} losses`; if($('powerLevel'))updateArmory(); if($('upgradeHero'))updateHeroMastery(); renderDailyRewards();renderAchievements(); }
 const $=id=>document.getElementById(id);
 const randColor=()=>COLORS[Math.floor(Math.random()*COLORS.length)];
 function randomCell(){return {color:randColor(),special:null};}
@@ -1055,9 +1086,10 @@ function endGame(win){
  let levelsGained=0,levelCoins=0;
  if(win){profile.wins++;profile.xp+=xpReward;profile.coins+=coinReward;while(profile.xp>=profile.level*100){profile.xp-=profile.level*100;profile.level++;levelsGained++;profile.coins+=50;levelCoins+=50;}}
  else{profile.losses++;profile.xp+=xpReward;}
+ profile.bestCombo=Math.max(Number(profile.bestCombo)||0,Number(comboBest)||0);if(win&&campaignMode&&isBossBattle())profile.bossSlayer=true;
  let campaignBonus=0;
- if(campaignMode&&win){const st=CAMPAIGN_STAGES[campaignStage-1];const firstClear=!profile.campaignWins.includes(campaignStage);if(firstClear){profile.campaignWins.push(campaignStage);campaignBonus=st&&st.boss?60:20;profile.coins+=campaignBonus;}if(campaignStage===profile.campaignUnlocked&&profile.campaignUnlocked<9)profile.campaignUnlocked++;selectedCampaignStage=Math.min(9,profile.campaignUnlocked);saveProfile();renderCampaignMap();}
- else saveProfile();
+ if(campaignMode&&win){const st=CAMPAIGN_STAGES[campaignStage-1];const firstClear=!profile.campaignWins.includes(campaignStage);if(firstClear){profile.campaignWins.push(campaignStage);campaignBonus=st&&st.boss?60:20;profile.coins+=campaignBonus;}if(campaignStage===profile.campaignUnlocked&&profile.campaignUnlocked<9)profile.campaignUnlocked++;selectedCampaignStage=Math.min(9,profile.campaignUnlocked);renderCampaignMap();}
+ checkAchievements();saveProfile();
  const overlay=$('overlay'),playerAvatar=$('playerAvatar'),enemyAvatar=$('enemyAvatar');
  overlay.classList.remove('result-win','result-lose','boss-win');overlay.classList.add(win?'result-win':'result-lose');const bossWin=win&&isBossBattle();if(bossWin)overlay.classList.add('boss-win');
  if(playerAvatar){playerAvatar.classList.remove('celebrate','fallen');playerAvatar.classList.add(win?'celebrate':'fallen');}
@@ -1142,10 +1174,11 @@ document.querySelectorAll('[data-champion]').forEach(b=>b.addEventListener('clic
  champion=id;saveProfile();updateChampions();start();
 }));
 $('soundToggle').addEventListener('click',()=>{soundOn=!soundOn;$('soundToggle').textContent=soundOn?'🔊 Sound On · Music':'🔇 Sound Off';$('soundToggle').setAttribute('aria-pressed',String(soundOn));if(soundOn){getAudio();playSound('gift');startMusic();}else{stopMusic();if(audioCtx&&audioCtx.state==='running'){try{audioCtx.suspend();}catch(e){}}}});
-$('dailyReward').addEventListener('click',()=>{const today=new Date().toLocaleDateString('en-CA');if(profile.lastGift===today){say('🎁 Daily gift already claimed. Come back tomorrow!');return;}profile.lastGift=today;profile.coins+=50;profile.xp+=20;while(profile.xp>=profile.level*100){profile.xp-=profile.level*100;profile.level++;profile.coins+=50;}saveProfile();say('🎁 Daily gift claimed: +50 coins and +20 XP!');playSound('gift');beep(740,.16);});
+function claimDailyReward(){const today=localDateKey();if(profile.lastGift===today){say('🎁 Today’s reward is already claimed. Come back tomorrow!');return;}if(profile.lastGift){const parts=profile.lastGift.split('-').map(Number);if(parts.length===3&&parts.every(Number.isFinite)){const previous=new Date(Date.UTC(parts[0],parts[1]-1,parts[2]));previous.setUTCDate(previous.getUTCDate()+1);profile.dailyStreak=previous.toISOString().slice(0,10)===today?(Number(profile.dailyStreak)||0)+1:1;}else profile.dailyStreak=1;}else profile.dailyStreak=1;profile.lastGift=today;const reward=dailyRewardForStreak(profile.dailyStreak);profile.coins+=reward.coins;profile.xp+=reward.xp;let levels=0;while(profile.xp>=profile.level*100){profile.xp-=profile.level*100;profile.level++;profile.coins+=50;levels++;}saveProfile();renderDailyRewards();checkAchievements();say(`🎁 Day ${((profile.dailyStreak-1)%7)+1} reward claimed: +${reward.coins} coins and +${reward.xp} XP!${levels?` Level up! Bonus +${levels*50} coins.`:''}`);playSound('gift');beep(740,.16);}
+$('dailyReward').addEventListener('click',claimDailyReward);$('claimDailyReward').addEventListener('click',claimDailyReward);
 $('buyPower').addEventListener('click',()=>{const cost=40+profile.power*35;if(profile.power>=10||profile.coins<cost){say('Not enough coins for that Power Rune upgrade.');return;}profile.coins-=cost;profile.power++;saveProfile();say(`⚔️ Power Rune upgraded to level ${profile.power}. Match attacks are stronger!`);beep(520,.12);});
 $('buyVitality').addEventListener('click',()=>{const cost=40+profile.vitality*35;if(profile.vitality>=10||profile.coins<cost){say('Not enough coins for that Vitality Rune upgrade.');return;}profile.coins-=cost;profile.vitality++;saveProfile();say(`❤️ Vitality Rune upgraded to level ${profile.vitality}. Your max health increases next battle.`);beep(520,.12);});
-$('upgradeHero').addEventListener('click',()=>{const lvl=heroMasteryLevel(),cost=100+lvl*100;if(lvl>=5){say(CHAMPIONS[champion].name+' has reached maximum mastery!');return;}if(!profile.unlockedChampions.includes(champion)){say('Unlock this hero before training them.');return;}if(profile.coins<cost){say(`You need ${cost} coins to train ${CHAMPIONS[champion].name}. Win battles or claim your daily gift.`);return;}profile.coins-=cost;profile.heroLevels=profile.heroLevels||{};profile.heroLevels[champion]=lvl+1;saveProfile();updateChampions();say(`🌟 ${CHAMPIONS[champion].name} reached Mastery Level ${lvl+1}! +5% attack and +5 max health per level.`);playSound('magic');});
+$('upgradeHero').addEventListener('click',()=>{const lvl=heroMasteryLevel(),cost=[100,200,350,550,800][lvl]||800;if(lvl>=5){say(CHAMPIONS[champion].name+' has reached maximum mastery!');return;}if(!profile.unlockedChampions.includes(champion)){say('Unlock this hero before training them.');return;}if(profile.coins<cost){say(`You need ${cost} coins to train ${CHAMPIONS[champion].name}. Win battles or claim your daily gift.`);return;}profile.coins-=cost;profile.heroLevels=profile.heroLevels||{};profile.heroLevels[champion]=lvl+1;saveProfile();updateChampions();say(`🌟 ${CHAMPIONS[champion].name} reached Mastery Level ${lvl+1}! +5% attack and +5 max health per level.`);playSound('magic');});
 // The help dialog is declared after this script in the HTML. Wait until parsing
 // finishes before looking up its elements; otherwise null.addEventListener throws
 // and prevents the replay handler below from being registered.
@@ -1200,6 +1233,7 @@ const replayButton = $('playAgain');
 if (replayButton) replayButton.addEventListener('click', replayBattle);
 setupDisplayPreferences();
 try { renderCampaignMap(); start(); } catch (err) { console.error(err); const errBox=$('boardError'); if(errBox){errBox.style.display='block';errBox.textContent='Game startup error: '+(err && err.stack ? err.stack : String(err));} }
+renderDailyRewards();renderAchievements();
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) { window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(err => console.warn('Offline cache unavailable:', err))); }
 })();
 </script>
