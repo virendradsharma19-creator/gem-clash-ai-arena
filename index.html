@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 2.9.0 Dramatic Battle Effects</title>
+<title>Gem Clash: AI Arena — Build 3.0.1 Visible Adaptive AI</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -288,6 +288,11 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 @media(max-width:760px){.wrap{padding:8px}.layout{grid-template-columns:minmax(0,1fr);gap:10px}.panel{padding:10px}.board{gap:4px;padding:7px}.cell{border-radius:8px;font-size:clamp(1.25rem,6.2vw,2.2rem)}.combo-toast{max-width:94vw;white-space:normal;text-align:center}}
 @media(prefers-reduced-motion:reduce){#board.fx-bomb,#board.fx-lightning,#board.fx-prism{animation:none!important}}
 
+
+/* Build 3.0.1: make the rival's in-battle adaptation visible to the player. */
+.ai-adaptation{display:flex;align-items:center;gap:8px;margin:7px 0 8px;padding:7px 9px;border-radius:10px;border:1px solid #68eaff55;background:linear-gradient(100deg,#10213cdd,#25204bdd);box-shadow:inset 0 1px #ffffff10;transition:background .25s,border-color .25s}.ai-adaptation b{display:block;font-size:.62rem;letter-spacing:.08em;color:#8ff4ff}.ai-adaptation em{display:block;margin-top:2px;font-size:.68rem;line-height:1.25;font-style:normal;color:#e4e9ff}.ai-pulse{width:9px;height:9px;flex:0 0 9px;border-radius:50%;background:#63f4d2;box-shadow:0 0 0 4px #63f4d222,0 0 12px #63f4d2;animation:aiPulse 1.25s ease-in-out infinite}.ai-adaptation.counter-combo{border-color:#ffb34d99;background:linear-gradient(100deg,#3d241ddd,#3d2b18dd)}.ai-adaptation.counter-combo b{color:#ffd28b}.ai-adaptation.counter-special{border-color:#d89bff99;background:linear-gradient(100deg,#2c1b49dd,#1e2850dd)}.ai-adaptation.counter-special b{color:#e6baff}.ai-adaptation.pressure{border-color:#ff737399;background:linear-gradient(100deg,#451b2bdd,#30182bdd)}.ai-adaptation.pressure b{color:#ffaaaa}.ai-adaptation.tactical{border-color:#77e5b399;background:linear-gradient(100deg,#12382fdd,#172b45dd)}.ai-adaptation.tactical b{color:#9effce}@keyframes aiPulse{50%{opacity:.45;transform:scale(.78)}}
+@media(max-width:520px){.ai-adaptation{padding:6px 7px}.ai-adaptation em{font-size:.64rem}}
+
 </style>
 <meta name="theme-color" content="#10152b"><meta name="description" content="A colorful match-3 fantasy battle arena with three selectable arenas. Challenge rivals, unlock upgrades, and build your champion."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml">
 
@@ -337,7 +342,7 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 <body>
 <div id="comboToast" class="combo-toast" aria-live="polite" aria-atomic="true"></div>
 <div class="wrap">
-<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 2.8.1 · CLEARER EFFECTS & FOCUS LAYOUT</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn" id="dailyReward">🎁 Daily Gift</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
+<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 3.0.1 · VISIBLE ADAPTIVE AI</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn" id="dailyReward">🎁 Daily Gift</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
 <div class="layout">
 <section class="panel">
   <div class="stats">
@@ -351,7 +356,7 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
   <div class="battlehead" id="battlehead">
     <div class="fighter"><span class="avatar" id="playerAvatar">🧙</span><div class="fighter-info"><strong id="playerChampionName">You</strong><small id="playerChampionRole">Gem Guardian</small><div class="fighter-health"><div class="fighter-health-label"><span>YOU</span><b id="playerBattleHpText">100 / 100</b></div><div class="fighter-hp-track"><div class="fighter-hp-fill player-mini-hp" id="playerBattleHpBar"></div></div></div></div></div>
     <div class="battle-vs" aria-hidden="true">VS</div>
-    <div class="fighter"><span class="avatar" id="enemyAvatar">🔥</span><div class="fighter-info"><strong id="enemyName">Blaze</strong><small id="enemyStyle">Aggressive rival</small><div class="fighter-health"><div class="fighter-health-label"><span>RIVAL</span><b id="enemyBattleHpText">100 / 100</b></div><div class="fighter-hp-track"><div class="fighter-hp-fill enemy-mini-hp" id="enemyBattleHpBar"></div></div></div></div></div>
+    <div class="fighter"><span class="avatar" id="enemyAvatar">🔥</span><div class="fighter-info"><strong id="enemyName">Blaze</strong><small id="enemyStyle">Aggressive rival</small><div id="aiAdaptation" class="ai-adaptation" aria-live="polite"><span class="ai-pulse"></span><span><b>AI STATUS · STUDYING</b><em>Reading your moves</em></span></div><div class="fighter-health"><div class="fighter-health-label"><span>RIVAL</span><b id="enemyBattleHpText">100 / 100</b></div><div class="fighter-hp-track"><div class="fighter-hp-fill enemy-mini-hp" id="enemyBattleHpBar"></div></div></div></div></div>
   </div>
   <div class="boss-alert" id="bossAlert" role="status" aria-live="assertive">👑 BOSS ENCOUNTER<span class="boss-sub" id="bossAlertSub">A powerful enemy stands before you.</span></div>
   <div class="turnbanner"><span id="turnLabel" class="turnbadge">🟦 Your turn — drag or tap gems</span><span>Move time: <strong id="moveTimer" class="move-clock">10s</strong></span></div>
@@ -428,7 +433,7 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
   <div class="rules"><b>Progression:</b> Wins grant XP and coins; level-ups award bonus coins. Train each unlocked hero up to Mastery Level 5 for +5% attack and +5 max health per level. Hero mastery and your other progress save locally in this browser. <b>Combo chain:</b> matches that cascade trigger a big on-screen combo banner, board impact shake, and a rising damage bonus. Longer chains deal more damage and charge energy faster. <b>Craft special gems:</b> match 4 in a straight line for a glowing ⚡ Lightning Gem (horizontal or vertical), match 5 for 🌈 rainbow prism, or make a T/L-shaped match for 💣 blast bomb. Lightning clears a full row/column, the bomb blasts a 3×3 area, and swapping the rainbow prism with a gem clears that colour.</div>
 </aside>
 </div>
-<div class="footer">Gem Clash: AI Arena · Build 2.9.1 · Animated Special Gems</div>
+<div class="footer">Gem Clash: AI Arena · Build 3.0.1 · Visible Adaptive AI</div>
 </div>
 <div id="fxLayer" aria-hidden="true"></div>
 <div class="overlay" id="overlay" aria-live="assertive" aria-modal="true" role="dialog" aria-labelledby="resultTitle"><div class="modal result-modal"><div class="result-emblem" id="resultEmblem" aria-hidden="true">🏆</div><div class="result-kicker" id="resultKicker">BATTLE COMPLETE</div><h2 id="resultTitle">VICTORY!</h2><p id="resultText">You won the battle.</p><div class="result-rewards" id="resultRewards"><div class="reward-tile"><span>✨</span><small>XP EARNED</small><strong>+50</strong></div><div class="reward-tile"><span>💰</span><small>COINS EARNED</small><strong>+25</strong></div><div class="reward-tile"><span>🔥</span><small>BEST COMBO</small><strong>x3</strong></div></div><div class="result-profile" id="resultProfile"><div class="profile-result-card"><span>🛡️</span><div><small>GUARDIAN LEVEL</small><strong id="resultGuardianLevel">Level 1</strong><em id="resultGuardianXp">0 / 100 XP</em></div></div><div class="profile-result-card"><span>📖</span><div><small>BATTLE RECORD</small><strong id="resultBattleRecord">0 wins · 0 losses</strong><em>Saved on this device</em></div></div></div><div class="result-footer" id="resultFooter">Your legend grows stronger with every battle.</div><button class="primary result-play-again" id="playAgain" type="button">⚔️ BATTLE AGAIN</button></div></div>
@@ -523,6 +528,17 @@ const RIVALS={
  Nexus:{avatar:'🤖',style:'Adaptive rival',hp:100,attack:7,rate:0.70,ability:'Nexus reacts more often when you build big combos.'}
 };
 let board=[], selected=null, playerHp=100, enemyHp=100, enemyMaxHp=100, energy=0, seconds=120, timerId=null, busy=false, over=false, rival='Blaze', difficulty='Normal', comboBest=0, turnCount=0, arena='Citadel', champion='Mage', mode='Classic', moveSeconds=10, turnState='player', dragStart=null, suppressClickUntil=0, campaignMode=false, campaignStage=1, selectedCampaignStage=1;
+// Build 3.0.0: lightweight in-battle opponent adaptation (all local; no network or personal data).
+let playerStyle={bigCombos:0,largeMatches:0,specialUses:0,turnDamage:0};
+function updateAIAdaptation(){
+ const box=$('aiAdaptation');if(!box)return;let headline='AI STATUS · STUDYING',detail='Reading your moves and board patterns',cls='';
+ if(playerHp<=maxHealth()*.35){headline='AI STATUS · PRESSING ADVANTAGE';detail=rival==='Frost'?'Holding steady and choosing reliable pressure':'You are low on health — expect stronger pressure';cls='pressure';}
+ else if(playerStyle.specialUses>=2){headline='AI STATUS · COUNTERING SPECIALS';detail=rival==='Nexus'?'Hunting high-value clears and special-gem opportunities':rival==='Blaze'?'Prioritising larger, higher-damage matches':'Choosing steadier moves while you spend special gems';cls='counter-special';}
+ else if(playerStyle.bigCombos>=2||playerStyle.largeMatches>=3){headline='AI STATUS · COUNTERING COMBOS';detail=rival==='Nexus'?'Prioritising tactical clears and special-gem chances':rival==='Blaze'?'Escalating attack pressure to keep the fight close':'Favouring reliable matches and sustained pressure';cls='counter-combo';}
+ else if(enemyHp<=enemyMaxHp*.3){headline='AI STATUS · LAST-STAND TACTICS';detail='Rival is near defeat and will favour stronger available moves';cls='tactical';}
+ box.className='ai-adaptation '+cls;box.innerHTML=`<span class="ai-pulse"></span><span><b>${headline}</b><em>${detail}</em></span>`;
+}
+
 const CHAMPIONS={
  Mage:{icon:'🧙',name:'Mystic Mage',cost:0,hp:0,damage:1,desc:'Balanced magic user.'},
  Knight:{icon:'🛡️',name:'Iron Knight',cost:100,hp:20,damage:1,desc:'Starts each battle with +20 health.'},
@@ -606,7 +622,7 @@ function updateUI(){
  $('energyText').textContent=`${energy} / 100`;$('energyBar').style.width=energy+'%';
  $('ultimate').disabled=over||busy||energy<100;$('heal').disabled=over||busy||energy<60||playerHp>=maxHealth();if($('heroSkill')){$('heroSkill').disabled=over||busy||energy<40||turnState!=='player';const skillNames={Mage:'✨ ARCANE PULSE',Knight:'🛡️ SHIELD BASH',Ranger:'🏹 STAR VOLLEY',Phoenix:'🔥 FLAME BURST'};$('heroSkill').textContent=(skillNames[champion]||skillNames.Mage)+' · 40';}
  $('timer').textContent=`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`;if($('moveTimer'))$('moveTimer').textContent=turnState==='player'?`${moveSeconds}s`:(turnState==='enemy'?'AI…':'—');if($('turnLabel')){ $('turnLabel').textContent=turnState==='player'?'🟦 Your turn — make a match':turnState==='enemy'?`🔴 ${rival} is moving…`:'✨ Resolving match';$('turnLabel').className='turnbadge'+(turnState==='enemy'?' enemy':'');} 
- $('comboText').textContent=`Best combo: x${comboBest}`;updateProfileUI();
+ $('comboText').textContent=`Best combo: x${comboBest}`;updateAIAdaptation();updateProfileUI();
 }
 function say(t){$('log').textContent=t;}
 function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
@@ -785,6 +801,20 @@ function scoreAIMove(matches){
  if(rival==='Blaze')score+=matches.set.size*1.5;
  if(rival==='Frost'&&matches.set.size<=4)score+=3;
  if(rival==='Nexus'&&(matches.set.size>=5||[...matches.set].some(i=>{const cell=board[Math.floor(i/SIZE)][i%SIZE];return cell?.special;})))score+=12;
+ // Read the player's recent style and adjust rival priorities during this battle.
+ const specialCount=[...matches.set].filter(i=>{const cell=board[Math.floor(i/SIZE)][i%SIZE];return !!cell?.special;}).length;
+ if(playerStyle.bigCombos>=2){score+=Math.min(12,playerStyle.bigCombos*2);if(rival==='Nexus'&&matches.set.size>=4)score+=9;}
+ if(playerStyle.specialUses>=2){score+=specialCount*4;if(rival==='Nexus'&&specialCount)score+=10;}
+ if(playerStyle.largeMatches>=3&&matches.set.size>=4)score+=rival==='Blaze'?9:5;
+ // If the rival is close to defeat, choose higher-impact moves; if the player is low, attack styles press harder.
+ if(enemyHp<=enemyMaxHp*.3)score+=matches.set.size*2.5+(specialCount?8:0);
+ if(playerHp<=maxHealth()*.35&&rival==='Blaze')score+=7;
+ if(playerHp<=maxHealth()*.4&&rival==='Nexus'&&matches.set.size>=4)score+=8;
+ if(rival==='Frost'&&playerHp<=maxHealth()*.4&&matches.set.size<=4)score+=5; // Frost prefers reliable pressure over risky-looking large clears.
+ // Sharper, visible rival personalities: Blaze favours damage; Frost favours dependable moves; Nexus targets tactics.
+ if(rival==='Blaze'){score+=matches.set.size*2;if(playerHp<=maxHealth()*.5)score+=matches.set.size*1.5;}
+ if(rival==='Frost'&&matches.set.size<=5)score+=6;
+ if(rival==='Nexus'){if(specialCount>0)score+=14;if(matches.set.size>=5)score+=10;if(playerStyle.specialUses>=2&&matches.set.size>=4)score+=10;}
  return score;
 }
 function getAIMove(){
@@ -802,10 +832,10 @@ function getAIMove(){
   return pool[Math.floor(Math.random()*pool.length)];
  }
  if(difficulty==='Expert'){
-  const pool=moves.filter(m=>m.score>=moves[0].score*.9).slice(0,3);
+  const pool=moves.filter(m=>m.score>=moves[0].score*.97).slice(0,2);
   return pool[Math.floor(Math.random()*pool.length)];
  }
- const pool=moves.filter(m=>m.score>=moves[0].score*.78).slice(0,5);
+ const pool=moves.filter(m=>m.score>=moves[0].score*.88).slice(0,3);
  return pool[Math.floor(Math.random()*pool.length)];
 }
 // Build 2.8.4: reliable single-gesture drag, with pointer release handled at window level.
@@ -870,7 +900,7 @@ async function tap(r,c){
  await swapAndResolve(a,b);
 }
 async function prismSwap(prismPos,targetPos){
- if(over||busy)return;busy=true;setTurn('resolving');selected=null;
+ if(over||busy)return;playerStyle.specialUses++;busy=true;setTurn('resolving');selected=null;
  const prism=board[prismPos.r][prismPos.c], target=board[targetPos.r][targetPos.c]?.color||randColor();
  const clear=new Set([prismPos.r*SIZE+prismPos.c]);
  showBattleFx('prism','🌈 RAINBOW PRISM!','All gems matching this colour are being cleared!');
@@ -883,7 +913,7 @@ async function prismSwap(prismPos,targetPos){
  busy=false;render();turnCount++;if(!over){setTurn('enemy');await enemyTurn(turnCount);}checkEnd();
 }
 async function activateSwappedSpecial(specialPos,otherPos){
- if(over||busy)return;busy=true;setTurn('resolving');selected=null;
+ if(over||busy)return;playerStyle.specialUses++;busy=true;setTurn('resolving');selected=null;
  const special=board[specialPos.r][specialPos.c];
  if(!special?.special||special.special==='prism'){busy=false;return;}
  const clear=new Set([specialPos.r*SIZE+specialPos.c]);
@@ -929,6 +959,8 @@ async function resolveCascade(first,a,b){
  while(matches.set.size&&chain<7){
   animateMatches(matches);await sleep(430);
   chain++;comboBest=Math.max(comboBest,chain);
+  if(chain>=2)playerStyle.bigCombos++;
+  if((matches.groups||[]).some(g=>g.len>=4))playerStyle.largeMatches++;
   let spec=specialType(matches);let clear=new Set(matches.set);
   // Detonate special gems touched by a match.
   // Detonate any crafted gems touched by the match; iterate until chained blasts stop expanding.
@@ -977,6 +1009,11 @@ async function enemyTurn(turn){
  const profile=RIVALS[rival];let chance=profile.rate;
  if(difficulty==='Casual')chance*=.55;if(difficulty==='Expert')chance=Math.min(.98,chance*1.25);
  if(rival==='Nexus'&&comboBest>=3)chance=Math.min(.98,chance+.12);if(rival==='Nexus'&&turn>=4)chance=Math.min(.98,chance+.08);
+ // Adapt reaction tempo to what the player is doing, without exceeding the selected difficulty ceiling.
+ if(playerStyle.bigCombos>=2)chance+=rival==='Nexus'?.10:.04;
+ if(playerStyle.specialUses>=2)chance+=rival==='Nexus'?.08:.03;
+ if(playerHp<=maxHealth()*.35&&rival==='Blaze')chance+=.06;
+ if(difficulty==='Casual')chance=Math.min(.62,chance);else if(difficulty==='Normal')chance=Math.min(.90,chance);else chance=Math.min(.99,chance);
  if(mode==='Survival')chance=Math.min(.99,chance+.18);
  const move=getAIMove();
  if(move&&Math.random()<Math.min(.96,chance+.15)){
@@ -1088,7 +1125,7 @@ function renderCampaignMap(){
 }
 function launchCampaignStage(n){const st=CAMPAIGN_STAGES[n-1];if(!st||n>profile.campaignUnlocked)return;campaignMode=true;campaignStage=n;selectedCampaignStage=n;arena=st.arena;rival=st.rival;difficulty=st.difficulty;mode='Classic';applyArena();document.querySelectorAll('[data-rival]').forEach(b=>b.classList.toggle('active',b.dataset.rival===rival));document.querySelectorAll('[data-diff]').forEach(b=>b.classList.toggle('active',b.dataset.diff===difficulty));document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));updateModeStatus();renderCampaignMap();start();say(`${st.boss?'👑 BOSS MISSION: ':'📜 STORY MISSION: '} ${st.story} OBJECTIVE: ${st.objective} ${RIVALS[rival].ability}`);}
 function start(){
- applyArena();updateChampions();updateModeStatus();clearInterval(timerId);playerHp=maxHealth();enemyMaxHp=RIVALS[rival].hp;enemyHp=enemyMaxHp;if(campaignMode){const st=CAMPAIGN_STAGES[campaignStage-1];if(st&&st.boss)enemyMaxHp=Math.round(enemyMaxHp*1.75);else if(campaignStage>=7)enemyMaxHp=Math.round(enemyMaxHp*1.2);enemyHp=enemyMaxHp;}energy=0;seconds=mode==='TimeAttack'?75:mode==='Survival'?180:120;if(mode==='TimeAttack')enemyHp=Math.round(enemyHp*.8);comboBest=0;turnCount=0;selected=null;busy=false;over=false;
+ applyArena();updateChampions();updateModeStatus();clearInterval(timerId);playerHp=maxHealth();enemyMaxHp=RIVALS[rival].hp;enemyHp=enemyMaxHp;if(campaignMode){const st=CAMPAIGN_STAGES[campaignStage-1];if(st&&st.boss)enemyMaxHp=Math.round(enemyMaxHp*1.75);else if(campaignStage>=7)enemyMaxHp=Math.round(enemyMaxHp*1.2);enemyHp=enemyMaxHp;}energy=0;seconds=mode==='TimeAttack'?75:mode==='Survival'?180:120;if(mode==='TimeAttack')enemyHp=Math.round(enemyHp*.8);comboBest=0;turnCount=0;playerStyle={bigCombos:0,largeMatches:0,specialUses:0,turnDamage:0};selected=null;busy=false;over=false;updateAIAdaptation();
  $('overlay').classList.remove('show','result-win','result-lose');$('overlay').classList.remove('boss-win');['playerAvatar','enemyAvatar'].forEach(id=>{const el=$(id);if(el)el.classList.remove('celebrate','fallen');});const boss=bossIdentity();$('battlehead')?.classList.toggle('boss-arena',!!boss);const bossBox=$('bossAlert');if(bossBox){bossBox.classList.toggle('active',!!boss);bossBox.classList.remove('warning');bossBox.innerHTML=boss?`👑 ${boss.title}<span class="boss-sub">Boss battle · beware the special attack every third enemy turn</span>`:'';}setBattleHeroes();$('playerChampionName').textContent=CHAMPIONS[champion].name;$('playerChampionRole').textContent=CHAMPIONS[champion].desc;$('enemyName').textContent=boss?boss.name:rival;$('enemyStyle').textContent=boss?`BOSS · ${RIVALS[rival].style}`:RIVALS[rival].style;
  createBoard();setTurn('player');render();say(`${rival}: ${RIVALS[rival].ability}`);timerId=setInterval(()=>{if(over)return;seconds--;if(!busy&&turnState==='player'){moveSeconds--;if(moveSeconds<=0){setTurn('enemy');say(`⏱️ Time is up! ${rival} takes the turn.`);enemyTurn(turnCount+1);}}updateUI();if(seconds<=0)checkEnd();},1000);
 }
