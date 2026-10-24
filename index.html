@@ -227,6 +227,7 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
 @keyframes bossPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.22)}}
 @keyframes bossWarning{0%,100%{transform:scale(1)}50%{transform:scale(1.025);box-shadow:0 0 28px #ff8a4b88}}
 .boss-win .result-emblem{filter:drop-shadow(0 0 24px #ffb84e)!important;animation:bossTrophy .85s ease-in-out infinite alternate}
+body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defeatScreenFlash{0%,100%{filter:none}22%{filter:brightness(1.35) saturate(1.25)}45%{filter:brightness(.78) saturate(.8)}70%{filter:brightness(1.08)}}
 @keyframes bossTrophy{from{transform:translateY(0) rotate(-5deg) scale(1)}to{transform:translateY(-7px) rotate(5deg) scale(1.12)}}
 @media(prefers-reduced-motion:reduce){.boss-alert,.boss-win .result-emblem{animation:none!important}}
 
@@ -308,6 +309,28 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
 @keyframes demoPrismClear{0%,30%,100%{opacity:1;transform:scale(1)}48%,68%{opacity:.12;transform:scale(.4);filter:brightness(2)}}
 @media(max-width:560px){.gem-tutorial-grid{grid-template-columns:1fr}.tutorial-demo{height:60px}.gem-tutorial{display:grid;grid-template-columns:1fr;}}
 @media(prefers-reduced-motion:reduce){.tutorial-demo span,.tutorial-demo .demo-special{animation:none!important}.cell.drag-target{transform:none}}
+
+/* Build 2.9.3: cinematic victory and defeat celebrations */
+#overlay.result-win:before,#overlay.result-lose:before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;opacity:0}
+#overlay.result-win:before{background:radial-gradient(circle at 50% 42%,#fff4b866 0%,#ffca4530 22%,transparent 58%);animation:resultSpotlight 1.3s ease-out both}
+#overlay.result-lose:before{background:radial-gradient(ellipse at 50% 48%,#ff304b44 0%,#6b153622 40%,transparent 72%);animation:defeatVignette 1.2s ease-out both}
+#overlay.result-win .result-modal{animation:resultEnter .62s cubic-bezier(.18,.88,.24,1.18) both,resultGoldPulse 1.5s ease-in-out .55s 2}
+#overlay.result-lose .result-modal{animation:resultEnter .62s cubic-bezier(.18,.88,.24,1.18) both,resultDefeatShake .55s ease-out .3s 1}
+#overlay.result-win .result-emblem{animation:emblemPop .85s cubic-bezier(.16,1.4,.3,1) both,trophyFloat 1.4s ease-in-out .9s 2}
+#overlay.result-lose .result-emblem{animation:emblemPop .85s cubic-bezier(.16,1.4,.3,1) both,defeatEmblem .7s ease-out .7s 1}
+#overlay.boss-win .result-modal{border-color:#fff0a8;box-shadow:0 0 0 2px #ffe18a44,0 28px 100px #000d,0 0 100px #ffb72e88}
+#overlay.boss-win .result-emblem{filter:drop-shadow(0 0 25px #ffd166);animation:emblemPop .85s cubic-bezier(.16,1.4,.3,1) both,bossTrophy .8s ease-in-out .8s 3}
+@keyframes resultSpotlight{0%{opacity:0;transform:scale(.35)}35%{opacity:1}100%{opacity:.7;transform:scale(1.3)}}
+@keyframes defeatVignette{0%{opacity:0}35%{opacity:1}100%{opacity:.72}}
+@keyframes resultGoldPulse{0%,100%{filter:brightness(1)}45%{filter:brightness(1.13) saturate(1.16)}}
+@keyframes trophyFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.08)}}
+@keyframes defeatEmblem{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(4px) rotate(-8deg)}65%{transform:translateY(-2px) rotate(5deg)}}
+@keyframes resultDefeatShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+@keyframes bossTrophy{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.13) rotate(4deg)}}
+.result-spark{position:fixed;left:var(--x);top:var(--y);z-index:9001;pointer-events:none;font-size:var(--size,24px);line-height:1;filter:drop-shadow(0 0 8px var(--glow,#ffd166));animation:resultSparkFly var(--dur,1.4s) cubic-bezier(.12,.7,.2,1) forwards}
+@keyframes resultSparkFly{0%{opacity:0;transform:translate(-50%,-50%) scale(.15) rotate(0)}15%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(.35) rotate(var(--rot,180deg))}}
+@media(prefers-reduced-motion:reduce){#overlay.result-win:before,#overlay.result-lose:before,#overlay.result-win .result-modal,#overlay.result-lose .result-modal,#overlay.result-win .result-emblem,#overlay.result-lose .result-emblem,#overlay.boss-win .result-emblem,.result-spark{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+
 </style>
 
 </head>
@@ -457,7 +480,7 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
 [data-mark="RAINBOW"] { outline: 3px solid #ff4de1 !important; box-shadow: 0 0 0 3px #55f7ff, 0 0 16px 6px rgba(255,77,225,.95), inset 0 0 12px rgba(255,255,255,.9) !important; animation: prismCraftGlow 1s ease-in-out infinite alternate !important; position: relative; z-index: 2; }
 @keyframes prismCraftGlow { from { filter: saturate(1.2) brightness(1.05); } to { filter: saturate(1.8) brightness(1.45); } }
 
-/* Build 2.9.2: stronger cinematic special-gem animations, with no text banner. */
+/* Build 2.9.3: stronger cinematic special-gem animations, with no text banner. */
 .battle-visual-fx{position:fixed;inset:0;z-index:10030;pointer-events:none;display:grid;place-items:center;overflow:hidden;isolation:isolate}
 .battle-visual-fx:before{content:"";position:absolute;inset:0;opacity:0;background:radial-gradient(circle at center,#fff9 0,transparent 58%);animation:fxScreenFlash .72s ease-out forwards}
 .battle-visual-fx .fx-stage{position:relative;width:min(84vw,600px);height:min(84vw,600px);display:grid;place-items:center;isolation:isolate}
@@ -687,6 +710,28 @@ function championAbility(kind){
  else {const br=$('board').getBoundingClientRect();fxPoint(br.left+br.width*.5,br.top+br.height*.48,'fx-burst',c.color);}
 }
 function victoryConfetti(){const layer=fxLayer();if(!layer)return;const colors=['#ffd166','#5ee7ff','#ff6b8a','#8cf7c5','#c6a5ff','#fff'];for(let i=0;i<90;i++){const p=document.createElement('i');p.className='fx-confetti';p.style.setProperty('--x',(Math.random()*100)+'vw');p.style.setProperty('--fx',colors[i%colors.length]);p.style.setProperty('--w',(5+Math.random()*7)+'px');p.style.setProperty('--h',(7+Math.random()*12)+'px');p.style.setProperty('--dur',(1.6+Math.random()*1.8)+'s');p.style.setProperty('--drift',(Math.random()*220-110)+'px');p.style.setProperty('--rot',(Math.random()*360)+'deg');layer.appendChild(p);setTimeout(()=>p.remove(),3600);}}
+
+function resultCelebration(win,bossWin=false){
+ const layer=fxLayer();if(!layer)return;
+ const winIcons=bossWin?['👑','✨','🏆','⭐','💎']:['✨','⭐','🏆','💎','🎉'];
+ const loseIcons=['🔥','💨','✦','💔'];
+ const icons=win?winIcons:loseIcons;
+ const count=win?(bossWin?42:30):18;
+ for(let i=0;i<count;i++){
+  const p=document.createElement('span');p.className='result-spark';p.textContent=icons[i%icons.length];
+  p.style.setProperty('--x',(Math.random()*100)+'vw');p.style.setProperty('--y',(win?20+Math.random()*55:30+Math.random()*45)+'vh');
+  p.style.setProperty('--dx',(Math.random()*300-150)+'px');p.style.setProperty('--dy',(win?-(40+Math.random()*250):(60+Math.random()*180))+'px');
+  p.style.setProperty('--rot',(Math.random()*300-150)+'deg');p.style.setProperty('--size',(win?16+Math.random()*24:12+Math.random()*18)+'px');
+  p.style.setProperty('--dur',(win?1.1+Math.random()*1.2:.8+Math.random()*.9)+'s');p.style.setProperty('--glow',win?'#ffd166':'#ff526d');layer.appendChild(p);setTimeout(()=>p.remove(),2800);
+ }
+ if(win){
+  const colors=bossWin?['#ffe18a','#ff6b45','#c6a5ff','#5ee7ff']:['#ffe18a','#5ee7ff','#8cf7c5'];
+  for(let i=0;i<(bossWin?8:5);i++)setTimeout(()=>fxPoint(window.innerWidth*(.12+Math.random()*.76),window.innerHeight*(.18+Math.random()*.56),'fx-burst',colors[i%colors.length]),i*110);
+ }else{
+  document.body.classList.remove('defeat-flash');void document.body.offsetWidth;document.body.classList.add('defeat-flash');setTimeout(()=>document.body.classList.remove('defeat-flash'),650);
+ }
+}
+
 
 function getMatches(){
  const set=new Set(), groups=[];
@@ -989,6 +1034,7 @@ function endGame(win){
  $('resultFooter').textContent=campaignMode?(win?`Campaign reward: +${campaignBonus} bonus coins. ${campaignStage===9?'The Adventure Campaign is complete!':`Next: Stage ${Math.min(9,profile.campaignUnlocked)}.`}`:`Your campaign progress is safe. You can retry this stage or upgrade in the Armory.`):(win?(levelsGained?`LEVEL UP! You reached Level ${profile.level} and earned ${levelCoins} bonus coins.`:'Your legend grows stronger with every victory.'):`You still earned ${xpReward} XP. Every battle helps you grow.`);
  $('playAgain').disabled=false;$('playAgain').textContent=campaignMode?'⚔️ RETRY STAGE':'⚔️ BATTLE AGAIN';
  overlay.classList.add('show');
+ resultCelebration(win,bossWin);
  if(win){victoryConfetti();if(bossWin){for(let i=0;i<4;i++)setTimeout(()=>{fxPoint(window.innerWidth*(.2+Math.random()*.6),window.innerHeight*(.2+Math.random()*.45),'fx-burst',['#ffcf62','#ff694f','#c6a5ff','#fff18a'][i]);},i*180);say('🏆 LEGENDARY! The boss has fallen and the realm is safer.');}playSound('victory');}else{playSound('defeat');}
  stopMusic();updateUI();
 }
