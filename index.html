@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 3.1.1 Balanced Coin Economy</title>
+<title>Gem Clash: AI Arena — Build 3.1.2 Daily Rewards Visibility Fix</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -342,7 +342,7 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 <body>
 <div id="comboToast" class="combo-toast" aria-live="polite" aria-atomic="true"></div>
 <div class="wrap">
-<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 3.1.1 · BALANCED COIN ECONOMY</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn" id="dailyReward">🎁 Daily Gift</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
+<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 3.1.2 · DAILY REWARDS FIX</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn daily-nav" id="dailyReward" type="button">🎁 Daily Rewards</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
 <div class="layout">
 <section class="panel">
   <div class="stats">
@@ -366,6 +366,15 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
   <div class="log" id="log" aria-live="polite">Make your first match. Four gems create a ROW BLAST; five create a PRISM gem!</div>
 </section>
 <aside class="panel">
+  <section class="reward-panel" id="rewardsPanel" aria-labelledby="rewardsTitle">
+    <div class="reward-heading"><span class="reward-icon">🎁</span><div><h3 id="rewardsTitle">Daily Rewards</h3><p>Claim a gift each day and build your streak. Rewards are saved on this device.</p></div></div>
+    <div class="streak-summary"><span id="streakCount">🔥 Daily streak: 0 days</span><span id="nextRewardText">Today's gift: 10 coins + 20 XP</span></div>
+    <div class="streak-strip" id="streakStrip" aria-label="Seven day reward calendar"></div>
+    <button class="reward-claim" id="claimDailyReward" type="button">🎁 CLAIM TODAY'S REWARD</button>
+    <h3 style="font-size:16px;margin:18px 0 4px">🏅 Achievements</h3>
+    <p style="font-size:12px;color:#b9c7e9;margin:0">Complete goals to earn bonus coins.</p>
+    <div class="achievement-list" id="achievementList" aria-live="polite"></div>
+  </section>
   <section class="display-settings" aria-labelledby="displaySettingsTitle">
     <h3 id="displaySettingsTitle">🎛️ Battle Screen Layout</h3>
     <p>Choose optional panels to hide so the board and battle effects are easier to see. You can change these any time.</p>
@@ -376,15 +385,6 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
       <label><input type="checkbox" data-hide-panel="gemGuideGroup"> Hide Special Gems & Attacks guide</label>
     </div>
     <button class="topbtn" id="resetDisplaySettings" type="button">Show all panels</button>
-  </section>
-  <section class="reward-panel" id="rewardsPanel" aria-labelledby="rewardsTitle">
-    <div class="reward-heading"><span class="reward-icon">🎁</span><div><h3 id="rewardsTitle">Daily Rewards</h3><p>Claim a gift each day and build your streak. Rewards are saved on this device.</p></div></div>
-    <div class="streak-summary"><span id="streakCount">🔥 Daily streak: 0 days</span><span id="nextRewardText">Next gift: 50 coins + 20 XP</span></div>
-    <div class="streak-strip" id="streakStrip" aria-label="Seven day reward calendar"></div>
-    <button class="reward-claim" id="claimDailyReward" type="button">🎁 CLAIM TODAY'S REWARD</button>
-    <h3 style="font-size:16px;margin:18px 0 4px">🏅 Achievements</h3>
-    <p style="font-size:12px;color:#b9c7e9;margin:0">Complete goals to earn bonus coins.</p>
-    <div class="achievement-list" id="achievementList" aria-live="polite"></div>
   </section>
   <section class="campaign-panel" id="campaignPanel" aria-labelledby="campaignTitle">
     <div class="campaign-heading"><span class="campaign-icon">🗺️</span><div><h3 id="campaignTitle">Adventure Campaign</h3><p>Uncover the realm’s story, complete missions, and defeat the bosses.</p></div></div>
@@ -531,6 +531,9 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 
 /* Build 3.1.0: daily streak and achievement cards */
 .reward-panel{margin:0 0 16px;padding:16px;border:1px solid rgba(255,209,102,.3);border-radius:18px;background:linear-gradient(145deg,rgba(57,40,87,.94),rgba(20,31,58,.96));box-shadow:0 12px 30px rgba(0,0,0,.18)}
+.daily-nav{background:linear-gradient(100deg,#ffe18a,#ffb84d);color:#2b1b09;box-shadow:0 0 18px #ffd16644}
+.reward-panel.daily-focus{animation:dailyFocus 1.6s ease-out}
+@keyframes dailyFocus{0%,100%{box-shadow:0 12px 30px rgba(0,0,0,.18);border-color:rgba(255,209,102,.3)}25%,65%{box-shadow:0 0 0 4px #ffd16666,0 0 34px #ffd16666;border-color:#ffe18a}}
 .reward-heading{display:flex;gap:11px;align-items:center;margin-bottom:10px}.reward-heading .reward-icon{font-size:30px}.reward-heading h3{margin:0;font-size:18px}.reward-heading p{margin:3px 0 0;color:#b9c7e9;font-size:12px;line-height:1.45}
 .streak-strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin:12px 0}.streak-day{min-width:0;text-align:center;padding:7px 1px;border-radius:9px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.045);font-size:10px;color:#c6d2ef}.streak-day b{display:block;font-size:15px;margin-bottom:3px}.streak-day.claimed{border-color:#7ce8c2;background:rgba(66,210,158,.15);color:#b5ffe2}.streak-day.today{border-color:#ffd166;background:rgba(255,209,102,.14);color:#ffe6a0}.streak-summary{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:12px;color:#d8e2fb;margin:8px 0 10px}.reward-claim{width:100%;border:0;border-radius:12px;padding:12px;font-weight:900;color:#24203a;background:linear-gradient(100deg,#ffe18a,#ffb84d);cursor:pointer;box-shadow:0 5px 16px rgba(255,184,77,.17)}.reward-claim:disabled{opacity:.58;cursor:default;filter:saturate(.65)}
 .achievement-list{display:grid;gap:8px;margin-top:12px}.achievement-card{display:grid;grid-template-columns:38px 1fr auto;gap:9px;align-items:center;padding:10px;border-radius:12px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}.achievement-card.unlocked{border-color:rgba(124,232,194,.5);background:rgba(48,160,124,.12)}.achievement-icon{font-size:25px;text-align:center}.achievement-copy b{display:block;font-size:12px;color:#f0f4ff}.achievement-copy small{display:block;font-size:11px;line-height:1.4;color:#aebcdd;margin-top:3px}.achievement-progress{font-size:10px;color:#ffe18a;white-space:nowrap;font-weight:800}.achievement-card.unlocked .achievement-progress{color:#8df2c7}
@@ -1175,7 +1178,7 @@ document.querySelectorAll('[data-champion]').forEach(b=>b.addEventListener('clic
 }));
 $('soundToggle').addEventListener('click',()=>{soundOn=!soundOn;$('soundToggle').textContent=soundOn?'🔊 Sound On · Music':'🔇 Sound Off';$('soundToggle').setAttribute('aria-pressed',String(soundOn));if(soundOn){getAudio();playSound('gift');startMusic();}else{stopMusic();if(audioCtx&&audioCtx.state==='running'){try{audioCtx.suspend();}catch(e){}}}});
 function claimDailyReward(){const today=localDateKey();if(profile.lastGift===today){say('🎁 Today’s reward is already claimed. Come back tomorrow!');return;}if(profile.lastGift){const parts=profile.lastGift.split('-').map(Number);if(parts.length===3&&parts.every(Number.isFinite)){const previous=new Date(Date.UTC(parts[0],parts[1]-1,parts[2]));previous.setUTCDate(previous.getUTCDate()+1);profile.dailyStreak=previous.toISOString().slice(0,10)===today?(Number(profile.dailyStreak)||0)+1:1;}else profile.dailyStreak=1;}else profile.dailyStreak=1;profile.lastGift=today;const reward=dailyRewardForStreak(profile.dailyStreak);profile.coins+=reward.coins;profile.xp+=reward.xp;let levels=0;while(profile.xp>=profile.level*100){profile.xp-=profile.level*100;profile.level++;profile.coins+=50;levels++;}saveProfile();renderDailyRewards();checkAchievements();say(`🎁 Day ${((profile.dailyStreak-1)%7)+1} reward claimed: +${reward.coins} coins and +${reward.xp} XP!${levels?` Level up! Bonus +${levels*50} coins.`:''}`);playSound('gift');beep(740,.16);}
-$('dailyReward').addEventListener('click',claimDailyReward);$('claimDailyReward').addEventListener('click',claimDailyReward);
+$('dailyReward').addEventListener('click',()=>{const panel=$('rewardsPanel');if(panel){panel.scrollIntoView({behavior:'smooth',block:'start'});panel.classList.remove('daily-focus');void panel.offsetWidth;panel.classList.add('daily-focus');setTimeout(()=>panel.classList.remove('daily-focus'),1700);}});$('claimDailyReward').addEventListener('click',claimDailyReward);
 $('buyPower').addEventListener('click',()=>{const cost=40+profile.power*35;if(profile.power>=10||profile.coins<cost){say('Not enough coins for that Power Rune upgrade.');return;}profile.coins-=cost;profile.power++;saveProfile();say(`⚔️ Power Rune upgraded to level ${profile.power}. Match attacks are stronger!`);beep(520,.12);});
 $('buyVitality').addEventListener('click',()=>{const cost=40+profile.vitality*35;if(profile.vitality>=10||profile.coins<cost){say('Not enough coins for that Vitality Rune upgrade.');return;}profile.coins-=cost;profile.vitality++;saveProfile();say(`❤️ Vitality Rune upgraded to level ${profile.vitality}. Your max health increases next battle.`);beep(520,.12);});
 $('upgradeHero').addEventListener('click',()=>{const lvl=heroMasteryLevel(),cost=[100,200,350,550,800][lvl]||800;if(lvl>=5){say(CHAMPIONS[champion].name+' has reached maximum mastery!');return;}if(!profile.unlockedChampions.includes(champion)){say('Unlock this hero before training them.');return;}if(profile.coins<cost){say(`You need ${cost} coins to train ${CHAMPIONS[champion].name}. Win battles or claim your daily gift.`);return;}profile.coins-=cost;profile.heroLevels=profile.heroLevels||{};profile.heroLevels[champion]=lvl+1;saveProfile();updateChampions();say(`🌟 ${CHAMPIONS[champion].name} reached Mastery Level ${lvl+1}! +5% attack and +5 max health per level.`);playSound('magic');});
