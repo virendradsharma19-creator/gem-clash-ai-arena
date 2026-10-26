@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 3.1.2 Daily Rewards Visibility Fix</title>
+<title>Gem Clash: AI Arena — Build 3.3.0 Gem Size Restore Fix</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -25,7 +25,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px;fl
 .cell.empty{opacity:.35}
 .cell{touch-action:none;cursor:grab}.cell.drag-source{outline:3px solid var(--cyan);transform:scale(.92);filter:brightness(1.4)}
 .cell.match-three{animation:matchBurst .42s ease-in-out both;z-index:2}.cell.match-four{animation:matchBurst .5s ease-in-out both;z-index:2;box-shadow:0 0 0 3px var(--gold),0 0 24px #ffd166,inset 0 0 15px #fff8}
-@keyframes matchBurst{0%{transform:scale(1);filter:brightness(1)}35%{transform:scale(1.18) rotate(-5deg);filter:brightness(2.2)}70%{transform:scale(.88) rotate(5deg);filter:brightness(1.7)}100%{transform:scale(0);opacity:.15}}
+@keyframes matchBurst{0%{transform:scale(1);filter:brightness(1)}35%{transform:scale(1.18) rotate(-5deg);filter:brightness(2.2)}70%{transform:scale(.88) rotate(5deg);filter:brightness(1.7)}100%{transform:scale(.82);opacity:.28}}
 .turnbanner{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#111832;border:1px solid #35436f;border-radius:12px;padding:8px 10px;margin:0 0 10px;font-weight:800;font-size:.88rem}
 .turnbadge{color:var(--cyan)}.turnbadge.enemy{color:#ff9c9c}.move-clock{font-variant-numeric:tabular-nums;color:var(--gold);font-size:1.05rem}
 .board.enemy-thinking{box-shadow:0 0 0 2px #ff657b,0 0 22px #ff657b55;border-radius:13px}
@@ -259,7 +259,7 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 .special-fx-banner.fx-bomb{--fx-accent:#ff9b57;background:radial-gradient(circle,#793a25f5,#15142df5)}.special-fx-banner.fx-lightning{--fx-accent:#8af7ff;background:radial-gradient(circle,#174f8cf5,#10152ff5)}.special-fx-banner.fx-prism{--fx-accent:#f09cff;background:radial-gradient(circle,#623d8df5,#15142ff5)}.special-fx-banner.fx-combo{--fx-accent:#ffe18a}
 @keyframes specialFxPop{0%{opacity:0;transform:translate(-50%,-40%) scale(.55)}12%,68%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-62%) scale(.96)}}
 #board.fx-shake{animation:boardFxShake .42s ease-out both;filter:brightness(1.28) saturate(1.4);box-shadow:0 0 0 3px #ffffff80,0 0 35px var(--board-fx,#8af7ff)!important}
-#board.fx-bomb{--board-fx:#ff9855}#board.fx-lightning{--board-fx:#8af7ff}#board.fx-prism{--board-fx:#ed9cff}
+#board.fx-bomb{--board-fx:#ff9855}#board.board-fx-lightning{--board-fx:#8af7ff}#board.fx-prism{--board-fx:#ed9cff}
 @keyframes boardFxShake{0%,100%{transform:translateX(0) scale(1)}15%{transform:translateX(-5px) scale(1.015)}30%{transform:translateX(5px) scale(1.02)}45%{transform:translateX(-4px)}60%{transform:translateX(4px)}75%{transform:translateX(-2px)}}
 .cell.special[data-mark="BOMB"],.cell.special[data-mark="CROSS"]{animation:bombGemPulse .55s ease-in-out infinite alternate;border:3px solid #ffc18a;box-shadow:0 0 10px #ff9855,0 0 26px #ff7138,inset 0 0 14px #fff!important}
 @keyframes bombGemPulse{from{filter:brightness(1);transform:scale(1)}to{filter:brightness(1.65);transform:scale(1.08)}}
@@ -277,7 +277,7 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 @keyframes bombCharge{from{filter:brightness(1);box-shadow:inset 0 0 0 2px #ffd166,0 0 12px #ff7b45aa,0 4px 0 #080d1d}to{filter:brightness(1.6);box-shadow:inset 0 0 0 3px #fff2b5,0 0 28px #ff623dcc,0 0 44px #ffb34788,0 4px 0 #080d1d}}
 .cell.special[data-mark="RAINBOW PRISM"],.cell.special[data-mark="PRISM"]{box-shadow:inset 0 0 0 2px #fff,0 0 18px #e7a0ff,0 0 30px #68eaff99,0 4px 0 #080d1d}
 #board.fx-bomb{animation:bigBombShock .65s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 0 3px #fff2a8,0 0 28px #ff6c36,0 0 62px #ffb347,inset 0 0 32px #ff7b45!important}
-#board.fx-lightning{animation:bigLightningShock .6s ease-out;box-shadow:0 0 0 3px #eaffff,0 0 30px #7df5ff,0 0 64px #399eff,inset 0 0 30px #75f5ff!important}
+#board.board-fx-lightning{animation:bigLightningShock .6s ease-out;box-shadow:0 0 0 3px #eaffff,0 0 30px #7df5ff,0 0 64px #399eff,inset 0 0 30px #75f5ff!important}
 #board.fx-prism{animation:bigPrismWave .85s ease-out;box-shadow:0 0 0 3px #fff,0 0 28px #ed9cff,0 0 70px #9c7bff,inset 0 0 35px #f09cff!important}
 #board.fx-combo{box-shadow:0 0 0 3px #ffe18a,0 0 34px #ffb84d,0 0 70px #ff6f4b!important}
 @keyframes bigBombShock{0%{transform:scale(1);filter:brightness(1)}18%{transform:scale(1.035);filter:brightness(2.1)}42%{transform:translateX(-7px) scale(1.02);filter:brightness(1.7)}62%{transform:translateX(6px) scale(1.015)}100%{transform:scale(1);filter:brightness(1)}}
@@ -286,12 +286,170 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 .combo-toast{font-size:clamp(1.15rem,4vw,2rem);padding:16px 26px;border-width:3px;text-shadow:0 0 12px #fff,0 2px 4px #000;box-shadow:0 0 0 5px #ffcf4544,0 12px 46px #ff7b28bb,0 0 55px #ffe18a88}
 .special-fx-banner{font-size:clamp(1.1rem,4vw,1.7rem);padding:16px 24px;border-width:3px;box-shadow:0 0 0 5px #ffffff22,0 0 35px var(--fx-accent,#ffe18a),0 0 70px var(--fx-accent,#ffe18a)}
 @media(max-width:760px){.wrap{padding:8px}.layout{grid-template-columns:minmax(0,1fr);gap:10px}.panel{padding:10px}.board{gap:4px;padding:7px}.cell{border-radius:8px;font-size:clamp(1.25rem,6.2vw,2.2rem)}.combo-toast{max-width:94vw;white-space:normal;text-align:center}}
-@media(prefers-reduced-motion:reduce){#board.fx-bomb,#board.fx-lightning,#board.fx-prism{animation:none!important}}
+@media(prefers-reduced-motion:reduce){#board.fx-bomb,#board.board-fx-lightning,#board.fx-prism{animation:none!important}}
 
 
 /* Build 3.0.1: make the rival's in-battle adaptation visible to the player. */
 .ai-adaptation{display:flex;align-items:center;gap:8px;margin:7px 0 8px;padding:7px 9px;border-radius:10px;border:1px solid #68eaff55;background:linear-gradient(100deg,#10213cdd,#25204bdd);box-shadow:inset 0 1px #ffffff10;transition:background .25s,border-color .25s}.ai-adaptation b{display:block;font-size:.62rem;letter-spacing:.08em;color:#8ff4ff}.ai-adaptation em{display:block;margin-top:2px;font-size:.68rem;line-height:1.25;font-style:normal;color:#e4e9ff}.ai-pulse{width:9px;height:9px;flex:0 0 9px;border-radius:50%;background:#63f4d2;box-shadow:0 0 0 4px #63f4d222,0 0 12px #63f4d2;animation:aiPulse 1.25s ease-in-out infinite}.ai-adaptation.counter-combo{border-color:#ffb34d99;background:linear-gradient(100deg,#3d241ddd,#3d2b18dd)}.ai-adaptation.counter-combo b{color:#ffd28b}.ai-adaptation.counter-special{border-color:#d89bff99;background:linear-gradient(100deg,#2c1b49dd,#1e2850dd)}.ai-adaptation.counter-special b{color:#e6baff}.ai-adaptation.pressure{border-color:#ff737399;background:linear-gradient(100deg,#451b2bdd,#30182bdd)}.ai-adaptation.pressure b{color:#ffaaaa}.ai-adaptation.tactical{border-color:#77e5b399;background:linear-gradient(100deg,#12382fdd,#172b45dd)}.ai-adaptation.tactical b{color:#9effce}@keyframes aiPulse{50%{opacity:.45;transform:scale(.78)}}
 @media(max-width:520px){.ai-adaptation{padding:6px 7px}.ai-adaptation em{font-size:.64rem}}
+
+
+/* Build 3.1.3: square jewel tiles and square colour gems */
+.cell{border-radius:5px!important;border:2px solid #b8cfff88!important;background:linear-gradient(145deg,#34446f,#111a36)!important;box-shadow:inset 0 1px 2px #ffffff2e,inset 0 -4px 0 #050a18aa,0 3px 0 #070b19,0 0 0 1px #080e22!important;overflow:hidden}
+.cell:not(.special){font-size:clamp(1.2rem,4vw,2.1rem);text-shadow:0 0 8px #ffffff55,0 2px 3px #0008}
+.cell:not(.special)::before{content:"";position:absolute;inset:5px;border:1px solid #ffffff65;border-radius:3px;pointer-events:none;box-shadow:inset 0 0 9px #ffffff24}
+.cell:not(.special)::after{content:"";position:absolute;left:10px;top:8px;width:35%;height:22%;background:linear-gradient(90deg,#ffffff9c,transparent);transform:skewX(-30deg);border-radius:2px;pointer-events:none}
+@media(max-width:760px){.cell{border-radius:4px!important}.cell:not(.special)::before{inset:3px}}
+/* Build 3.1.4: large, jewel-cut square gems that fill almost the entire cell. */
+.cell:not(.special){position:relative;color:transparent!important;font-size:0!important;padding:0!important;isolation:isolate;border:1px solid #d8e6ff!important;background:linear-gradient(145deg,#263554,#10182e)!important;overflow:hidden;border-radius:5px!important;box-shadow:inset 0 1px 2px #ffffff35,0 3px 0 #070b19!important}
+.cell:not(.special)::before{content:"";position:absolute;inset:3px!important;border-radius:3px!important;border:2px solid #ffffff75;box-shadow:inset 0 0 0 1px #08152a55,inset 0 0 12px #ffffff35,0 0 7px var(--gem-glow);background:var(--gem-fill);pointer-events:none;z-index:0}
+.cell:not(.special)::after{content:"";position:absolute;left:7px;top:6px;width:48%;height:30%;background:linear-gradient(135deg,#ffffffd9,#ffffff22 70%,transparent);clip-path:polygon(0 0,100% 0,72% 100%,18% 100%);border-radius:2px;pointer-events:none;z-index:1;box-shadow:none}
+.cell:not(.special)[data-gem-color="🟥"],.cell:not(.special)[data-gem-color="🔴"],.cell:not(.special)[data-gem-color="red"]{--gem-fill:linear-gradient(135deg,#ff8b91 0%,#ff343e 35%,#c90028 72%,#7c0926 100%);--gem-glow:#ff344d}
+.cell:not(.special)[data-gem-color="🟦"],.cell:not(.special)[data-gem-color="🔵"],.cell:not(.special)[data-gem-color="blue"]{--gem-fill:linear-gradient(135deg,#a3f4ff 0%,#22baff 32%,#1264f3 68%,#142e9a 100%);--gem-glow:#26aaff}
+.cell:not(.special)[data-gem-color="🟩"],.cell:not(.special)[data-gem-color="🟢"],.cell:not(.special)[data-gem-color="green"]{--gem-fill:linear-gradient(135deg,#b4ffc2 0%,#34ed83 32%,#08a84d 70%,#075a42 100%);--gem-glow:#35ff9a}
+.cell:not(.special)[data-gem-color="🟨"],.cell:not(.special)[data-gem-color="🟡"],.cell:not(.special)[data-gem-color="yellow"]{--gem-fill:linear-gradient(135deg,#fff5a0 0%,#ffcf32 35%,#f39b08 72%,#9b4c0a 100%);--gem-glow:#ffcb3d}
+.cell:not(.special)[data-gem-color="🟪"],.cell:not(.special)[data-gem-color="🟣"],.cell:not(.special)[data-gem-color="purple"]{--gem-fill:linear-gradient(135deg,#ffd0ff 0%,#d65cff 34%,#8d24e8 70%,#47128d 100%);--gem-glow:#d45cff}
+.cell:not(.special)[data-gem-color="🟧"],.cell:not(.special)[data-gem-color="🟠"],.cell:not(.special)[data-gem-color="orange"]{--gem-fill:linear-gradient(135deg,#ffe0a3 0%,#ff8c37 34%,#ed4b1d 70%,#9c241b 100%);--gem-glow:#ff8a3d}
+.cell:not(.special)[data-gem-color="R"]{--gem-fill:linear-gradient(135deg,#ff8b91,#ff343e 40%,#9b1537);--gem-glow:#ff344d}
+.cell:not(.special)[data-gem-color="B"]{--gem-fill:linear-gradient(135deg,#a3f4ff,#22baff 40%,#142e9a);--gem-glow:#26aaff}
+.cell:not(.special)[data-gem-color="G"]{--gem-fill:linear-gradient(135deg,#b4ffc2,#34ed83 40%,#075a42);--gem-glow:#35ff9a}
+.cell:not(.special)[data-gem-color="Y"]{--gem-fill:linear-gradient(135deg,#fff5a0,#ffcf32 40%,#9b4c0a);--gem-glow:#ffcb3d}
+.cell:not(.special)[data-gem-color="P"]{--gem-fill:linear-gradient(135deg,#ffd0ff,#d65cff 40%,#47128d);--gem-glow:#d45cff}
+.cell:not(.special)[data-gem-color="O"]{--gem-fill:linear-gradient(135deg,#ffe0a3,#ff8c37 40%,#9c241b);--gem-glow:#ff8a3d}
+.cell.special{z-index:1}
+@media(max-width:760px){.cell:not(.special)::before{inset:2px!important}.cell:not(.special)::after{left:5px;top:5px}}
+
+/* Build 3.1.5 — jewel-cut gems closely fill each board cell */
+.cell:not(.special){
+  position:relative; isolation:isolate; overflow:hidden;
+  width:100%; height:100%; min-height:0; padding:0;
+  border-radius:8px !important; border:2px solid #d8e8ff !important;
+  color:transparent !important; font-size:0 !important; line-height:0;
+  box-sizing:border-box;
+  background:var(--gem-base,#2788ef) !important;
+  box-shadow: inset 0 0 0 1px #ffffff65, inset 0 -5px 0 #06122b65, 0 2px 0 #070d1d !important;
+}
+.cell:not(.special)::before{
+  content:""; position:absolute; inset:3px; border-radius:4px;
+  background:linear-gradient(135deg,#ffffffd9 0%,#ffffff42 13%,transparent 28%,transparent 65%,#00000020 100%);
+  clip-path:polygon(0 0,100% 0,100% 100%,0 100%);
+  border:1px solid #ffffff9c; box-shadow:inset 0 0 0 1px #ffffff42;
+  pointer-events:none;
+}
+.cell:not(.special)::after{
+  content:""; position:absolute; inset:9%;
+  background:linear-gradient(135deg,#ffffff55 0%,transparent 38%,#00000015 100%);
+  clip-path:polygon(0 0,100% 0,100% 100%,0 100%);
+  border:1px solid #ffffff45; pointer-events:none;
+}
+.cell[data-gem-color="🟥"]{--gem-base:linear-gradient(145deg,#ff8a88 0%,#ff303c 42%,#b50932 100%) !important;border-color:#ff9ba0 !important;}
+.cell[data-gem-color="🟦"]{--gem-base:linear-gradient(145deg,#8cf5ff 0%,#16a9ff 42%,#1746d8 100%) !important;border-color:#a3f6ff !important;}
+.cell[data-gem-color="🟩"]{--gem-base:linear-gradient(145deg,#b6ff9d 0%,#29dc75 42%,#07834c 100%) !important;border-color:#b7ffd2 !important;}
+.cell[data-gem-color="🟨"]{--gem-base:linear-gradient(145deg,#fff6a0 0%,#ffc52f 42%,#d96b0b 100%) !important;border-color:#fff0a3 !important;}
+.cell[data-gem-color="🟪"]{--gem-base:linear-gradient(145deg,#ffc5ff 0%,#c34bff 42%,#6d22c8 100%) !important;border-color:#f2b8ff !important;}
+.cell[data-gem-color="🟧"]{--gem-base:linear-gradient(145deg,#ffd0a0 0%,#ff7a22 42%,#d83220 100%) !important;border-color:#ffd1a0 !important;}
+.cell.special{width:100%;height:100%;box-sizing:border-box;border-radius:8px!important;}
+.cell.special[data-mark="BOMB"],.cell.special[data-mark="CROSS"],.cell.special[data-mark="ROW BLAST"]{font-size:clamp(1.5rem,4.2vw,2.4rem)!important;}
+@media(max-width:760px){.cell:not(.special){border-radius:6px!important}.cell:not(.special)::before{inset:2px}.cell:not(.special)::after{inset:8%}}
+
+
+/* Build 3.1.6 — detailed faceted jewel artwork: broad gems, bevels and visible cut planes */
+.cell:not(.special){
+  position:relative!important; overflow:hidden!important; isolation:isolate;
+  padding:0!important; font-size:0!important; color:transparent!important;
+  border:2px solid var(--jewel-edge,#8feaff)!important; border-radius:6px!important;
+  background:linear-gradient(145deg,#1a2542,#080f25)!important;
+  box-shadow:inset 0 1px 0 #ffffff9c,inset 0 -4px 0 #020817a8,0 3px 0 #050b19,0 0 7px var(--jewel-glow,#44cfff66)!important;
+}
+.cell:not(.special)::before{
+  content:"";position:absolute;inset:3px!important;z-index:0;pointer-events:none;
+  border:1px solid #ffffffb8;border-radius:3px!important;
+  background:
+    linear-gradient(135deg,transparent 0 48.8%,#ffffffa8 49.5%,#ffffff2c 50.5%,transparent 51.2%),
+    linear-gradient(45deg,transparent 0 48.8%,#07112e55 49.5%,#ffffff45 50.5%,transparent 51.2%),
+    linear-gradient(155deg,#ffffffb8 0%,#ffffff35 13%,transparent 26% 68%,#00000035 100%),
+    var(--jewel-fill,linear-gradient(135deg,#8ff 0%,#168bff 48%,#102a86 100%));
+  box-shadow:inset 0 0 0 1px #ffffff48,inset 0 -5px 8px #06102e55,0 0 9px var(--jewel-glow,#44cfff55);
+  clip-path:polygon(0 0,100% 0,100% 100%,0 100%);
+}
+.cell:not(.special)::after{
+  content:"";position:absolute;inset:7%!important;z-index:1;pointer-events:none;
+  border-radius:2px;
+  background:
+    linear-gradient(135deg,#ffffffb8 0%,#ffffff4c 18%,transparent 19%),
+    linear-gradient(225deg,transparent 0 55%,#00000028 56% 100%),
+    linear-gradient(45deg,transparent 0 48%,#ffffff58 49%,transparent 51%);
+  clip-path:polygon(0 0,78% 0,100% 22%,100% 100%,22% 100%,0 78%);
+  box-shadow:inset 0 0 0 1px #ffffff58;
+}
+.cell[data-gem-color="🟥"],.cell[data-gem-color="🔴"],.cell[data-gem-color="red"],.cell[data-gem-color="R"]{--jewel-fill:linear-gradient(135deg,#ffb2b0 0%,#ff6264 17%,#fa263e 42%,#c90032 72%,#6e0927 100%);--jewel-edge:#ffb5b3;--jewel-glow:#ff344d;}
+.cell[data-gem-color="🟦"],.cell[data-gem-color="🔵"],.cell[data-gem-color="blue"],.cell[data-gem-color="B"]{--jewel-fill:linear-gradient(135deg,#d3ffff 0%,#75eaff 17%,#159eff 42%,#174de5 72%,#111e77 100%);--jewel-edge:#a9f6ff;--jewel-glow:#26aaff;}
+.cell[data-gem-color="🟩"],.cell[data-gem-color="🟢"],.cell[data-gem-color="green"],.cell[data-gem-color="G"]{--jewel-fill:linear-gradient(135deg,#e2ffd0 0%,#8dffb1 17%,#27d977 42%,#078c4b 72%,#06432f 100%);--jewel-edge:#baffce;--jewel-glow:#35ff9a;}
+.cell[data-gem-color="🟨"],.cell[data-gem-color="🟡"],.cell[data-gem-color="yellow"],.cell[data-gem-color="Y"]{--jewel-fill:linear-gradient(135deg,#fffbd0 0%,#ffed79 17%,#ffc52e 42%,#ee8a0b 72%,#82400a 100%);--jewel-edge:#fff2a5;--jewel-glow:#ffcb3d;}
+.cell[data-gem-color="🟪"],.cell[data-gem-color="🟣"],.cell[data-gem-color="purple"],.cell[data-gem-color="P"]{--jewel-fill:linear-gradient(135deg,#ffe3ff 0%,#f6a3ff 17%,#ca4cff 42%,#8120d9 72%,#35106c 100%);--jewel-edge:#f3baff;--jewel-glow:#d45cff;}
+.cell[data-gem-color="🟧"],.cell[data-gem-color="🟠"],.cell[data-gem-color="orange"],.cell[data-gem-color="O"]{--jewel-fill:linear-gradient(135deg,#fff0ca 0%,#ffc17b 17%,#ff812d 42%,#e8471e 72%,#7d201a 100%);--jewel-edge:#ffd2a2;--jewel-glow:#ff8a3d;}
+@media(max-width:760px){.cell:not(.special)::before{inset:2px!important}.cell:not(.special)::after{inset:6%!important}}
+
+
+/* Build 3.1.9 — distinctive cut patterns for every standard gem colour */
+.cell:not(.special){border-color:var(--facet-edge,#d9efff)!important;box-shadow:inset 0 0 0 1px #ffffff70,inset 0 -4px 0 #06122b70,0 2px 0 #060b18!important}
+.cell:not(.special)::before{
+  inset:2px!important;border:1px solid var(--facet-edge,#ffffffb0)!important;
+  border-radius:3px!important;
+  background:
+    linear-gradient(135deg,transparent 0 48%,#ffffffb8 49% 50%,transparent 51%),
+    linear-gradient(45deg,transparent 0 48%,#07112c70 49% 50%,transparent 51%),
+    var(--facet-pattern,linear-gradient(135deg,#fff8,#fff0 45%,#0005)),
+    var(--gem-fill)!important;
+  box-shadow:inset 0 0 0 1px #ffffff80,inset 0 0 10px #ffffff30,0 0 6px var(--gem-glow)!important;
+  clip-path:polygon(8% 2%,92% 2%,98% 10%,98% 90%,90% 98%,10% 98%,2% 90%,2% 10%);
+}
+.cell:not(.special)::after{
+  left:2px!important;top:2px!important;width:calc(100% - 4px)!important;height:calc(100% - 4px)!important;
+  background:var(--facet-overlay,linear-gradient(135deg,#ffffff90,transparent 35%,#0003))!important;
+  clip-path:var(--facet-cut,polygon(0 0,100% 0,70% 35%,50% 50%,15% 35%))!important;
+  opacity:.96!important;border-radius:0!important;transform:none!important;
+}
+/* Ruby: sharp triangular crown and deep lower facets */
+.cell[data-gem-color="🟥"],.cell[data-gem-color="🔴"],.cell[data-gem-color="red"],.cell[data-gem-color="R"]{--facet-edge:#ffb2c0;--facet-pattern:conic-gradient(from 225deg at 50% 48%,#ffb7bd 0 12%,#ff3c55 12% 25%,#a9002c 25% 38%,#ff6874 38% 50%,#d20a39 50% 63%,#760b2b 63% 75%,#ff4c64 75% 88%,#ffd4d6 88%);--facet-overlay:linear-gradient(150deg,#fff 0 2%,transparent 22%),linear-gradient(30deg,transparent 0 52%,#650b2c99 53% 72%,transparent 73%);--facet-cut:polygon(0 0,100% 0,72% 32%,50% 52%,24% 32%)}
+/* Sapphire: star-like radial cuts and icy blue facets */
+.cell[data-gem-color="🟦"],.cell[data-gem-color="🔵"],.cell[data-gem-color="blue"],.cell[data-gem-color="B"]{--facet-edge:#a8f4ff;--facet-pattern:conic-gradient(from 0deg at 50% 50%,#c4ffff 0 8%,#258cff 8% 20%,#0641c7 20% 31%,#69dcff 31% 43%,#1559db 43% 56%,#071e83 56% 68%,#3db9ff 68% 80%,#b3faff 80% 91%,#1464d9 91%);--facet-overlay:linear-gradient(135deg,#fff 0 4%,transparent 26%),linear-gradient(225deg,#ffffff66,transparent 40%),linear-gradient(0deg,#061e7799,transparent 58%);--facet-cut:polygon(0 0,100% 0,63% 42%,50% 100%,35% 42%)}
+/* Emerald: layered step cuts */
+.cell[data-gem-color="🟩"],.cell[data-gem-color="🟢"],.cell[data-gem-color="green"],.cell[data-gem-color="G"]{--facet-edge:#aaffc4;--facet-pattern:linear-gradient(135deg,transparent 0 23%,#c5ffd8 24% 26%,transparent 27%),linear-gradient(45deg,transparent 0 38%,#057d4b 39% 61%,transparent 62%),conic-gradient(from 135deg at 50% 50%,#a9ffd0,#1bd778,#057b4c,#50f39a,#075c42,#aaffd0);--facet-overlay:linear-gradient(45deg,transparent 0 45%,#00492f99 46% 66%,transparent 67%),linear-gradient(135deg,#fff 0 3%,transparent 25%);--facet-cut:polygon(0 0,100% 0,100% 35%,66% 50%,100% 66%,100% 100%,0 100%,0 66%,34% 50%,0 35%)}
+/* Citrine: sunburst golden facets */
+.cell[data-gem-color="🟨"],.cell[data-gem-color="🟡"],.cell[data-gem-color="yellow"],.cell[data-gem-color="Y"]{--facet-edge:#fff0a0;--facet-pattern:conic-gradient(from 270deg at 50% 48%,#fff9b0,#ffca27,#d87908,#fff06c,#f69d0b,#8e4205,#ffd94c,#fff7b1);--facet-overlay:linear-gradient(135deg,#fff 0 5%,transparent 26%),linear-gradient(45deg,transparent 0 58%,#9b4a08a8 59% 76%,transparent 77%);--facet-cut:polygon(0 0,100% 0,68% 36%,100% 100%,0 100%,32% 36%)}
+/* Amethyst: layered violet and pink facets */
+.cell[data-gem-color="🟪"],.cell[data-gem-color="🟣"],.cell[data-gem-color="purple"],.cell[data-gem-color="P"]{--facet-edge:#f2baff;--facet-pattern:conic-gradient(from 180deg at 50% 50%,#ffd9ff,#c14bff,#6515b9,#f28cff,#7e20d6,#3a087a,#d95cff,#ffd9ff);--facet-overlay:linear-gradient(135deg,#fff 0 4%,transparent 26%),linear-gradient(225deg,#ffbaff77,transparent 40%),linear-gradient(0deg,#3a087a99,transparent 60%);--facet-cut:polygon(0 0,100% 0,72% 28%,100% 100%,0 100%,28% 28%)}
+/* Topaz: amber diagonal cuts and fiery gold reflections */
+.cell[data-gem-color="🟧"],.cell[data-gem-color="🟠"],.cell[data-gem-color="orange"],.cell[data-gem-color="O"]{--facet-edge:#ffd39a;--facet-pattern:conic-gradient(from 45deg at 50% 50%,#fff0b5,#ff8a38,#c93217,#ffb33e,#8f2515,#ff642b,#ffe2a0,#d73b18);--facet-overlay:linear-gradient(135deg,#fff 0 4%,transparent 26%),linear-gradient(45deg,transparent 0 52%,#8c1c1299 53% 72%,transparent 73%);--facet-cut:polygon(0 0,100% 0,100% 62%,66% 50%,100% 100%,0 100%,34% 50%,0 62%)}
+@media(max-width:760px){.cell:not(.special)::before{inset:1px!important}.cell:not(.special)::after{left:1px!important;top:1px!important;width:calc(100% - 2px)!important;height:calc(100% - 2px)!important}}
+
+
+/* Build 3.2.1: visual parity while dragging, sequential match pulses, lightning strike and gravity fall. */
+.drag-ghost{
+  margin:0!important;position:fixed!important;z-index:99999!important;
+  width:var(--drag-cell-size,clamp(42px,8vw,68px))!important;
+  height:var(--drag-cell-size,clamp(42px,8vw,68px))!important;
+  min-width:0!important;max-width:none!important;min-height:0!important;max-height:none!important;
+  padding:0!important;display:grid!important;place-items:center!important;
+  pointer-events:none!important;opacity:1!important;filter:brightness(1.28) saturate(1.25)!important;
+  transform:translate(-50%,-58%) scale(1.08) rotate(-3deg)!important;
+  animation:dragGemLift .16s ease-out both!important;
+}
+.drag-ghost::before,.drag-ghost::after{pointer-events:none}
+.cell.gem-fall{animation:gemFallSettle .28s cubic-bezier(.18,.72,.32,1) var(--fall-delay,0ms) both}
+.cell.lightning-strike{position:relative;z-index:2;animation:lightningCellFlash .32s ease-out var(--strike-delay,0ms) both}
+@keyframes gemFallSettle{
+  0%{transform:translateY(-34px) scale(.94);filter:brightness(1.45);opacity:.72}
+  65%{transform:translateY(3px) scale(1.025);filter:brightness(1.18);opacity:1}
+  100%{transform:translateY(0) scale(1);filter:brightness(1);opacity:1}
+}
+@keyframes lightningCellFlash{
+  0%{filter:brightness(1);box-shadow:none}
+  18%{filter:brightness(2.8) saturate(1.6);box-shadow:0 0 0 3px #d8fbff,0 0 22px 8px #63eaff}
+  48%{filter:brightness(1.8);box-shadow:0 0 0 2px #fff,0 0 16px 5px #49baff}
+  100%{filter:brightness(1);box-shadow:none}
+}
 
 </style>
 <meta name="theme-color" content="#10152b"><meta name="description" content="A colorful match-3 fantasy battle arena with three selectable arenas. Challenge rivals, unlock upgrades, and build your champion."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -338,6 +496,108 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 
 </style>
 
+<style>
+
+/* Build 3.1.7 — stronger crystal facets: broad triangular cut planes, bevels and crisp specular highlights */
+.cell:not(.special){border-width:2px!important;border-radius:5px!important;box-shadow:inset 0 0 0 1px #ffffffb0,inset 0 -5px 8px #03091d99,0 3px 0 #050b19,0 0 10px var(--jewel-glow,#44cfff66)!important}
+.cell:not(.special)::before{
+  inset:3px!important; border:1px solid #ffffffd9!important; border-radius:2px!important;
+  background:
+    linear-gradient(145deg, transparent 0 48.5%, #ffffffb8 49.3%, #ffffff35 50.1%, transparent 51.2%),
+    linear-gradient(35deg, transparent 0 48%, #07102d99 48.7%, #ffffff7a 49.4%, transparent 50.4%),
+    linear-gradient(215deg, transparent 0 48%, #ffffff7a 49%, #07102d66 50%, transparent 51%),
+    linear-gradient(135deg,#ffffffed 0%,#ffffff75 8%,transparent 24%,transparent 61%,#00000048 100%),
+    var(--jewel-fill,linear-gradient(135deg,#8ff 0%,#168bff 48%,#102a86 100%))!important;
+  box-shadow:inset 0 0 0 1px #ffffff7a,inset 0 -7px 10px #02091e77,0 0 10px var(--jewel-glow,#44cfff66)!important;
+}
+.cell:not(.special)::after{
+  inset:8%!important; border:0!important; border-radius:1px!important;
+  clip-path:polygon(0 0,100% 0,100% 100%,0 100%);
+  background:
+    linear-gradient(135deg,#ffffffd9 0%,#ffffff68 11%,transparent 12% 100%),
+    linear-gradient(45deg,transparent 0 49%,#ffffff5e 49.5%,transparent 51%),
+    linear-gradient(225deg,transparent 0 49%,#02091f45 49.5%,transparent 51%),
+    linear-gradient(315deg,transparent 0 64%,#ffffff40 65%,transparent 68%);
+  box-shadow:none!important;
+}
+.cell[data-gem-color="🟥"],.cell[data-gem-color="🔴"],.cell[data-gem-color="red"],.cell[data-gem-color="R"]{--jewel-fill:linear-gradient(135deg,#fff0e8 0%,#ff8a91 12%,#ff334d 35%,#e20b3c 57%,#a70031 78%,#5c0826 100%)!important}
+.cell[data-gem-color="🟦"],.cell[data-gem-color="🔵"],.cell[data-gem-color="blue"],.cell[data-gem-color="B"]{--jewel-fill:linear-gradient(135deg,#f0ffff 0%,#9df7ff 12%,#26c4ff 35%,#0875fa 57%,#1741c9 78%,#101d70 100%)!important}
+.cell[data-gem-color="🟩"],.cell[data-gem-color="🟢"],.cell[data-gem-color="green"],.cell[data-gem-color="G"]{--jewel-fill:linear-gradient(135deg,#f1ffe8 0%,#b5ffc6 12%,#43ef8c 35%,#0cc46c 57%,#087c4b 78%,#063b31 100%)!important}
+.cell[data-gem-color="🟨"],.cell[data-gem-color="🟡"],.cell[data-gem-color="yellow"],.cell[data-gem-color="Y"]{--jewel-fill:linear-gradient(135deg,#fffde8 0%,#fff5a5 12%,#ffd64b 35%,#ffae1b 57%,#d86b0b 78%,#76350b 100%)!important}
+.cell[data-gem-color="🟪"],.cell[data-gem-color="🟣"],.cell[data-gem-color="purple"],.cell[data-gem-color="P"]{--jewel-fill:linear-gradient(135deg,#fff0ff 0%,#f9c9ff 12%,#df70ff 35%,#ad37f3 57%,#7020bf 78%,#32105f 100%)!important}
+.cell[data-gem-color="🟧"],.cell[data-gem-color="🟠"],.cell[data-gem-color="orange"],.cell[data-gem-color="O"]{--jewel-fill:linear-gradient(135deg,#fff6df 0%,#ffd3a2 12%,#ff9b43 35%,#f46625 57%,#c63b1e 78%,#6b1d1b 100%)!important}
+@media(max-width:760px){.cell:not(.special)::before{inset:2px!important}.cell:not(.special)::after{inset:7%!important}}
+
+</style>
+
+<style id="build-3-2-4-grid-recovery">
+/* Build 3.2.4: keep matched tiles visible while groups resolve sequentially. */
+.cell.match-three { animation: gcMatchVisible .26s ease-in-out both !important; }
+.cell.match-four { animation: gcMatchVisibleStrong .30s ease-in-out both !important; }
+@keyframes gcMatchVisible {
+  0% { transform:scale(1); filter:brightness(1); opacity:1; }
+  38% { transform:scale(1.12) rotate(-3deg); filter:brightness(1.9); opacity:1; }
+  72% { transform:scale(.96) rotate(2deg); filter:brightness(1.3); opacity:1; }
+  100% { transform:scale(1); filter:brightness(1); opacity:1; }
+}
+@keyframes gcMatchVisibleStrong {
+  0% { transform:scale(1); filter:brightness(1); opacity:1; }
+  35% { transform:scale(1.18) rotate(-4deg); filter:brightness(2.1); opacity:1; }
+  70% { transform:scale(.94) rotate(3deg); filter:brightness(1.4); opacity:1; }
+  100% { transform:scale(1); filter:brightness(1); opacity:1; }
+}
+/* Keep the lightning flash brief and avoid obscuring the tile contents. */
+.cell.lightning-strike { animation-duration:.24s !important; }
+@media (prefers-reduced-motion: reduce) {
+  .cell.match-three, .cell.match-four, .cell.lightning-strike { animation-duration:.01ms !important; }
+}
+</style>
+<style id="build-3-2-5-persistent-grid-glass-gems">
+/* Keep the board mounted during matches; give gems a subtle glass-like translucency. */
+.cell {
+ background:linear-gradient(145deg,rgba(104,132,190,.66),rgba(25,37,73,.76)) !important;
+ border-color:rgba(174,202,255,.48) !important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.24),inset 0 -5px 12px rgba(3,9,28,.16),0 3px 0 rgba(4,9,25,.72) !important;
+ color:rgba(255,255,255,.97);
+}
+.cell.special {background:linear-gradient(145deg,rgba(125,104,176,.72),rgba(37,40,83,.8)) !important;}
+.cell.match-three,.cell.match-four {animation:gcMatchPulse325 .28s ease-in-out both !important;}
+@keyframes gcMatchPulse325 {0%,100%{transform:scale(1);filter:brightness(1);opacity:1}38%{transform:scale(1.1);filter:brightness(1.65);opacity:1}72%{transform:scale(.97);filter:brightness(1.2);opacity:1}}
+.cell.lightning-strike {animation-duration:.24s !important;}
+@media(prefers-reduced-motion:reduce){.cell.match-three,.cell.match-four,.cell.lightning-strike{animation-duration:.01ms!important}}
+</style>
+
+<style id="build-3-2-7-gem-quality-and-match-reset">
+/* Match effects are brief highlights only; never fade gems out in a way that can persist after refill. */
+.cell.match-three,.cell.match-four { animation: gc327MatchFlash .24s ease-in-out both !important; opacity:1 !important; }
+@keyframes gc327MatchFlash { 0%,100% { transform:scale(1); filter:brightness(1); opacity:1; } 42% { transform:scale(1.13); filter:brightness(1.85) saturate(1.25); opacity:1; } 72% { transform:scale(.97); filter:brightness(1.2); opacity:1; } }
+/* Softer translucent glass tile with a clear highlight and depth; gem symbols remain crisp. */
+.cell { background:linear-gradient(145deg,rgba(154,190,255,.32),rgba(46,66,116,.48) 54%,rgba(18,28,57,.64)) !important; border:1px solid rgba(208,225,255,.58) !important; box-shadow:inset 0 1px 0 rgba(255,255,255,.46),inset 0 -7px 12px rgba(4,12,35,.24),0 3px 0 rgba(3,8,23,.62),0 0 9px rgba(115,165,255,.10) !important; backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px); text-shadow:0 1px 2px rgba(0,0,0,.42); }
+.cell::before { content:""; position:absolute; inset:2px 3px auto; height:35%; border-radius:8px 8px 50% 50%; background:linear-gradient(180deg,rgba(255,255,255,.20),rgba(255,255,255,0)); pointer-events:none; }
+.cell.special { border-color:rgba(255,235,166,.8) !important; box-shadow:inset 0 1px 0 rgba(255,255,255,.52),0 0 13px rgba(255,218,104,.24),0 3px 0 rgba(3,8,23,.62) !important; }
+@media (prefers-reduced-motion:reduce) { .cell.match-three,.cell.match-four { animation-duration:.01ms !important; } }
+</style>
+
+<style id="build-3-2-8-gem-size-restoration">
+/* Restore the previous gem artwork scale without changing the board or cell dimensions. */
+.cell { aspect-ratio:1 !important; min-width:0 !important; padding:0 !important; }
+.cell:not(.special)::before { inset:3px !important; background-size:100% 100% !important; }
+@media(max-width:760px) { .cell:not(.special)::before { inset:3px !important; } }
+</style>
+
+<style id="build-3-2-9-restore-full-gem-artwork">
+/* Fix: the generic glass highlight was overriding the jewel-cut pseudo-element and shrinking the visible gem face. Restore the full-cell gem artwork. */
+.cell:not(.special) { position:relative!important; width:100%!important; height:100%!important; min-width:0!important; min-height:0!important; padding:0!important; box-sizing:border-box!important; overflow:hidden!important; color:transparent!important; font-size:0!important; line-height:0!important; }
+.cell:not(.special)::before { content:""!important; position:absolute!important; inset:3px!important; height:auto!important; border-radius:4px!important; background:linear-gradient(135deg,rgba(255,255,255,.72) 0%,rgba(255,255,255,.20) 13%,transparent 29%,transparent 65%,rgba(0,0,0,.13) 100%),var(--gem-fill, var(--gem-base, linear-gradient(145deg,#5ba7ff,#173b91)))!important; clip-path:polygon(0 0,100% 0,100% 100%,0 100%)!important; border:1px solid rgba(255,255,255,.62)!important; box-shadow:inset 0 0 0 1px rgba(255,255,255,.22),inset 0 -4px 8px rgba(0,0,0,.16)!important; pointer-events:none!important; z-index:0!important; }
+.cell:not(.special)::after { content:""!important; position:absolute!important; inset:9%!important; left:9%!important; top:9%!important; width:auto!important; height:auto!important; background:linear-gradient(135deg,rgba(255,255,255,.32),transparent 40%,rgba(0,0,0,.10))!important; clip-path:polygon(0 0,100% 0,100% 100%,0 100%)!important; border:1px solid rgba(255,255,255,.28)!important; border-radius:3px!important; pointer-events:none!important; z-index:1!important; box-shadow:none!important; }
+.cell.special { font-size:clamp(1.1rem,4vw,2rem)!important; line-height:1!important; }
+</style>
+<style id="build-330-gem-alignment-fix">
+#board{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));align-items:stretch;position:relative;isolation:isolate;overflow:hidden}
+#board>.cell{position:relative;inset:auto;min-width:0;min-height:0;width:100%;height:100%;box-sizing:border-box;translate:0 0;z-index:0}
+#board>.cell.selected,#board>.cell.drag-source{z-index:2}
+#board>.cell.match-three,#board>.cell.match-four{z-index:1}
+</style>
 </head>
 <body>
 <div id="comboToast" class="combo-toast" aria-live="polite" aria-atomic="true"></div>
@@ -538,9 +798,34 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 .streak-strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin:12px 0}.streak-day{min-width:0;text-align:center;padding:7px 1px;border-radius:9px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.045);font-size:10px;color:#c6d2ef}.streak-day b{display:block;font-size:15px;margin-bottom:3px}.streak-day.claimed{border-color:#7ce8c2;background:rgba(66,210,158,.15);color:#b5ffe2}.streak-day.today{border-color:#ffd166;background:rgba(255,209,102,.14);color:#ffe6a0}.streak-summary{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:12px;color:#d8e2fb;margin:8px 0 10px}.reward-claim{width:100%;border:0;border-radius:12px;padding:12px;font-weight:900;color:#24203a;background:linear-gradient(100deg,#ffe18a,#ffb84d);cursor:pointer;box-shadow:0 5px 16px rgba(255,184,77,.17)}.reward-claim:disabled{opacity:.58;cursor:default;filter:saturate(.65)}
 .achievement-list{display:grid;gap:8px;margin-top:12px}.achievement-card{display:grid;grid-template-columns:38px 1fr auto;gap:9px;align-items:center;padding:10px;border-radius:12px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}.achievement-card.unlocked{border-color:rgba(124,232,194,.5);background:rgba(48,160,124,.12)}.achievement-icon{font-size:25px;text-align:center}.achievement-copy b{display:block;font-size:12px;color:#f0f4ff}.achievement-copy small{display:block;font-size:11px;line-height:1.4;color:#aebcdd;margin-top:3px}.achievement-progress{font-size:10px;color:#ffe18a;white-space:nowrap;font-weight:800}.achievement-card.unlocked .achievement-progress{color:#8df2c7}
 @media(max-width:560px){.reward-panel{padding:12px}.streak-day{font-size:9px}.streak-day b{font-size:13px}.achievement-card{grid-template-columns:31px 1fr auto;gap:6px;padding:8px}.achievement-icon{font-size:22px}}
+
+/* Build 3.1.8 — use jewel artwork cropped directly from the approved reference image. */
+.cell:not(.special){
+  background:linear-gradient(145deg,#202d50,#10182f)!important;
+  border:1px solid #8ca8d8!important;
+  padding:0!important; overflow:hidden!important;
+  box-shadow:inset 0 1px 2px #ffffff20,0 2px 0 #070b19!important;
+}
+.cell:not(.special)::before{
+  content:""!important; position:absolute!important; inset:0!important;
+  display:block!important; border:0!important; border-radius:0!important;
+  box-shadow:none!important; background-color:transparent!important;
+  background-repeat:no-repeat!important; background-position:center!important;
+  background-size:100% 100%!important; pointer-events:none!important; z-index:1!important;
+}
+.cell:not(.special)::after{content:none!important;display:none!important}
+.cell:not(.special)[data-gem-color="🟥"],.cell:not(.special)[data-gem-color="🔴"],.cell:not(.special)[data-gem-color="red"],.cell:not(.special)[data-gem-color="R"]{--sprite:url('gems/red.svg')}
+.cell:not(.special)[data-gem-color="🟦"],.cell:not(.special)[data-gem-color="🔵"],.cell:not(.special)[data-gem-color="blue"],.cell:not(.special)[data-gem-color="B"]{--sprite:url('gems/blue.svg')}
+.cell:not(.special)[data-gem-color="🟩"],.cell:not(.special)[data-gem-color="🟢"],.cell:not(.special)[data-gem-color="green"],.cell:not(.special)[data-gem-color="G"]{--sprite:url('gems/green.svg')}
+.cell:not(.special)[data-gem-color="🟨"],.cell:not(.special)[data-gem-color="🟡"],.cell:not(.special)[data-gem-color="yellow"],.cell:not(.special)[data-gem-color="Y"]{--sprite:url('gems/yellow.svg')}
+.cell:not(.special)[data-gem-color="🟪"],.cell:not(.special)[data-gem-color="🟣"],.cell:not(.special)[data-gem-color="purple"],.cell:not(.special)[data-gem-color="P"]{--sprite:url('gems/purple.svg')}
+.cell:not(.special)[data-gem-color="🟧"],.cell:not(.special)[data-gem-color="🟠"],.cell:not(.special)[data-gem-color="orange"],.cell:not(.special)[data-gem-color="O"]{--sprite:url('gems/orange.svg')}
+.cell:not(.special)::before{background-image:var(--sprite)!important}
+@media(max-width:760px){.cell:not(.special)::before{inset:3px!important}}
+
 </style>
 <script> (() => {
-const SIZE=8, COLORS=['🔴','🔵','🟢','🟡','🟣','🟠'];
+const SIZE=8, COLORS=['🟥','🟦','🟩','🟨','🟪','🟧'];
 const RIVALS={
  Blaze:{avatar:'🔥',style:'Aggressive rival',hp:100,attack:9,rate:0.82,ability:'Blaze hits harder but leaves openings.'},
  Frost:{avatar:'❄️',style:'Defensive rival',hp:115,attack:6,rate:0.58,ability:'Frost has extra health and attacks less often.'},
@@ -634,15 +919,46 @@ function createBoard(){
    while((c>=2&&board[r][c].color===board[r][c-1].color&&board[r][c].color===board[r][c-2].color)||(r>=2&&board[r][c].color===board[r-1][c].color&&board[r][c].color===board[r-2][c].color))board[r][c]=randomCell();
  }
 }
+const activeCellAnimations = new WeakMap();
+function cancelCellAnimation(el){
+ const anim=activeCellAnimations.get(el);
+ if(anim){try{anim.onfinish=null;anim.oncancel=null;anim.cancel();}catch(e){}activeCellAnimations.delete(el);}
+ el.style.removeProperty('transform');el.style.removeProperty('translate');el.style.removeProperty('z-index');
+}
 function render(){
- const root=$('board');root.innerHTML='';$('boardError').style.display='none';
+ const root=$('board');$('boardError').style.display='none';
+ // Keep exactly one button for each board coordinate; stale/duplicate nodes can overlap gems.
+ const wanted=new Set();
  for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++){
-  const cell=board[r][c]||{color:'',special:null};const b=document.createElement('button');b.className='cell'+(selected&&selected.r===r&&selected.c===c?' selected':'')+(cell.special?' special':'');b.dataset.r=r;b.dataset.c=c;
-  b.textContent=cell.special==='row'?'💥':cell.special==='lightningH'?'⚡':cell.special==='lightningV'?'⚡':cell.special==='bomb'?'💣':cell.special==='prism'?'🌈':cell.special==='cross'?'✖️':cell.color;
-  if(cell.special)b.dataset.mark=cell.special==='row'?'ROW BLAST':cell.special==='lightningH'?'ROW LIGHTNING':cell.special==='lightningV'?'COLUMN LIGHTNING':cell.special==='bomb'?'BOMB':cell.special==='prism'?'RAINBOW':'CROSS';
-  b.setAttribute('aria-label',cell.special?cell.special+' special gem':cell.color+' gem');
-  b.addEventListener('click',()=>{if(Date.now()<suppressClickUntil)return;tap(r,c)});root.appendChild(b);
+  const key=`${r},${c}`;wanted.add(key);
+  let b=root.querySelector(`[data-r="${r}"][data-c="${c}"]`);
+  if(!b){
+   b=document.createElement('button');b.type='button';b.dataset.r=r;b.dataset.c=c;
+   b.addEventListener('click',()=>{if(Date.now()<suppressClickUntil)return;tap(Number(b.dataset.r),Number(b.dataset.c))});
+   root.appendChild(b);
+  }
+  // A persistent cell button may still have a Web Animation attached from the previous gem.
+  // Cancel it before changing the button's gem, otherwise its old transform can move the new gem.
+  cancelCellAnimation(b);
+  // Remove duplicate buttons for this coordinate if an earlier render left any behind.
+  const duplicates=root.querySelectorAll(`[data-r="${r}"][data-c="${c}"]`);
+  duplicates.forEach((node,i)=>{if(i>0)node.remove()});
+  const cell=board[r][c]||{color:'',special:null};
+  const transient=['lightning-strike','drag-source'];
+  const keep=transient.filter(cls=>b.classList.contains(cls));
+  b.className='cell'+(selected&&selected.r===r&&selected.c===c?' selected':'')+(cell.special?' special':'')+(cell.color?'':' empty')+(keep.length?' '+keep.join(' '):'');
+  // Clear stale inline transforms/stacking from interrupted animations.
+  b.style.removeProperty('transform');b.style.removeProperty('translate');b.style.removeProperty('z-index');
+  b.dataset.gemColor=cell.color||'';
+  b.textContent=cell.special==='row'?'💥':cell.special==='lightningH'?'⚡':cell.special==='lightningV'?'⚡':cell.special==='bomb'?'💣':cell.special==='prism'?'🌈':cell.special==='cross'?'✖️':cell.color||'';
+  if(cell.special)b.dataset.mark=cell.special==='row'?'ROW BLAST':cell.special==='lightningH'?'ROW LIGHTNING':cell.special==='lightningV'?'COLUMN LIGHTNING':cell.special==='bomb'?'BOMB':cell.special==='prism'?'RAINBOW':'CROSS';else delete b.dataset.mark;
+  b.setAttribute('aria-label',cell.special?cell.special+' special gem':(cell.color||'empty')+' gem');
  }
+ // Remove malformed/out-of-range cells, which otherwise can sit on top of valid gems.
+ [...root.querySelectorAll('.cell[data-r][data-c]')].forEach(node=>{
+  const r=Number(node.dataset.r),c=Number(node.dataset.c);
+  if(!Number.isInteger(r)||!Number.isInteger(c)||r<0||r>=SIZE||c<0||c>=SIZE)node.remove();
+ });
  updateUI();
 }
 function updateUI(){
@@ -672,7 +988,7 @@ function showComboToast(chain,damage){
 }
 function showBattleFx(kind,title,subtitle){
  const boardEl=$('board');
- if(boardEl){boardEl.classList.remove('fx-shake','fx-bomb','fx-lightning','fx-prism');void boardEl.offsetWidth;boardEl.classList.add('fx-'+kind,'fx-shake');setTimeout(()=>boardEl.classList.remove('fx-shake','fx-'+kind),720);}
+ if(boardEl){boardEl.classList.remove('fx-shake','fx-bomb','fx-lightning','fx-prism','board-fx-lightning');void boardEl.offsetWidth;const boardKind=kind==='lightning'?'board-fx-lightning':'fx-'+kind;boardEl.classList.add(boardKind,'fx-shake');setTimeout(()=>boardEl.classList.remove('fx-shake',boardKind),720);}
  // Cinematic visuals only: no rectangular activation announcement.
  document.querySelectorAll('.battle-visual-fx,.special-fx-banner').forEach(el=>el.remove());
  const fx=document.createElement('div');fx.className='battle-visual-fx fx-'+kind;fx.setAttribute('aria-hidden','true');
@@ -816,6 +1132,40 @@ function animateMatches(matches){
  const boardRoot=$('board');
  for(const group of matches.groups){const cls=group.len>=4?'match-four':'match-three';for(const [r,c] of group.cells){const el=boardRoot.querySelector(`[data-r="${r}"][data-c="${c}"]`);if(el){el.classList.remove('match-three','match-four');void el.offsetWidth;el.classList.add(cls);}}}
 }
+async function animateMatchGroupsSequentially(matches){
+ const boardRoot=$('board');
+ const groups=(matches.groups||[]).slice().sort((x,y)=>Math.max(y.len||0,0)-Math.max(x.len||0,0));
+ for(const group of groups){
+  const cls=group.len>=4?'match-four':'match-three';
+  for(const [r,c] of group.cells){
+   const el=boardRoot.querySelector(`[data-r="${r}"][data-c="${c}"]`);
+   if(el){el.classList.remove('match-three','match-four');void el.offsetWidth;el.classList.add(cls);}
+  }
+  await sleep(145);
+ }
+ matchEffects(matches);
+}
+function captureGemOrigins(){
+ const origins=new Map();
+ for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++){const gem=board[r][c];if(gem)origins.set(gem,{r,c});}
+ return origins;
+}
+function animateFallingGems(origins){
+ const root=$('board');
+ for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++){
+  const gem=board[r][c],el=root.querySelector(`[data-r="${r}"][data-c="${c}"]`);if(!gem||!el)continue;
+  const from=origins&&origins.get(gem);const distance=from?from.r-r:(r+1);
+  if(distance<=0)continue;
+  cancelCellAnimation(el);
+  try{
+   const anim=el.animate([{translate:`0 ${-distance*100}%`,opacity:.72},{translate:'0 0',opacity:1}],{duration:Math.min(420,170+distance*42),delay:Math.min(100,c*9),easing:'cubic-bezier(.2,.75,.25,1)'});
+   activeCellAnimations.set(el,anim);
+   const cleanup=()=>{if(activeCellAnimations.get(el)===anim)activeCellAnimations.delete(el);try{el.style.removeProperty('translate');el.style.removeProperty('transform');el.style.removeProperty('z-index');}catch(e){}};
+   anim.onfinish=()=>{cleanup();try{anim.cancel()}catch(e){}};
+   anim.oncancel=cleanup;
+  }catch(e){cancelCellAnimation(el);}
+ }
+}
 function setTurn(state){turnState=state;if(state==='player')moveSeconds=10;updateUI();}
 function scoreAIMove(matches){
  // Evaluate both immediate damage and tactical value instead of choosing only by match size.
@@ -901,9 +1251,11 @@ window.addEventListener('pointermove',e=>{
  const dx=e.clientX-dragStart.startX,dy=e.clientY-dragStart.startY,distance=Math.hypot(dx,dy);
  if(distance>7&&!dragHasMoved){
   dragHasMoved=true;dragStart.cell.classList.add('drag-source');
-  dragGhost=document.createElement('div');
-  dragGhost.className='drag-ghost'+(dragStart.cell.classList.contains('special')?' special':'');
-  dragGhost.textContent=dragStart.cell.textContent;dragGhost.setAttribute('aria-hidden','true');document.body.appendChild(dragGhost);
+  dragGhost=dragStart.cell.cloneNode(true);
+  dragGhost.className='drag-ghost '+dragStart.cell.className;
+  dragGhost.removeAttribute('data-r');dragGhost.removeAttribute('data-c');
+  dragGhost.removeAttribute('aria-label');dragGhost.replaceChildren(...Array.from(dragStart.cell.childNodes).map(n=>n.cloneNode(true)));
+  dragGhost.setAttribute('aria-hidden','true');document.body.appendChild(dragGhost);
  }
  if(!dragHasMoved)return;
  const candidate=dragCandidate(dragStart,dx,dy);
@@ -942,7 +1294,9 @@ async function prismSwap(prismPos,targetPos){
  playSound('special');const damage=Math.min(55,Math.round(clear.size*3*(1+powerBonus())));await animateShot('playerAvatar','enemyAvatar','strong',clear.size);enemyHp=Math.max(0,enemyHp-damage);impactFeedback('enemyAvatar',damage);energy=Math.min(100,energy+clear.size*4);
  for(const idx of clear){board[Math.floor(idx/SIZE)][idx%SIZE]=null;}
  say(`🌈 PRISM WIPE! Cleared ${clear.size} gems for ${damage} damage.`);render();await sleep(220);
+ const origins=captureGemOrigins();
  for(let c=0;c<SIZE;c++){let vals=[];for(let r=SIZE-1;r>=0;r--)if(board[r][c])vals.push(board[r][c]);while(vals.length<SIZE)vals.push(randomCell());for(let r=SIZE-1,i=0;r>=0;r--,i++)board[r][c]=vals[i];}
+ render();animateFallingGems(origins);await sleep(320);
  const m=getMatches();if(m.set.size)await resolveCascade(m,prismPos,targetPos);
  busy=false;render();turnCount++;if(!over){setTurn('enemy');await enemyTurn(turnCount);}checkEnd();
 }
@@ -955,6 +1309,14 @@ async function activateSwappedSpecial(specialPos,otherPos){
  const processed=new Set([specialPos.r*SIZE+specialPos.c]);let expanded=true;
  while(expanded){expanded=false;for(const idx of [...clear]){if(processed.has(idx))continue;const r=Math.floor(idx/SIZE),c=idx%SIZE,cell=board[r][c];if(!cell?.special)continue;processed.add(idx);const before=clear.size;addSpecialBlast(clear,r,c,cell);if(clear.size>before)expanded=true;}}
  const count=clear.size;
+ if(special.special==='lightningH'||special.special==='lightningV'||special.special==='row'){
+  const boardEl=$('board');
+  const affected=special.special==='lightningV'
+   ? Array.from({length:SIZE},(_,r)=>boardEl.querySelector(`[data-r="${r}"][data-c="${specialPos.c}"]`))
+   : Array.from({length:SIZE},(_,c)=>boardEl.querySelector(`[data-r="${specialPos.r}"][data-c="${c}"]`));
+  affected.filter(Boolean).forEach((el,i)=>{el.classList.remove('lightning-strike');el.style.setProperty('--strike-delay',`${i*28}ms`);void el.offsetWidth;el.classList.add('lightning-strike');});
+  await sleep(320);
+ }
  const fxKind=special.special==='bomb'||special.special==='cross'?'bomb':(special.special==='lightningH'||special.special==='lightningV'||special.special==='row'?'lightning':'bomb');
  const fxTitle=special.special==='bomb'?'💣 BLAST BOMB!':special.special==='lightningH'?'⚡ ROW LIGHTNING!':special.special==='lightningV'?'⚡ COLUMN LIGHTNING!':special.special==='cross'?'✖️ CROSS BLAST!':'💥 ROW BLAST!';
  showBattleFx(fxKind,fxTitle,`Clearing ${count} tiles and striking your rival!`);
@@ -962,20 +1324,27 @@ async function activateSwappedSpecial(specialPos,otherPos){
  const damage=Math.min(65,Math.round(count*(2.8+powerBonus())));
  await animateShot('playerAvatar','enemyAvatar',special.special==='lightningH'||special.special==='lightningV'?'lightning':'strong',count);
  enemyHp=Math.max(0,enemyHp-damage);impactFeedback('enemyAvatar',damage);energy=Math.min(100,energy+count*4);
- for(const idx of clear)board[Math.floor(idx/SIZE)][idx%SIZE]=null;
  say(`${special.special==='bomb'?'💣 BLAST BOMB':special.special==='lightningH'?'⚡ ROW LIGHTNING':special.special==='lightningV'?'⚡ COLUMN LIGHTNING':special.special==='cross'?'✖️ CROSS BLAST':'💥 ROW BLAST'} activated! Cleared ${count} tiles for ${damage} damage.`);
- render();await sleep(180);
- for(let c=0;c<SIZE;c++){let vals=[];for(let r=SIZE-1;r>=0;r--)if(board[r][c])vals.push(board[r][c]);while(vals.length<SIZE)vals.push(randomCell());for(let r=SIZE-1,i=0;r>=0;r--,i++)board[r][c]=vals[i];}
- await sleep(120);const matches=getMatches();if(matches.set.size)await resolveCascade(matches,specialPos,otherPos);
+ const origins=captureGemOrigins();
+ settleAndRefillBoard(clear);
+ render();animateFallingGems(origins);await sleep(320);const matches=getMatches();if(matches.set.size)await resolveCascade(matches,specialPos,otherPos);
  busy=false;render();turnCount++;checkEnd();if(!over){setTurn('enemy');await enemyTurn(turnCount);}checkEnd();
 }
 async function animateGemSwap(a,b){
- const first=$(`board` ).querySelector(`[data-r="${a.r}"][data-c="${a.c}"]`);
- const second=$(`board` ).querySelector(`[data-r="${b.r}"][data-c="${b.c}"]`);
+ const first=$('board').querySelector(`[data-r="${a.r}"][data-c="${a.c}"]`);
+ const second=$('board').querySelector(`[data-r="${b.r}"][data-c="${b.c}"]`);
  if(!first||!second||typeof first.animate!=='function'){await sleep(100);return;}
  const ra=first.getBoundingClientRect(),rb=second.getBoundingClientRect();
- const dx=rb.left-ra.left,dy=rb.top-ra.top;
- try{await Promise.all([first.animate([{transform:'translate(0,0) scale(1)'},{transform:`translate(${dx}px,${dy}px) scale(1.05)`}],{duration:165,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'}).finished,second.animate([{transform:'translate(0,0) scale(1)'},{transform:`translate(${-dx}px,${-dy}px) scale(1.05)`}],{duration:165,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'}).finished]);}catch(_){await sleep(100);}
+ const dx=rb.left-ra.left,dy=rb.top-ra.top;let animA=null,animB=null;
+ try{
+  cancelCellAnimation(first);cancelCellAnimation(second);
+  animA=first.animate([{transform:'translate(0,0) scale(1)'},{transform:`translate(${dx}px,${dy}px) scale(1.05)`}],{duration:165,easing:'cubic-bezier(.2,.8,.2,1)'});
+  animB=second.animate([{transform:'translate(0,0) scale(1)'},{transform:`translate(${-dx}px,${-dy}px) scale(1.05)`}],{duration:165,easing:'cubic-bezier(.2,.8,.2,1)'});
+  await Promise.all([animA.finished,animB.finished]);
+ }catch(_){await sleep(30);}
+ finally{
+  for(const [el,anim] of [[first,animA],[second,animB]]){if(anim){try{anim.cancel()}catch(e){}}el.style.removeProperty('transform');el.style.removeProperty('translate');el.style.removeProperty('z-index');}
+ }
 }
 async function swapAndResolve(a,b){
  if(over||busy||turnState!=='player')return;busy=true;setTurn('resolving');await animateGemSwap(a,b);[board[a.r][a.c],board[b.r][b.c]]=[board[b.r][b.c],board[a.r][a.c]];render();
@@ -988,10 +1357,24 @@ async function swapAndResolve(a,b){
  if(!m.set.size){[board[a.r][a.c],board[b.r][b.c]]=[board[b.r][b.c],board[a.r][a.c]];say('No match. Try to line up 3 or more gems.');busy=false;setTurn('player');render();return;}
  turnCount++;await resolveCascade(m,a,b);busy=false;render();if(!over){setTurn('enemy');await enemyTurn(turnCount);}checkEnd();
 }
+function settleAndRefillBoard(clearSet){
+ // Clear matched/blasted cells, then compact each column downward and fill every gap.
+ // Work on a fresh column list so no empty/null slot can survive a blast.
+ if(clearSet) for(const idx of clearSet){const r=Math.floor(idx/SIZE),c=idx%SIZE;if(r>=0&&r<SIZE&&c>=0&&c<SIZE)board[r][c]=null;}
+ for(let c=0;c<SIZE;c++){
+  const survivors=[];
+  for(let r=SIZE-1;r>=0;r--){const gem=board[r][c];if(gem)survivors.push(gem);}
+  let write=SIZE-1;
+  for(const gem of survivors){board[write][c]=gem;write--;}
+  while(write>=0){board[write][c]=randomCell();write--;}
+ }
+ // Final safety net: every visible cell always has a valid gem object.
+ for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++)if(!board[r][c]||!board[r][c].color)board[r][c]=randomCell();
+}
 async function resolveCascade(first,a,b){
  let matches=first,chain=0,total=0;
  while(matches.set.size&&chain<7){
-  animateMatches(matches);await sleep(430);
+  await animateMatchGroupsSequentially(matches);await sleep(280);
   chain++;comboBest=Math.max(comboBest,chain);
   if(chain>=2)playerStyle.bigCombos++;
   if((matches.groups||[]).some(g=>g.len>=4))playerStyle.largeMatches++;
@@ -1025,11 +1408,9 @@ async function resolveCascade(first,a,b){
    board[place.r][place.c]={color:existing?.color||randColor(),special:spec};
    if(spec==='prism')say('🌈 RAINBOW PRISM CREATED! It is marked with a rainbow glow. Swap it with an adjacent gem to clear every gem of that colour.');
   }
-  for(const idx of clear){let r=Math.floor(idx/SIZE),c=idx%SIZE;board[r][c]=null;}
-  render();await sleep(180);
-  // gravity
-  for(let c=0;c<SIZE;c++){let vals=[];for(let r=SIZE-1;r>=0;r--)if(board[r][c])vals.push(board[r][c]);while(vals.length<SIZE)vals.push(randomCell());for(let r=SIZE-1,i=0;r>=0;r--,i++)board[r][c]=vals[i];}
-  await sleep(130);matches=getMatches();
+  const origins=captureGemOrigins();
+  settleAndRefillBoard(clear);
+  render();animateFallingGems(origins);await sleep(320);matches=getMatches();
  }
  if(chain>=2)say(`🔥 MEGA COMBO x${chain}! ${total} total damage dealt.`);
  render();
