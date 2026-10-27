@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 3.3.0 Gem Size Restore Fix</title>
+<title>Gem Clash: AI Arena — Build 3.4.0 Rune Milestone Abilities</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -11,6 +11,7 @@ button{font:inherit;cursor:pointer;border:0;border-radius:12px;font-weight:800}
 body[data-arena="Frostlands"]{background:radial-gradient(circle at top,#367b9b 0,#10283d 48%,#07121f 100%)}body[data-arena="Emberfall"]{background:radial-gradient(circle at top,#9b452f 0,#351725 48%,#100914 100%)}
 .wrap{max-width:1050px;margin:auto;padding:14px}
 header{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.coin-balance-badge{display:inline-flex;align-items:center;justify-content:center;padding:9px 12px;border-radius:10px;background:linear-gradient(135deg,#514522,#2e2b48);border:1px solid #ffe18a;color:#ffe9a8;font-size:.9rem;white-space:nowrap}
 .logo{font-size:clamp(1.25rem,4vw,2rem);font-weight:1000;letter-spacing:.3px}.logo span{color:var(--gold)}.tag{color:var(--muted);font-size:.8rem}
 .topbtn{padding:9px 12px;background:#303b68;color:#fff}
 .layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(250px,.8fr);gap:14px}
@@ -29,6 +30,20 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px;fl
 .turnbanner{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#111832;border:1px solid #35436f;border-radius:12px;padding:8px 10px;margin:0 0 10px;font-weight:800;font-size:.88rem}
 .turnbadge{color:var(--cyan)}.turnbadge.enemy{color:#ff9c9c}.move-clock{font-variant-numeric:tabular-nums;color:var(--gold);font-size:1.05rem}
 .board.enemy-thinking{box-shadow:0 0 0 2px #ff657b,0 0 22px #ff657b55;border-radius:13px}
+
+
+/* Build 3.4.1: distinctive champion signature effects */
+.hero-signature-effect{position:fixed;left:var(--x);top:var(--y);z-index:9002;pointer-events:none;font-size:clamp(30px,6vw,66px);line-height:1;filter:drop-shadow(0 0 12px var(--sig,#8f9bff));animation:signaturePop .95s cubic-bezier(.15,.8,.2,1) forwards;transform:translate(-50%,-50%)}
+.hero-signature-effect.knight{font-size:clamp(42px,7vw,76px);animation:shieldPulse .9s ease-out forwards}
+.hero-signature-effect.ranger{animation:arrowVolley .8s ease-out forwards}
+.hero-signature-effect.phoenix{animation:phoenixRise 1.05s ease-out forwards}
+.hero-signature-effect.mage{animation:arcanePulse 1s ease-out forwards}
+@keyframes signaturePop{0%{opacity:0;transform:translate(-50%,-50%) scale(.15) rotate(-25deg)}25%{opacity:1;transform:translate(-50%,-50%) scale(1.35) rotate(8deg)}75%{opacity:.95;transform:translate(-50%,-60%) scale(1)}100%{opacity:0;transform:translate(-50%,-90%) scale(.7)}}
+@keyframes shieldPulse{0%{opacity:0;transform:translate(-50%,-50%) scale(.35)}20%{opacity:1;transform:translate(-50%,-50%) scale(1.25)}45%{opacity:1;transform:translate(-50%,-50%) scale(.92)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.5)}}
+@keyframes arrowVolley{0%{opacity:0;transform:translate(-50%,-50%) translate(-55px,35px) scale(.5) rotate(-35deg)}20%,55%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) translate(85px,-55px) scale(1.2) rotate(20deg)}}
+@keyframes phoenixRise{0%{opacity:0;transform:translate(-50%,-30%) scale(.25)}20%{opacity:1;transform:translate(-50%,-65%) scale(1.35)}65%{opacity:.95;transform:translate(-50%,-105%) scale(1.05)}100%{opacity:0;transform:translate(-50%,-155%) scale(.65)}}
+@keyframes arcanePulse{0%{opacity:0;transform:translate(-50%,-50%) scale(.2) rotate(0)}25%{opacity:1;transform:translate(-50%,-50%) scale(1.2) rotate(80deg)}70%{opacity:.9;transform:translate(-50%,-50%) scale(1.5) rotate(180deg)}100%{opacity:0;transform:translate(-50%,-50%) scale(2.1) rotate(260deg)}}
+@media(prefers-reduced-motion:reduce){.hero-signature-effect{animation-duration:.01ms!important}}
 
 /* Build 1.2.0: champion-specific ability cues */
 .avatar{display:inline-block;transform-origin:center;filter:drop-shadow(0 0 0 transparent)}
@@ -452,7 +467,7 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 }
 
 </style>
-<meta name="theme-color" content="#10152b"><meta name="description" content="A colorful match-3 fantasy battle arena with three selectable arenas. Challenge rivals, unlock upgrades, and build your champion."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#10152b"><meta name="application-name" content="Gem Clash: AI Arena Build 3.3.7"><meta name="description" content="A colorful match-3 fantasy battle arena with three selectable arenas. Challenge rivals, unlock upgrades, and build your champion."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml">
 
 <style>
 /* Build 2.8.1: animated special-gem tutorials and one-step directional drag feedback. */
@@ -602,7 +617,7 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 <body>
 <div id="comboToast" class="combo-toast" aria-live="polite" aria-atomic="true"></div>
 <div class="wrap">
-<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 3.1.2 · DAILY REWARDS FIX</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn daily-nav" id="dailyReward" type="button">🎁 Daily Rewards</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
+<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 3.3.9 · COIN SHOP VISIBILITY FIX</div></div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><strong id="topCoinBalance" class="coin-balance-badge">💰 0 coins</strong><button class="topbtn" id="coinShopNav" type="button">🛒 Coin Shop</button><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn daily-nav" id="dailyReward" type="button">🎁 Daily Rewards</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
 <div class="layout">
 <section class="panel">
   <div class="stats">
@@ -659,16 +674,28 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
   <div class="arenarow"><button class="arena active" data-arena="Citadel">🏰 Citadel<small>Classic</small></button><button class="arena" data-arena="Frostlands">❄️ Frostlands<small>Frozen</small></button><button class="arena" data-arena="Emberfall">🌋 Emberfall<small>Volcanic</small></button></div>
   <h3 class="side-title">Choose your champion</h3>
   <div class="champion-grid" id="championGrid">
-    <button class="champion-card active" data-champion="Mage"><span class="champ-icon">🧙</span><strong>Mystic Mage · FREE</strong><small>Balanced champion. A reliable start for every battle.</small></button>
-    <button class="champion-card" data-champion="Knight"><span class="champ-icon">🛡️</span><strong>Iron Knight · 100 coins</strong><small>Defender: starts each battle with +20 health.</small></button>
-    <button class="champion-card" data-champion="Ranger"><span class="champ-icon">🏹</span><strong>Star Ranger · 150 coins</strong><small>Striker: match attacks deal 15% more damage.</small></button>
-    <button class="champion-card" data-champion="Phoenix"><span class="champ-icon">🔥</span><strong>Solar Phoenix · 250 coins</strong><small>Elite: +10 health and 10% stronger attacks.</small></button>
+    <button class="champion-card active" data-champion="Mage"><span class="champ-icon">🧙</span><strong>Mystic Mage · FREE</strong><small>Balanced champion. Skill: Arcane Pulse (focused magic damage).</small></button>
+    <button class="champion-card" data-champion="Knight"><span class="champ-icon">🛡️</span><strong>Iron Knight · 100 coins</strong><small>Defender: starts with +20 health. Skill: Shield Bash (damage + healing).</small></button>
+    <button class="champion-card" data-champion="Ranger"><span class="champ-icon">🏹</span><strong>Star Ranger · 150 coins</strong><small>Striker: match attacks deal 15% more damage. Skill: Star Volley (damage + energy).</small></button>
+    <button class="champion-card" data-champion="Phoenix"><span class="champ-icon">🔥</span><strong>Solar Phoenix · 250 coins</strong><small>Elite: +10 health and 10% stronger attacks. Skill: Flame Burst (damage + healing).</small></button>
   </div>
   <div class="rules" id="championStatus" style="margin:-4px 0 12px">Mystic Mage selected.</div>
+  <section class="power" id="heroAbilityPreview" aria-live="polite" style="margin:-3px 0 14px;border-color:#8f9bff66;background:linear-gradient(145deg,#202749,#121a32)">
+    <strong id="heroAbilityTitle">✨ Mystic Mage · Hero Abilities</strong>
+    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:9px">
+      <div style="background:#0c1429;border:1px solid #39466d;border-radius:10px;padding:10px"><small style="display:block;color:#aebce4">HERO SKILL · 40 ENERGY</small><b id="heroAbilitySkill">✨ Arcane Pulse</b><small id="heroAbilitySkillDesc" style="display:block;margin-top:5px;color:#c5d0ee">Deals focused magic damage.</small></div>
+      <div style="background:#0c1429;border:1px solid #39466d;border-radius:10px;padding:10px"><small style="display:block;color:#aebce4">ULTIMATE · 100 ENERGY</small><b id="heroAbilityUltimate">⚡ Arcane Nova</b><small id="heroAbilityUltimateDesc" style="display:block;margin-top:5px;color:#c5d0ee">A powerful signature strike.</small></div>
+    </div>
+    <small style="display:block;margin-top:8px;color:#aebce4">Build energy by matching gems, then use these abilities during your turn.</small>
+  </section>
   <section class="power" id="heroMasteryPanel" style="margin:0 0 14px;border-color:#ffd16666;background:linear-gradient(145deg,#28264b,#151c37)">
     <div style="display:flex;align-items:center;gap:10px"><span id="masteryIcon" style="font-size:2rem">🧙</span><div><strong>🌟 Hero Mastery · <span id="masteryLevel">Lv. 0</span></strong><small id="masteryDescription">Train your selected hero to improve health and attack power.</small></div></div>
     <div class="campaign-progress-track" style="margin:10px 0"><div id="masteryProgress" style="width:0%;background:linear-gradient(90deg,#ffe18a,#ff9f43)"></div></div>
     <small id="masteryNext" style="display:block;margin:7px 0 9px">Next upgrade: +5% attack and +5 max health.</small>
+    <div class="powerlist" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:8px 0 10px">
+      <div class="power" style="padding:10px"><small>⚔️ Current attack bonus</small><strong id="heroAttackStat" style="font-size:1.05rem">+0%</strong><small id="heroAttackDetail">Champion + mastery + Power Rune</small></div>
+      <div class="power" style="padding:10px"><small>❤️ Maximum health</small><strong id="heroHealthStat" style="font-size:1.05rem">100 HP</strong><small id="heroHealthDetail">Base + champion + upgrades</small></div>
+    </div>
     <button class="topbtn" id="upgradeHero" type="button" style="width:100%">Train Hero · 100 coins</button>
   </section>
   <h3 class="side-title">Battle mode</h3>
@@ -683,10 +710,12 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
   <h3 class="side-title">Difficulty</h3>
   <div class="diffrow"><button class="diff" data-diff="Casual">Casual</button><button class="diff active" data-diff="Normal">Normal</button><button class="diff" data-diff="Expert">Expert</button></div>
   <div id="armoryGroup">
-  <h3 class="side-title" id="armoryTitle">Champion Armory</h3>
+  <h3 class="side-title" id="armoryTitle">🛒 Coin Shop &amp; Champion Armory</h3>
+  <div class="rules" style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 9px"><span>Spend coins on permanent battle upgrades</span><strong id="shopCoinBalance">💰 0 coins</strong></div>
+  <div class="rules" id="runeMilestoneStatus" aria-live="polite" style="margin:0 0 9px">Next Power perk: level 3 · Next Vitality perk: level 3</div>
   <div class="powerlist" id="armoryList" style="margin-bottom:14px">
-    <div class="power"><span class="ico">⚔️</span><strong>Power Rune · <span id="powerLevel">Lv. 0</span></strong><small>Boost match damage. Upgrade cost: <b id="powerCost">40</b> coins.</small><button class="topbtn" id="buyPower" style="margin-top:8px;width:100%">Upgrade Power</button></div>
-    <div class="power"><span class="ico">❤️</span><strong>Vitality Rune · <span id="vitalityLevel">Lv. 0</span></strong><small>Increase your maximum health. Upgrade cost: <b id="vitalityCost">40</b> coins.</small><button class="topbtn" id="buyVitality" style="margin-top:8px;width:100%">Upgrade Vitality</button></div>
+    <div class="power"><span class="ico">⚔️</span><strong>Power Rune · <span id="powerLevel">Lv. 0</span></strong><small>Each level adds 12% match damage. <b>Milestones:</b> Lv. 3 Hero Skill +6 damage · Lv. 5 Ultimate +15% damage · Lv. 10 empowered ultimate effect. Maximum level: 10. Upgrade cost: <b id="powerCost">40</b> coins.</small><button class="topbtn" id="buyPower" style="margin-top:8px;width:100%">Upgrade Power</button></div>
+    <div class="power"><span class="ico">❤️</span><strong>Vitality Rune · <span id="vitalityLevel">Lv. 0</span></strong><small>Each level adds 10 maximum health. <b>Milestones:</b> Lv. 3 Shield Burst heals +8 HP · Lv. 5 healing Hero Skills restore +5 extra HP · Lv. 10 Shield Burst heals +5 additional HP. Maximum level: 10. Upgrade cost: <b id="vitalityCost">40</b> coins.</small><button class="topbtn" id="buyVitality" style="margin-top:8px;width:100%">Upgrade Vitality</button></div>
   </div>
   </div>
   <div id="gemGuideGroup">
@@ -702,7 +731,7 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
   <div class="rules"><b>Progression:</b> Wins grant XP and coins; level-ups award bonus coins. Train each unlocked hero up to Mastery Level 5 for +5% attack and +5 max health per level; mastery costs rise to 100, 200, 350, 550 and 800 coins. Hero mastery and your other progress save locally in this browser. <b>Combo chain:</b> matches that cascade trigger a big on-screen combo banner, board impact shake, and a rising damage bonus. Longer chains deal more damage and charge energy faster. <b>Craft special gems:</b> match 4 in a straight line for a glowing ⚡ Lightning Gem (horizontal or vertical), match 5 for 🌈 rainbow prism, or make a T/L-shaped match for 💣 blast bomb. Lightning clears a full row/column, the bomb blasts a 3×3 area, and swapping the rainbow prism with a gem clears that colour.</div>
 </aside>
 </div>
-<div class="footer">Gem Clash: AI Arena · Build 3.1.1 · Balanced Coin Economy</div>
+<div class="footer">Gem Clash: AI Arena · Build 3.4.0 · Coin Shop Visibility Fix</div>
 </div>
 <div id="fxLayer" aria-hidden="true"></div>
 <div class="overlay" id="overlay" aria-live="assertive" aria-modal="true" role="dialog" aria-labelledby="resultTitle"><div class="modal result-modal"><div class="result-emblem" id="resultEmblem" aria-hidden="true">🏆</div><div class="result-kicker" id="resultKicker">BATTLE COMPLETE</div><h2 id="resultTitle">VICTORY!</h2><p id="resultText">You won the battle.</p><div class="result-rewards" id="resultRewards"><div class="reward-tile"><span>✨</span><small>XP EARNED</small><strong>+50</strong></div><div class="reward-tile"><span>💰</span><small>COINS EARNED</small><strong>+25</strong></div><div class="reward-tile"><span>🔥</span><small>BEST COMBO</small><strong>x3</strong></div></div><div class="result-profile" id="resultProfile"><div class="profile-result-card"><span>🛡️</span><div><small>GUARDIAN LEVEL</small><strong id="resultGuardianLevel">Level 1</strong><em id="resultGuardianXp">0 / 100 XP</em></div></div><div class="profile-result-card"><span>📖</span><div><small>BATTLE RECORD</small><strong id="resultBattleRecord">0 wins · 0 losses</strong><em>Saved on this device</em></div></div></div><div class="result-footer" id="resultFooter">Your legend grows stronger with every battle.</div><button class="primary result-play-again" id="playAgain" type="button">⚔️ BATTLE AGAIN</button></div></div>
@@ -865,6 +894,12 @@ function startMusic(){if(!soundOn||musicTimer)return;getAudio();musicTick();}
 function heroMasteryLevel(id=champion){return Math.max(0,Math.min(5,Number(profile.heroLevels?.[id])||0));}
 function maxHealth(){return 100+profile.vitality*10+(CHAMPIONS[champion]?.hp||0)+heroMasteryLevel()*5}
 function powerBonus(){return profile.power*0.12+((CHAMPIONS[champion]?.damage||1)-1)+heroMasteryLevel()*0.05}
+function runeMilestoneText(){
+ const power=Number(profile.power)||0, vitality=Number(profile.vitality)||0;
+ const p=power>=10?'Empowered Ultimate unlocked':power>=5?'Ultimate +15% damage unlocked':power>=3?'Hero Skill +6 damage unlocked':'Next Power perk: level 3';
+ const v=vitality>=10?'Vitality mastery: enhanced Shield Burst':vitality>=5?'Healing Hero Skills +5 HP unlocked':vitality>=3?'Shield Burst +8 HP unlocked':'Next Vitality perk: level 3';
+ return `⚡ ${p} · 💚 ${v}`;
+}
 
 function updateChampions(){
   document.querySelectorAll('[data-champion]').forEach(b=>{
@@ -876,6 +911,19 @@ function updateChampions(){
     if(label) label.textContent=CHAMPIONS[id].name+' · '+(owned?'UNLOCKED':cost+' coins');
   });
   if($('championStatus')) $('championStatus').textContent=CHAMPIONS[champion].name+' selected — '+CHAMPIONS[champion].desc;
+  const abilityInfo={
+    Mage:{skill:'✨ Arcane Pulse',skillDesc:'Deals 22 focused magic damage.',ultimate:'⚡ Arcane Nova',ultimateDesc:'Deals 35 base damage, increased by your attack bonuses.'},
+    Knight:{skill:'🛡️ Shield Bash',skillDesc:'Deals 15 damage and restores up to 12 health.',ultimate:'🌟 Ironstar Strike',ultimateDesc:'Deals 35 base damage, increased by your attack bonuses.'},
+    Ranger:{skill:'🏹 Star Volley',skillDesc:'Deals 18 damage and restores 10 energy.',ultimate:'🌠 Starfall Volley',ultimateDesc:'Deals 35 base damage, increased by your attack bonuses.'},
+    Phoenix:{skill:'🔥 Flame Burst',skillDesc:'Deals 20 damage and restores up to 8 health.',ultimate:'☄️ Phoenix Inferno',ultimateDesc:'Deals 35 base damage, increased by your attack bonuses.'}
+  };
+  const selectedId=champion;
+  const ability=abilityInfo[selectedId]||abilityInfo.Mage;
+  if($('heroAbilityTitle'))$('heroAbilityTitle').textContent=CHAMPIONS[selectedId].icon+' '+CHAMPIONS[selectedId].name+' · Hero Abilities';
+  if($('heroAbilitySkill'))$('heroAbilitySkill').textContent=ability.skill;
+  if($('heroAbilitySkillDesc'))$('heroAbilitySkillDesc').textContent=ability.skillDesc;
+  if($('heroAbilityUltimate'))$('heroAbilityUltimate').textContent=ability.ultimate;
+  if($('heroAbilityUltimateDesc'))$('heroAbilityUltimateDesc').textContent=ability.ultimateDesc;
   updateHeroMastery();
 }
 function updateHeroMastery(){
@@ -885,9 +933,13 @@ function updateHeroMastery(){
  if($('masteryDescription'))$('masteryDescription').textContent=CHAMPIONS[champion].name+' gains +5% attack and +5 max health per mastery level.';
  if($('masteryProgress'))$('masteryProgress').style.width=(lvl/5*100)+'%';
  if($('masteryNext'))$('masteryNext').textContent=lvl>=5?'Maximum mastery reached! This hero is fully trained.':`Next upgrade: +5% attack and +5 max health · Cost: ${cost} coins.`;
+ if($('heroAttackStat'))$('heroAttackStat').textContent='+'+Math.round(powerBonus()*100)+'%';
+ if($('heroAttackDetail'))$('heroAttackDetail').textContent=`Power Rune +${Math.round(profile.power*12)}% · Mastery +${lvl*5}%`;
+ if($('heroHealthStat'))$('heroHealthStat').textContent=maxHealth()+' HP';
+ if($('heroHealthDetail'))$('heroHealthDetail').textContent=`Vitality +${profile.vitality*10} · Mastery +${lvl*5}`;
  const btn=$('upgradeHero');if(btn){btn.textContent=lvl>=5?'✓ HERO FULLY TRAINED':`🌟 Train ${CHAMPIONS[champion].name} · ${cost} coins`;btn.disabled=!owned||lvl>=5||profile.coins<cost;btn.style.opacity=btn.disabled?'.55':'1';}
 }
-function updateArmory(){const pc=40+profile.power*35,vc=40+profile.vitality*35;$('powerLevel').textContent='Lv. '+profile.power;$('vitalityLevel').textContent='Lv. '+profile.vitality;$('powerCost').textContent=pc;$('vitalityCost').textContent=vc;$('buyPower').disabled=profile.coins<pc||profile.power>=10;$('buyVitality').disabled=profile.coins<vc||profile.vitality>=10;$('buyPower').style.opacity=$('buyPower').disabled?'.5':'1';$('buyVitality').style.opacity=$('buyVitality').disabled?'.5':'1';}
+function updateArmory(){const pc=40+profile.power*35,vc=40+profile.vitality*35;$('powerLevel').textContent='Lv. '+profile.power;$('vitalityLevel').textContent='Lv. '+profile.vitality;$('powerCost').textContent=profile.power>=10?'MAX':pc;$('vitalityCost').textContent=profile.vitality>=10?'MAX':vc;$('buyPower').textContent=profile.power>=10?'✓ POWER MAXED':'Upgrade Power · '+pc+' coins';$('buyVitality').textContent=profile.vitality>=10?'✓ VITALITY MAXED':'Upgrade Vitality · '+vc+' coins';$('buyPower').disabled=profile.coins<pc||profile.power>=10;$('buyVitality').disabled=profile.coins<vc||profile.vitality>=10;$('buyPower').style.opacity=$('buyPower').disabled?'.5':'1';$('buyVitality').style.opacity=$('buyVitality').disabled?'.5':'1';const old=$('runeMilestoneStatus');if(old)old.textContent=runeMilestoneText();}
 const ACHIEVEMENTS=[
  {id:'first_win',icon:'🏆',title:'First Victory',desc:'Win your first battle.',goal:1,reward:10,progress:()=>Math.min(profile.wins,1)},
  {id:'five_wins',icon:'⚔️',title:'Arena Regular',desc:'Win 5 battles.',goal:5,reward:20,progress:()=>Math.min(profile.wins,5)},
@@ -904,7 +956,7 @@ function renderDailyRewards(){const strip=$('streakStrip');if(!strip)return;cons
 function renderAchievements(){const list=$('achievementList');if(!list)return;list.innerHTML=ACHIEVEMENTS.map(a=>{const done=!!profile.achievements[a.id],progress=Math.min(a.goal,a.progress());return `<div class="achievement-card ${done?'unlocked':''}"><span class="achievement-icon">${done?'✅':a.icon}</span><span class="achievement-copy"><b>${a.title}</b><small>${a.desc} · Reward: ${a.reward} coins</small></span><span class="achievement-progress">${done?'UNLOCKED':`${progress}/${a.goal}`}</span></div>`;}).join('');}
 function checkAchievements(){profile.achievements=profile.achievements||{};let coinsEarned=0;const unlocked=[];for(const a of ACHIEVEMENTS){if(!profile.achievements[a.id]&&a.progress()>=a.goal){profile.achievements[a.id]=true;profile.coins+=a.reward;coinsEarned+=a.reward;unlocked.push(`${a.icon} ${a.title} (+${a.reward} coins)`);}}renderAchievements();renderDailyRewards();if(unlocked.length){saveProfile();say(`🏅 Achievement unlocked! ${unlocked.join(' · ')}${coinsEarned?` — +${coinsEarned} bonus coins`:''}`);playSound('gift');}return coinsEarned;}
 function saveProfile(){profile.arena=arena;profile.champion=champion;if(!profile.heroLevels||typeof profile.heroLevels!=='object')profile.heroLevels={};try{localStorage.setItem('gemClashSave',JSON.stringify(profile))}catch(e){} updateProfileUI();}
-function updateProfileUI(){ $('levelText').textContent=`Level ${profile.level}`; $('xpText').textContent=`${profile.xp} / ${profile.level*100} XP · 💰 ${profile.coins}`; $('recordText').textContent=`${profile.wins} wins · ${profile.losses} losses`; if($('powerLevel'))updateArmory(); if($('upgradeHero'))updateHeroMastery(); renderDailyRewards();renderAchievements(); }
+function updateProfileUI(){ if($('shopCoinBalance'))$('shopCoinBalance').textContent=`💰 ${profile.coins} coins`; if($('topCoinBalance'))$('topCoinBalance').textContent=`💰 ${profile.coins} coins`; $('levelText').textContent=`Level ${profile.level}`; $('xpText').textContent=`${profile.xp} / ${profile.level*100} XP · 💰 ${profile.coins}`; $('recordText').textContent=`${profile.wins} wins · ${profile.losses} losses`; if($('powerLevel'))updateArmory(); if($('upgradeHero'))updateHeroMastery(); renderDailyRewards();renderAchievements(); }
 const $=id=>document.getElementById(id);
 const randColor=()=>COLORS[Math.floor(Math.random()*COLORS.length)];
 function randomCell(){return {color:randColor(),special:null};}
@@ -1009,7 +1061,7 @@ function showBattleFx(kind,title,subtitle){
 function setupDisplayPreferences(){
  const config=[['campaignPanel','campaignPanel'],['heroMasteryPanel','heroMasteryPanel'],['armoryGroup','armoryGroup'],['gemGuideGroup','gemGuideGroup']];
  const key='gemClashDisplayPrefs281';let prefs={};try{prefs=JSON.parse(localStorage.getItem(key)||'{}')||{};}catch(e){}
- for(const [inputId,panelId] of config){const input=document.querySelector(`[data-hide-panel="${inputId}"]`),panel=$(panelId);if(!input||!panel)continue;input.checked=!!prefs[inputId];panel.hidden=input.checked;input.addEventListener('change',()=>{panel.hidden=input.checked;prefs[inputId]=input.checked;try{localStorage.setItem(key,JSON.stringify(prefs));}catch(e){}});}
+ for(const [inputId,panelId] of config){const input=document.querySelector(`[data-hide-panel="${inputId}"]`),panel=$(panelId);if(!input||!panel)continue; if(inputId==='armoryGroup'){prefs[inputId]=false;panel.hidden=false;} input.checked=!!prefs[inputId];panel.hidden=input.checked;input.addEventListener('change',()=>{panel.hidden=input.checked;prefs[inputId]=input.checked;try{localStorage.setItem(key,JSON.stringify(prefs));}catch(e){}});}
  const reset=$('resetDisplaySettings');if(reset)reset.addEventListener('click',()=>{for(const [inputId,panelId] of config){const input=document.querySelector(`[data-hide-panel="${inputId}"]`),panel=$(panelId);if(input)input.checked=false;if(panel)panel.hidden=false;prefs[inputId]=false;}try{localStorage.setItem(key,JSON.stringify(prefs));}catch(e){}});
 }
 
@@ -1074,6 +1126,19 @@ function championAbility(kind){
  for(let i=0;i<7;i++){const p=document.createElement('i');p.className='fx-spark';p.style.setProperty('--x',x+'px');p.style.setProperty('--y',y+'px');p.style.setProperty('--dx',(Math.random()*150-75)+'px');p.style.setProperty('--dy',(Math.random()*130-65)+'px');p.style.setProperty('--fx',c.color);p.style.setProperty('--dur',(.5+Math.random()*.35)+'s');fxLayer().appendChild(p);setTimeout(()=>p.remove(),1000);}
  if(kind==='heal'){fxPoint(x,y,'fx-burst',c.color);fxPoint(x,y,'fx-burst','#8cf7c5');}
  else {const br=$('board').getBoundingClientRect();fxPoint(br.left+br.width*.5,br.top+br.height*.48,'fx-burst',c.color);}
+ // Signature visual: each champion gets a different readable combat cue.
+ const sigs={
+  Mage:{glyph:'✧',cls:'mage',color:'#9b8cff',label:'ARCANE RUNE'},
+  Knight:{glyph:'🛡️',cls:'knight',color:'#ffe18a',label:'AEGIS IMPACT'},
+  Ranger:{glyph:'➶',cls:'ranger',color:'#78ffd4',label:'STAR VOLLEY'},
+  Phoenix:{glyph:'🔥',cls:'phoenix',color:'#ff7848',label:'PHOENIX FLARE'}
+ };
+ const sig=sigs[champion]||sigs.Mage;
+ const sigEl=document.createElement('div');sigEl.className='hero-signature-effect '+sig.cls;sigEl.textContent=kind==='heal'?(champion==='Knight'?'🛡️':champion==='Phoenix'?'💚':'✨'):sig.glyph;
+ sigEl.style.setProperty('--x',x+'px');sigEl.style.setProperty('--y',y+'px');sigEl.style.setProperty('--sig',sig.color);fxLayer().appendChild(sigEl);setTimeout(()=>sigEl.remove(),1200);
+ if(champion==='Ranger'&&kind!=='heal'){
+  for(let n=0;n<2;n++){const arrow=document.createElement('div');arrow.className='hero-signature-effect ranger';arrow.textContent='➶';arrow.style.setProperty('--x',(x-14+n*28)+'px');arrow.style.setProperty('--y',(y+10-n*16)+'px');arrow.style.setProperty('--sig',sig.color);fxLayer().appendChild(arrow);setTimeout(()=>arrow.remove(),1000);}
+ }
 }
 function victoryConfetti(){const layer=fxLayer();if(!layer)return;const colors=['#ffd166','#5ee7ff','#ff6b8a','#8cf7c5','#c6a5ff','#fff'];for(let i=0;i<90;i++){const p=document.createElement('i');p.className='fx-confetti';p.style.setProperty('--x',(Math.random()*100)+'vw');p.style.setProperty('--fx',colors[i%colors.length]);p.style.setProperty('--w',(5+Math.random()*7)+'px');p.style.setProperty('--h',(7+Math.random()*12)+'px');p.style.setProperty('--dur',(1.6+Math.random()*1.8)+'s');p.style.setProperty('--drift',(Math.random()*220-110)+'px');p.style.setProperty('--rot',(Math.random()*360)+'deg');layer.appendChild(p);setTimeout(()=>p.remove(),3600);}}
 
@@ -1150,22 +1215,38 @@ function captureGemOrigins(){
  for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++){const gem=board[r][c];if(gem)origins.set(gem,{r,c});}
  return origins;
 }
-function animateFallingGems(origins){
+async function animateFallingGems(origins){
  const root=$('board');
+ if(!root||typeof Element==='undefined'||!Element.prototype.animate)return;
+ let longest=0;
+ // Animate every surviving/new gem with a clear drop, soft overshoot and tiny spring-back.
+ // Wait for the whole refill to finish before allowing a cascade to redraw the board.
  for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++){
   const gem=board[r][c],el=root.querySelector(`[data-r="${r}"][data-c="${c}"]`);if(!gem||!el)continue;
-  const from=origins&&origins.get(gem);const distance=from?from.r-r:(r+1);
+  const from=origins&&origins.get(gem);const distance=from?Math.max(0,from.r-r):(r+1);
   if(distance<=0)continue;
   cancelCellAnimation(el);
   try{
-   const anim=el.animate([{translate:`0 ${-distance*100}%`,opacity:.72},{translate:'0 0',opacity:1}],{duration:Math.min(420,170+distance*42),delay:Math.min(100,c*9),easing:'cubic-bezier(.2,.75,.25,1)'});
+   const duration=Math.min(760,340+distance*48);
+   const delay=Math.min(150,c*18+Math.max(0,SIZE-r-1)*5);
+   longest=Math.max(longest,duration+delay);
+   const startY=-(distance*112);
+   const anim=el.animate([
+    {transform:`translate3d(0,${startY}%,0) scale(.88) rotate(-3deg)`,opacity:.25,filter:'brightness(1.55) saturate(1.18)',offset:0},
+    {transform:`translate3d(0,${Math.max(3,distance*1.8)}%,0) scale(1.045) rotate(1.2deg)`,opacity:1,filter:'brightness(1.2)',offset:.76},
+    {transform:'translate3d(0,-1.2%,0) scale(.985) rotate(-.4deg)',opacity:1,filter:'brightness(1.08)',offset:.89},
+    {transform:'translate3d(0,.45%,0) scale(1.008) rotate(0deg)',opacity:1,filter:'brightness(1.02)',offset:.96},
+    {transform:'translate3d(0,0,0) scale(1) rotate(0deg)',opacity:1,filter:'brightness(1)',offset:1}
+   ],{duration,delay,easing:'cubic-bezier(.16,.76,.24,1)',fill:'both'});
    activeCellAnimations.set(el,anim);
-   const cleanup=()=>{if(activeCellAnimations.get(el)===anim)activeCellAnimations.delete(el);try{el.style.removeProperty('translate');el.style.removeProperty('transform');el.style.removeProperty('z-index');}catch(e){}};
+   const cleanup=()=>{if(activeCellAnimations.get(el)===anim)activeCellAnimations.delete(el);try{el.style.removeProperty('transform');el.style.removeProperty('translate');el.style.removeProperty('z-index');el.style.removeProperty('filter');}catch(e){}};
    anim.onfinish=()=>{cleanup();try{anim.cancel()}catch(e){}};
    anim.oncancel=cleanup;
   }catch(e){cancelCellAnimation(el);}
  }
+ if(longest)await sleep(longest+25);
 }
+
 function setTurn(state){turnState=state;if(state==='player')moveSeconds=10;updateUI();}
 function scoreAIMove(matches){
  // Evaluate both immediate damage and tactical value instead of choosing only by match size.
@@ -1296,7 +1377,7 @@ async function prismSwap(prismPos,targetPos){
  say(`🌈 PRISM WIPE! Cleared ${clear.size} gems for ${damage} damage.`);render();await sleep(220);
  const origins=captureGemOrigins();
  for(let c=0;c<SIZE;c++){let vals=[];for(let r=SIZE-1;r>=0;r--)if(board[r][c])vals.push(board[r][c]);while(vals.length<SIZE)vals.push(randomCell());for(let r=SIZE-1,i=0;r>=0;r--,i++)board[r][c]=vals[i];}
- render();animateFallingGems(origins);await sleep(320);
+ render();await animateFallingGems(origins);
  const m=getMatches();if(m.set.size)await resolveCascade(m,prismPos,targetPos);
  busy=false;render();turnCount++;if(!over){setTurn('enemy');await enemyTurn(turnCount);}checkEnd();
 }
@@ -1327,7 +1408,7 @@ async function activateSwappedSpecial(specialPos,otherPos){
  say(`${special.special==='bomb'?'💣 BLAST BOMB':special.special==='lightningH'?'⚡ ROW LIGHTNING':special.special==='lightningV'?'⚡ COLUMN LIGHTNING':special.special==='cross'?'✖️ CROSS BLAST':'💥 ROW BLAST'} activated! Cleared ${count} tiles for ${damage} damage.`);
  const origins=captureGemOrigins();
  settleAndRefillBoard(clear);
- render();animateFallingGems(origins);await sleep(320);const matches=getMatches();if(matches.set.size)await resolveCascade(matches,specialPos,otherPos);
+ render();await animateFallingGems(origins);const matches=getMatches();if(matches.set.size)await resolveCascade(matches,specialPos,otherPos);
  busy=false;render();turnCount++;checkEnd();if(!over){setTurn('enemy');await enemyTurn(turnCount);}checkEnd();
 }
 async function animateGemSwap(a,b){
@@ -1410,7 +1491,7 @@ async function resolveCascade(first,a,b){
   }
   const origins=captureGemOrigins();
   settleAndRefillBoard(clear);
-  render();animateFallingGems(origins);await sleep(320);matches=getMatches();
+  render();await animateFallingGems(origins);matches=getMatches();
  }
  if(chain>=2)say(`🔥 MEGA COMBO x${chain}! ${total} total damage dealt.`);
  render();
@@ -1446,20 +1527,20 @@ async function enemyTurn(turn){
  }
  $('board').classList.remove('enemy-thinking');busy=false;turnCount=Math.max(turnCount,turn);checkEnd();if(!over){setTurn('player');render();}
 }
-async function useUltimate(){if(energy<100||busy||over)return;busy=true;championAbility('ultimate');ultimateEffects();ultimateBanner('ULTIMATE BLAST!');energy=0;await animateShot('playerAvatar','enemyAvatar','lightning',5);const ultimateDamage=Math.round(35*(1+powerBonus()));enemyHp=Math.max(0,enemyHp-ultimateDamage);impactFeedback('enemyAvatar',ultimateDamage);say(`⚡ ULTIMATE BLAST! A massive arcane strike deals ${ultimateDamage} damage!`);playSound('magic');beep(880,.18);busy=false;render();checkEnd();if(!over){setTurn('enemy');enemyTurn(turnCount+1);}}
+async function useUltimate(){if(energy<100||busy||over)return;busy=true;championAbility('ultimate');ultimateEffects();ultimateBanner('ULTIMATE BLAST!');energy=0;await animateShot('playerAvatar','enemyAvatar','lightning',5);const ultimateDamage=Math.round(35*(1+powerBonus())*(profile.power>=5?1.15:1))+(profile.power>=10?10:0);enemyHp=Math.max(0,enemyHp-ultimateDamage);impactFeedback('enemyAvatar',ultimateDamage);say(`⚡ ULTIMATE BLAST! A massive arcane strike deals ${ultimateDamage} damage!`);playSound('magic');beep(880,.18);busy=false;render();checkEnd();if(!over){setTurn('enemy');enemyTurn(turnCount+1);}}
 
 async function useHeroSkill(){
  if(energy<40||busy||over||turnState!=='player')return;
  busy=true;energy-=40;championAbility('skill');
  const cfg={Mage:{damage:22,kind:'magic',extra:0,text:'Arcane Pulse blasts the rival with focused magic.'},Knight:{damage:15,kind:'strong',extra:12,text:'Shield Bash strikes the rival and restores 12 health.'},Ranger:{damage:18,kind:'lightning',extra:10,text:'Star Volley hits hard and restores 10 energy.'},Phoenix:{damage:20,kind:'fire',extra:8,text:'Flame Burst scorches the rival and restores 8 health.'}};
  const skill=cfg[champion]||cfg.Mage;ultimateBanner(skill.text.toUpperCase());await animateShot('playerAvatar','enemyAvatar',skill.kind,3);
- const damage=Math.round(skill.damage*(1+powerBonus()));enemyHp=Math.max(0,enemyHp-damage);impactFeedback('enemyAvatar',damage);
- if(champion==='Knight'||champion==='Phoenix'){const before=playerHp;playerHp=Math.min(maxHealth(),playerHp+skill.extra);if(playerHp>before)impactFeedback('playerAvatar',playerHp-before,'heal');}
+ const runeSkillBonus=profile.power>=3?6:0;const damage=Math.round(skill.damage*(1+powerBonus()))+runeSkillBonus;enemyHp=Math.max(0,enemyHp-damage);impactFeedback('enemyAvatar',damage);
+ if(champion==='Knight'||champion==='Phoenix'){const before=playerHp;const masteryHeal=profile.vitality>=5?5:0;playerHp=Math.min(maxHealth(),playerHp+skill.extra+masteryHeal);if(playerHp>before)impactFeedback('playerAvatar',playerHp-before,'heal');}
  if(champion==='Ranger')energy=Math.min(100,energy+skill.extra);
  say(`✨ ${CHAMPIONS[champion].name}: ${skill.text} Deals ${damage} damage.`);playSound(champion==='Phoenix'?'attack':'magic');beep(champion==='Phoenix'?760:680,.14);busy=false;render();checkEnd();if(!over){setTurn('enemy');enemyTurn(turnCount+1);}
 }
 
-function useHeal(){if(energy<60||busy||over||playerHp>=maxHealth())return;championAbility('heal');energy-=60;let before=playerHp;playerHp=Math.min(maxHealth(),playerHp+22+profile.vitality*2);impactFeedback('playerAvatar',playerHp-before,'heal');say(`🛡️ SHIELD BURST restores ${playerHp-before} health!`);playSound('heal');beep(620,.12);render();setTurn('enemy');enemyTurn(turnCount+1);}
+function useHeal(){if(energy<60||busy||over||playerHp>=maxHealth())return;championAbility('heal');energy-=60;let before=playerHp;const runeHealBonus=(profile.vitality>=3?8:0)+(profile.vitality>=10?5:0);playerHp=Math.min(maxHealth(),playerHp+22+profile.vitality*2+runeHealBonus);impactFeedback('playerAvatar',playerHp-before,'heal');say(`🛡️ SHIELD BURST restores ${playerHp-before} health${runeHealBonus?' with Rune milestone bonus':''}!`);playSound('heal');beep(620,.12);render();setTurn('enemy');enemyTurn(turnCount+1);}
 function checkEnd(){if(over)return;if(enemyHp<=0){endGame(true);}else if(playerHp<=0){endGame(false);}else if(seconds<=0){endGame(playerHp>=enemyHp/RIVALS[rival].hp*100);}}
 function endGame(win){
  if(over)return;
@@ -1473,7 +1554,8 @@ function endGame(win){
  profile.bestCombo=Math.max(Number(profile.bestCombo)||0,Number(comboBest)||0);if(win&&campaignMode&&isBossBattle())profile.bossSlayer=true;
  let campaignBonus=0;
  if(campaignMode&&win){const st=CAMPAIGN_STAGES[campaignStage-1];const firstClear=!profile.campaignWins.includes(campaignStage);if(firstClear){profile.campaignWins.push(campaignStage);campaignBonus=st&&st.boss?60:20;profile.coins+=campaignBonus;}if(campaignStage===profile.campaignUnlocked&&profile.campaignUnlocked<9)profile.campaignUnlocked++;selectedCampaignStage=Math.min(9,profile.campaignUnlocked);renderCampaignMap();}
- checkAchievements();saveProfile();
+ const achievementCoins=checkAchievements();saveProfile();
+ const totalCoinsEarned=win?(coinReward+levelCoins+campaignBonus+achievementCoins):0;
  const overlay=$('overlay'),playerAvatar=$('playerAvatar'),enemyAvatar=$('enemyAvatar');
  overlay.classList.remove('result-win','result-lose','boss-win');overlay.classList.add(win?'result-win':'result-lose');const bossWin=win&&isBossBattle();if(bossWin)overlay.classList.add('boss-win');
  if(playerAvatar){playerAvatar.classList.remove('celebrate','fallen');playerAvatar.classList.add(win?'celebrate':'fallen');}
@@ -1482,9 +1564,9 @@ function endGame(win){
  $('resultKicker').textContent=bossWin?'BOSS SLAIN · LEGENDARY VICTORY':(win?'CHAMPION VICTORY':'BATTLE ENDED');
  $('resultTitle').textContent=bossWin?'BOSS DEFEATED!':(win?'VICTORY!':'DEFEAT');
  $('resultText').textContent=campaignMode?(win?(campaignStage===9?'The Inferno Dragon has fallen! The crystal corruption fades, and peace returns to all three kingdoms.':`Stage ${campaignStage} cleared! ${rival} has been defeated${CAMPAIGN_STAGES[campaignStage-1].boss?' in a mighty boss battle':''}. ${CAMPAIGN_STAGES[campaignStage].story}`):`Stage ${campaignStage} remains unfinished. ${CAMPAIGN_STAGES[campaignStage-1].story} Regroup and try again.`):(win?`You defeated ${rival} in ${modeLabel()} mode! The arena is yours.`:`${rival} won this round. Regroup, upgrade, and come back stronger!`);
- $('resultRewards').innerHTML=`<div class="reward-tile"><span>✨</span><small>XP EARNED</small><strong>+${xpReward}</strong></div><div class="reward-tile"><span>💰</span><small>COINS EARNED</small><strong>+${coinReward+campaignBonus}</strong></div><div class="reward-tile"><span>🔥</span><small>BEST COMBO</small><strong>x${comboBest}</strong></div>`;
+ $('resultRewards').innerHTML=`<div class="reward-tile"><span>✨</span><small>XP EARNED</small><strong>+${xpReward}</strong></div><div class="reward-tile"><span>💰</span><small>COINS EARNED</small><strong>+${totalCoinsEarned}</strong></div><div class="reward-tile"><span>🔥</span><small>BEST COMBO</small><strong>x${comboBest}</strong></div>`;
  $('resultGuardianLevel').textContent=`Level ${profile.level}`;$('resultGuardianXp').textContent=`${profile.xp} / ${profile.level*100} XP · 💰 ${profile.coins}`;$('resultBattleRecord').textContent=`${profile.wins} wins · ${profile.losses} losses`;
- $('resultFooter').textContent=campaignMode?(win?`Campaign reward: +${campaignBonus} bonus coins. ${campaignStage===9?'The Adventure Campaign is complete!':`Next: Stage ${Math.min(9,profile.campaignUnlocked)}.`}`:`Your campaign progress is safe. You can retry this stage or upgrade in the Armory.`):(win?(levelsGained?`LEVEL UP! You reached Level ${profile.level} and earned ${levelCoins} bonus coins.`:'Your legend grows stronger with every victory.'):`You still earned ${xpReward} XP. Every battle helps you grow.`);
+ $('resultFooter').textContent=campaignMode?(win?`Campaign reward: +${campaignBonus} bonus coins. ${campaignStage===9?'The Adventure Campaign is complete!':`Next: Stage ${Math.min(9,profile.campaignUnlocked)}.`}`:`Your campaign progress is safe. You can retry this stage or upgrade in the Armory.`):(win?(levelsGained?`LEVEL UP! You reached Level ${profile.level} and earned ${levelCoins} bonus coins.`:'Your legend grows stronger with every victory.'):`No coins for a defeat. You earned ${xpReward} XP—win the next battle to earn coins.`);
  $('playAgain').disabled=false;$('playAgain').textContent=campaignMode?'⚔️ RETRY STAGE':'⚔️ BATTLE AGAIN';
  overlay.classList.add('show');
  resultCelebration(win,bossWin);
@@ -1560,8 +1642,8 @@ document.querySelectorAll('[data-champion]').forEach(b=>b.addEventListener('clic
 $('soundToggle').addEventListener('click',()=>{soundOn=!soundOn;$('soundToggle').textContent=soundOn?'🔊 Sound On · Music':'🔇 Sound Off';$('soundToggle').setAttribute('aria-pressed',String(soundOn));if(soundOn){getAudio();playSound('gift');startMusic();}else{stopMusic();if(audioCtx&&audioCtx.state==='running'){try{audioCtx.suspend();}catch(e){}}}});
 function claimDailyReward(){const today=localDateKey();if(profile.lastGift===today){say('🎁 Today’s reward is already claimed. Come back tomorrow!');return;}if(profile.lastGift){const parts=profile.lastGift.split('-').map(Number);if(parts.length===3&&parts.every(Number.isFinite)){const previous=new Date(Date.UTC(parts[0],parts[1]-1,parts[2]));previous.setUTCDate(previous.getUTCDate()+1);profile.dailyStreak=previous.toISOString().slice(0,10)===today?(Number(profile.dailyStreak)||0)+1:1;}else profile.dailyStreak=1;}else profile.dailyStreak=1;profile.lastGift=today;const reward=dailyRewardForStreak(profile.dailyStreak);profile.coins+=reward.coins;profile.xp+=reward.xp;let levels=0;while(profile.xp>=profile.level*100){profile.xp-=profile.level*100;profile.level++;profile.coins+=50;levels++;}saveProfile();renderDailyRewards();checkAchievements();say(`🎁 Day ${((profile.dailyStreak-1)%7)+1} reward claimed: +${reward.coins} coins and +${reward.xp} XP!${levels?` Level up! Bonus +${levels*50} coins.`:''}`);playSound('gift');beep(740,.16);}
 $('dailyReward').addEventListener('click',()=>{const panel=$('rewardsPanel');if(panel){panel.scrollIntoView({behavior:'smooth',block:'start'});panel.classList.remove('daily-focus');void panel.offsetWidth;panel.classList.add('daily-focus');setTimeout(()=>panel.classList.remove('daily-focus'),1700);}});$('claimDailyReward').addEventListener('click',claimDailyReward);
-$('buyPower').addEventListener('click',()=>{const cost=40+profile.power*35;if(profile.power>=10||profile.coins<cost){say('Not enough coins for that Power Rune upgrade.');return;}profile.coins-=cost;profile.power++;saveProfile();say(`⚔️ Power Rune upgraded to level ${profile.power}. Match attacks are stronger!`);beep(520,.12);});
-$('buyVitality').addEventListener('click',()=>{const cost=40+profile.vitality*35;if(profile.vitality>=10||profile.coins<cost){say('Not enough coins for that Vitality Rune upgrade.');return;}profile.coins-=cost;profile.vitality++;saveProfile();say(`❤️ Vitality Rune upgraded to level ${profile.vitality}. Your max health increases next battle.`);beep(520,.12);});
+$('buyPower').addEventListener('click',()=>{const cost=40+profile.power*35;if(profile.power>=10||profile.coins<cost){say('Not enough coins for that Power Rune upgrade.');return;}profile.coins-=cost;profile.power++;saveProfile();const perk=profile.power===3?' Hero Skill now deals +6 bonus damage!':profile.power===5?' Ultimate now deals 15% more damage!':profile.power===10?' Ultimate gains an extra +10 damage!':'';say(`⚔️ Power Rune upgraded to level ${profile.power}. Match attacks are stronger!${perk}`);beep(520,.12);});
+$('buyVitality').addEventListener('click',()=>{const cost=40+profile.vitality*35;if(profile.vitality>=10||profile.coins<cost){say('Not enough coins for that Vitality Rune upgrade.');return;}profile.coins-=cost;profile.vitality++;saveProfile();const perk=profile.vitality===3?' Shield Burst now heals +8 extra HP!':profile.vitality===5?' Healing Hero Skills restore +5 extra HP!':profile.vitality===10?' Shield Burst gains +5 more healing!':'';say(`❤️ Vitality Rune upgraded to level ${profile.vitality}. Your max health increases next battle.${perk}`);beep(520,.12);});
 $('upgradeHero').addEventListener('click',()=>{const lvl=heroMasteryLevel(),cost=[100,200,350,550,800][lvl]||800;if(lvl>=5){say(CHAMPIONS[champion].name+' has reached maximum mastery!');return;}if(!profile.unlockedChampions.includes(champion)){say('Unlock this hero before training them.');return;}if(profile.coins<cost){say(`You need ${cost} coins to train ${CHAMPIONS[champion].name}. Win battles or claim your daily gift.`);return;}profile.coins-=cost;profile.heroLevels=profile.heroLevels||{};profile.heroLevels[champion]=lvl+1;saveProfile();updateChampions();say(`🌟 ${CHAMPIONS[champion].name} reached Mastery Level ${lvl+1}! +5% attack and +5 max health per level.`);playSound('magic');});
 // The help dialog is declared after this script in the HTML. Wait until parsing
 // finishes before looking up its elements; otherwise null.addEventListener throws
@@ -1616,6 +1698,7 @@ window.gemClashReplayClick = function(event) { replayBattle(event); };
 const replayButton = $('playAgain');
 if (replayButton) replayButton.addEventListener('click', replayBattle);
 setupDisplayPreferences();
+const coinShopNav=$('coinShopNav');if(coinShopNav)coinShopNav.addEventListener('click',()=>{const panel=$('armoryGroup'),toggle=document.querySelector('[data-hide-panel="armoryGroup"]');if(panel){panel.hidden=false;if(toggle)toggle.checked=false;try{const p=JSON.parse(localStorage.getItem('gemClashDisplayPrefs281')||'{}');p.armoryGroup=false;localStorage.setItem('gemClashDisplayPrefs281',JSON.stringify(p));}catch(e){}panel.scrollIntoView({behavior:'smooth',block:'start'});const title=$('armoryTitle');if(title){title.setAttribute('tabindex','-1');title.focus({preventScroll:true});}}});
 try { renderCampaignMap(); start(); } catch (err) { console.error(err); const errBox=$('boardError'); if(errBox){errBox.style.display='block';errBox.textContent='Game startup error: '+(err && err.stack ? err.stack : String(err));} }
 renderDailyRewards();renderAchievements();
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) { window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(err => console.warn('Offline cache unavailable:', err))); }
