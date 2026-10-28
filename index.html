@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 3.4.0 Rune Milestone Abilities</title>
+<title>Gem Clash: AI Arena — Build 3.5.6 Approved Gem Design + Fluid Refill</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -22,8 +22,12 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px;fl
 .battlehead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}.avatar{font-size:1.7rem}.fighter{display:flex;align-items:center;gap:8px}.fighter strong{display:block}.fighter small{color:var(--muted)}
 .board{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:5px;touch-action:none;user-select:none}
 .cell{aspect-ratio:1;border-radius:11px;background:linear-gradient(145deg,#34436f,#1a2343);border:1px solid #526494;display:grid;place-items:center;font-size:clamp(1.05rem,4vw,2rem);position:relative;transition:transform .12s,filter .12s;min-width:0;padding:0;box-shadow:inset 0 1px #ffffff15,0 3px 0 #080d1d}
+.gem-face{display:grid;place-items:center;width:100%;height:100%;position:relative;z-index:1;will-change:transform;pointer-events:none}.gem-face:empty{display:none}.cell{overflow:visible}
 .cell{animation:gemIn .18s ease-out both}.cell:active{transform:scale(.92)}@keyframes gemIn{from{transform:scale(.72);opacity:.45}to{transform:scale(1);opacity:1}}@keyframes glowPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.35)}}.cell.special{animation:glowPulse 1.5s ease-in-out infinite}.cell.selected{outline:3px solid #fff;transform:scale(.94);filter:brightness(1.35)}.cell.special{box-shadow:inset 0 0 0 2px var(--gold),0 0 12px #ffd16665,0 3px 0 #080d1d}.cell.special:after{content:attr(data-mark);position:absolute;right:2px;top:0;font-size:.62rem;color:#fff;text-shadow:0 1px 3px #000}
 .cell.empty{opacity:.35}
+.cell.gem-land{animation:gemLandingFlash .22s ease-out both!important;}
+@keyframes gemLandingFlash{0%{filter:brightness(1.5);box-shadow:inset 0 0 0 2px #ffffffa8,0 0 15px #8deaff88,0 4px 0 #070b19}100%{filter:brightness(1);}}
+
 .cell{touch-action:none;cursor:grab}.cell.drag-source{outline:3px solid var(--cyan);transform:scale(.92);filter:brightness(1.4)}
 .cell.match-three{animation:matchBurst .42s ease-in-out both;z-index:2}.cell.match-four{animation:matchBurst .5s ease-in-out both;z-index:2;box-shadow:0 0 0 3px var(--gold),0 0 24px #ffd166,inset 0 0 15px #fff8}
 @keyframes matchBurst{0%{transform:scale(1);filter:brightness(1)}35%{transform:scale(1.18) rotate(-5deg);filter:brightness(2.2)}70%{transform:scale(.88) rotate(5deg);filter:brightness(1.7)}100%{transform:scale(.82);opacity:.28}}
@@ -466,8 +470,12 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
   100%{filter:brightness(1);box-shadow:none}
 }
 
+
+/* Build 3.4.6: soften the contrast of the board so temporary gaps during cascades are less stark. */
+.board{background:linear-gradient(145deg,#35466fdd,#465782e8)!important;border-color:#91a5d688!important;box-shadow:inset 0 0 18px #17234366,0 12px 26px #0003!important}
+.cell{background:linear-gradient(145deg,#536a9b,#35496f)!important;border-color:#9aafd9aa!important;box-shadow:inset 0 1px 2px #ffffff35,inset 0 -3px 0 #25355466,0 2px 0 #263654,0 0 0 1px #a7bbe044!important}
 </style>
-<meta name="theme-color" content="#10152b"><meta name="application-name" content="Gem Clash: AI Arena Build 3.3.7"><meta name="description" content="A colorful match-3 fantasy battle arena with three selectable arenas. Challenge rivals, unlock upgrades, and build your champion."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#10152b"><meta name="application-name" content="Gem Clash: AI Arena Build 3.4.2"><meta name="description" content="A colorful match-3 fantasy battle arena with three selectable arenas. Challenge rivals, unlock upgrades, and build your champion."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml">
 
 <style>
 /* Build 2.8.1: animated special-gem tutorials and one-step directional drag feedback. */
@@ -508,6 +516,27 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 .result-spark{position:fixed;left:var(--x);top:var(--y);z-index:9001;pointer-events:none;font-size:var(--size,24px);line-height:1;filter:drop-shadow(0 0 8px var(--glow,#ffd166));animation:resultSparkFly var(--dur,1.4s) cubic-bezier(.12,.7,.2,1) forwards}
 @keyframes resultSparkFly{0%{opacity:0;transform:translate(-50%,-50%) scale(.15) rotate(0)}15%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(.35) rotate(var(--rot,180deg))}}
 @media(prefers-reduced-motion:reduce){#overlay.result-win:before,#overlay.result-lose:before,#overlay.result-win .result-modal,#overlay.result-lose .result-modal,#overlay.result-win .result-emblem,#overlay.result-lose .result-emblem,#overlay.boss-win .result-emblem,.result-spark{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+
+/* Build 3.4.3: stronger, unmistakable victory celebration */
+#overlay.result-win .result-kicker{display:inline-block;padding:7px 13px;border-radius:999px;border:1px solid #ffe18a;background:linear-gradient(100deg,#5d4216,#9b6c19,#5d4216);color:#fff1b4;text-shadow:0 0 12px #ffd166;box-shadow:0 0 0 3px #ffd16622,0 0 28px #ffd16688;animation:winKickerPulse .7s ease-in-out 4}
+#overlay.result-win .result-emblem{font-size:clamp(3.8rem,9vw,5.2rem);filter:drop-shadow(0 0 20px #ffd166) drop-shadow(0 0 42px #ff9b32);}
+#overlay.result-win .result-modal{position:relative;overflow:hidden;animation:resultEnter .62s cubic-bezier(.18,.88,.24,1.18) both,winModalPulse .9s ease-in-out .45s 3}
+#overlay.result-win .result-modal:before{content:"✦  ✧  ✦  ✧  ✦";position:absolute;left:0;right:0;top:6px;color:#ffe18a;font-size:1.1rem;letter-spacing:.45em;opacity:0;pointer-events:none;animation:winStars .9s ease-out .25s 3}
+@keyframes winKickerPulse{0%,100%{filter:brightness(1);transform:scale(1)}50%{filter:brightness(1.6);transform:scale(1.06)}}
+@keyframes winModalPulse{0%,100%{box-shadow:0 0 0 1px #ffe18a33,0 28px 100px #000c,0 0 70px #ffcf5550}50%{box-shadow:0 0 0 3px #ffe18a88,0 28px 100px #000c,0 0 115px #ffcf55bb}}
+@keyframes winStars{0%{opacity:0;transform:translateY(-8px) scale(.75)}35%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(9px) scale(1.1)}}
+/* Build 3.4.2: layered victory spotlight, shockwaves and celebratory burst */
+.victory-banner-fx{position:fixed;left:50%;top:12%;transform:translateX(-50%) scale(.65);z-index:9003;max-width:92vw;white-space:nowrap;padding:13px 22px;border:2px solid #fff0a8;border-radius:18px;background:linear-gradient(110deg,#3a235b,#785018,#3a235b);color:#fff4bd;font-weight:1000;font-size:clamp(1.25rem,4vw,2.6rem);letter-spacing:.06em;text-align:center;text-shadow:0 0 15px #ffd166,0 3px 4px #160d28;box-shadow:0 0 0 4px #ffd16633,0 0 45px #ffd166cc;animation:victoryBannerEnter 1.8s cubic-bezier(.15,.8,.2,1) forwards;pointer-events:none}
+@keyframes victoryBannerEnter{0%{opacity:0;transform:translateX(-50%) translateY(-24px) scale(.55)}18%{opacity:1;transform:translateX(-50%) translateY(0) scale(1.08)}28%{transform:translateX(-50%) scale(1)}78%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-15px) scale(1.04)}}
+.victory-ring{position:fixed;left:var(--x);top:var(--y);width:18px;height:18px;border:3px solid var(--ring,#ffe18a);border-radius:50%;z-index:9000;pointer-events:none;box-shadow:0 0 18px var(--ring,#ffe18a),inset 0 0 12px var(--ring,#ffe18a);animation:victoryRing .95s cubic-bezier(.12,.72,.18,1) forwards}
+.victory-rise{position:fixed;left:var(--x);top:var(--y);z-index:9001;pointer-events:none;font-size:var(--size,24px);filter:drop-shadow(0 0 9px #ffd166);animation:victoryRise var(--dur,1.8s) cubic-bezier(.15,.65,.2,1) forwards}
+#overlay.result-win:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background:linear-gradient(115deg,transparent 25%,#fff7c522 45%,transparent 62%);background-size:220% 100%;animation:victorySweep 1.4s ease-out both}
+#overlay.boss-win:after{background:linear-gradient(115deg,transparent 15%,#fff1a855 42%,#ff8a3d33 52%,transparent 72%);animation:victorySweep 1.8s ease-out both}
+@keyframes victoryRing{0%{opacity:.95;transform:translate(-50%,-50%) scale(.15)}100%{opacity:0;transform:translate(-50%,-50%) scale(9)}}
+@keyframes victoryRise{0%{opacity:0;transform:translate(-50%,20px) scale(.4) rotate(-15deg)}15%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% - var(--rise))) scale(1.15) rotate(var(--rot,25deg))}}
+@keyframes victorySweep{0%{background-position:120% 0;opacity:0}25%{opacity:1}100%{background-position:-120% 0;opacity:.4}}
+@media(prefers-reduced-motion:reduce){.victory-ring,.victory-rise,.victory-banner-fx,#overlay.result-win:after,#overlay.boss-win:after,#overlay.result-win .result-kicker,#overlay.result-win .result-modal:before{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+
 
 </style>
 
@@ -612,12 +641,18 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 #board>.cell{position:relative;inset:auto;min-width:0;min-height:0;width:100%;height:100%;box-sizing:border-box;translate:0 0;z-index:0}
 #board>.cell.selected,#board>.cell.drag-source{z-index:2}
 #board>.cell.match-three,#board>.cell.match-four{z-index:1}
+<style id="build-350-cascade-underlay">
+/* Light slate underlay remains visible while a tile is travelling, rather than exposing black gaps. */
+#board{background:linear-gradient(145deg,#cbd7e8,#aebdd2 55%,#9eafc8)!important;border-radius:13px;padding:5px!important;gap:5px!important;}
+#board>.cell{transform-origin:center center;backface-visibility:hidden;will-change:transform;}
+#board>.cell.empty{opacity:1!important;}
+</style>
 </style>
 </head>
 <body>
 <div id="comboToast" class="combo-toast" aria-live="polite" aria-atomic="true"></div>
 <div class="wrap">
-<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 3.3.9 · COIN SHOP VISIBILITY FIX</div></div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><strong id="topCoinBalance" class="coin-balance-badge">💰 0 coins</strong><button class="topbtn" id="coinShopNav" type="button">🛒 Coin Shop</button><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn daily-nav" id="dailyReward" type="button">🎁 Daily Rewards</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
+<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 3.5.6 · APPROVED GEMS + FLUID REFILL</div></div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><strong id="topCoinBalance" class="coin-balance-badge">💰 0 coins</strong><button class="topbtn" id="coinShopNav" type="button">🛒 Coin Shop</button><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn daily-nav" id="dailyReward" type="button">🎁 Daily Rewards</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
 <div class="layout">
 <section class="panel">
   <div class="stats">
@@ -731,7 +766,7 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
   <div class="rules"><b>Progression:</b> Wins grant XP and coins; level-ups award bonus coins. Train each unlocked hero up to Mastery Level 5 for +5% attack and +5 max health per level; mastery costs rise to 100, 200, 350, 550 and 800 coins. Hero mastery and your other progress save locally in this browser. <b>Combo chain:</b> matches that cascade trigger a big on-screen combo banner, board impact shake, and a rising damage bonus. Longer chains deal more damage and charge energy faster. <b>Craft special gems:</b> match 4 in a straight line for a glowing ⚡ Lightning Gem (horizontal or vertical), match 5 for 🌈 rainbow prism, or make a T/L-shaped match for 💣 blast bomb. Lightning clears a full row/column, the bomb blasts a 3×3 area, and swapping the rainbow prism with a gem clears that colour.</div>
 </aside>
 </div>
-<div class="footer">Gem Clash: AI Arena · Build 3.4.0 · Coin Shop Visibility Fix</div>
+<div class="footer">Gem Clash: AI Arena · Build 3.5.6 · Approved Gem Design + Fluid Refill</div>
 </div>
 <div id="fxLayer" aria-hidden="true"></div>
 <div class="overlay" id="overlay" aria-live="assertive" aria-modal="true" role="dialog" aria-labelledby="resultTitle"><div class="modal result-modal"><div class="result-emblem" id="resultEmblem" aria-hidden="true">🏆</div><div class="result-kicker" id="resultKicker">BATTLE COMPLETE</div><h2 id="resultTitle">VICTORY!</h2><p id="resultText">You won the battle.</p><div class="result-rewards" id="resultRewards"><div class="reward-tile"><span>✨</span><small>XP EARNED</small><strong>+50</strong></div><div class="reward-tile"><span>💰</span><small>COINS EARNED</small><strong>+25</strong></div><div class="reward-tile"><span>🔥</span><small>BEST COMBO</small><strong>x3</strong></div></div><div class="result-profile" id="resultProfile"><div class="profile-result-card"><span>🛡️</span><div><small>GUARDIAN LEVEL</small><strong id="resultGuardianLevel">Level 1</strong><em id="resultGuardianXp">0 / 100 XP</em></div></div><div class="profile-result-card"><span>📖</span><div><small>BATTLE RECORD</small><strong id="resultBattleRecord">0 wins · 0 losses</strong><em>Saved on this device</em></div></div></div><div class="result-footer" id="resultFooter">Your legend grows stronger with every battle.</div><button class="primary result-play-again" id="playAgain" type="button">⚔️ BATTLE AGAIN</button></div></div>
@@ -972,6 +1007,13 @@ function createBoard(){
  }
 }
 const activeCellAnimations = new WeakMap();
+const activeGemFaceAnimations = new WeakMap();
+function cancelGemFaceAnimation(el){
+ const anim=activeGemFaceAnimations.get(el);
+ if(anim){try{anim.onfinish=null;anim.oncancel=null;anim.cancel();}catch(e){}activeGemFaceAnimations.delete(el);}
+ el.style.removeProperty('transform');el.style.removeProperty('translate');el.style.removeProperty('z-index');
+}
+
 function cancelCellAnimation(el){
  const anim=activeCellAnimations.get(el);
  if(anim){try{anim.onfinish=null;anim.oncancel=null;anim.cancel();}catch(e){}activeCellAnimations.delete(el);}
@@ -996,13 +1038,22 @@ function render(){
   const duplicates=root.querySelectorAll(`[data-r="${r}"][data-c="${c}"]`);
   duplicates.forEach((node,i)=>{if(i>0)node.remove()});
   const cell=board[r][c]||{color:'',special:null};
-  const transient=['lightning-strike','drag-source'];
+  const transient=['lightning-strike'];
   const keep=transient.filter(cls=>b.classList.contains(cls));
+  // Build 3.4.3: never preserve a drag-source outline across renders; AI swaps and interrupted gestures could leave dashed borders behind.
+  if(!dragStart)b.classList.remove('drag-source','drag-target');
   b.className='cell'+(selected&&selected.r===r&&selected.c===c?' selected':'')+(cell.special?' special':'')+(cell.color?'':' empty')+(keep.length?' '+keep.join(' '):'');
   // Clear stale inline transforms/stacking from interrupted animations.
   b.style.removeProperty('transform');b.style.removeProperty('translate');b.style.removeProperty('z-index');
   b.dataset.gemColor=cell.color||'';
-  b.textContent=cell.special==='row'?'💥':cell.special==='lightningH'?'⚡':cell.special==='lightningV'?'⚡':cell.special==='bomb'?'💣':cell.special==='prism'?'🌈':cell.special==='cross'?'✖️':cell.color||'';
+  const gemLabel=cell.special==='row'?'💥':cell.special==='lightningH'?'⚡':cell.special==='lightningV'?'⚡':cell.special==='bomb'?'💣':cell.special==='prism'?'🌈':cell.special==='cross'?'✖️':cell.color||'';
+  // Keep the cell's tile/background stationary. Only the gem artwork moves, so falling gems
+  // never drag the tile away and expose a black-looking hole underneath.
+  let face=b.querySelector('.gem-face');
+  if(!face){face=document.createElement('span');face.className='gem-face';b.appendChild(face);}
+  cancelGemFaceAnimation(face);
+  face.className='gem-face'+(!cell.special&&cell.color?' regular-gem':'');
+  face.textContent=cell.special?gemLabel:'';
   if(cell.special)b.dataset.mark=cell.special==='row'?'ROW BLAST':cell.special==='lightningH'?'ROW LIGHTNING':cell.special==='lightningV'?'COLUMN LIGHTNING':cell.special==='bomb'?'BOMB':cell.special==='prism'?'RAINBOW':'CROSS';else delete b.dataset.mark;
   b.setAttribute('aria-label',cell.special?cell.special+' special gem':(cell.color||'empty')+' gem');
  }
@@ -1140,10 +1191,11 @@ function championAbility(kind){
   for(let n=0;n<2;n++){const arrow=document.createElement('div');arrow.className='hero-signature-effect ranger';arrow.textContent='➶';arrow.style.setProperty('--x',(x-14+n*28)+'px');arrow.style.setProperty('--y',(y+10-n*16)+'px');arrow.style.setProperty('--sig',sig.color);fxLayer().appendChild(arrow);setTimeout(()=>arrow.remove(),1000);}
  }
 }
-function victoryConfetti(){const layer=fxLayer();if(!layer)return;const colors=['#ffd166','#5ee7ff','#ff6b8a','#8cf7c5','#c6a5ff','#fff'];for(let i=0;i<90;i++){const p=document.createElement('i');p.className='fx-confetti';p.style.setProperty('--x',(Math.random()*100)+'vw');p.style.setProperty('--fx',colors[i%colors.length]);p.style.setProperty('--w',(5+Math.random()*7)+'px');p.style.setProperty('--h',(7+Math.random()*12)+'px');p.style.setProperty('--dur',(1.6+Math.random()*1.8)+'s');p.style.setProperty('--drift',(Math.random()*220-110)+'px');p.style.setProperty('--rot',(Math.random()*360)+'deg');layer.appendChild(p);setTimeout(()=>p.remove(),3600);}}
+function victoryConfetti(){const layer=fxLayer();if(!layer)return;const colors=['#ffd166','#5ee7ff','#ff6b8a','#8cf7c5','#c6a5ff','#fff'];for(let i=0;i<150;i++){const p=document.createElement('i');p.className='fx-confetti';p.style.setProperty('--x',(Math.random()*100)+'vw');p.style.setProperty('--fx',colors[i%colors.length]);p.style.setProperty('--w',(5+Math.random()*7)+'px');p.style.setProperty('--h',(7+Math.random()*12)+'px');p.style.setProperty('--dur',(1.6+Math.random()*1.8)+'s');p.style.setProperty('--drift',(Math.random()*220-110)+'px');p.style.setProperty('--rot',(Math.random()*360)+'deg');layer.appendChild(p);setTimeout(()=>p.remove(),3600);}}
 
 function resultCelebration(win,bossWin=false){
  const layer=fxLayer();if(!layer)return;
+ if(win){const banner=document.createElement('div');banner.className='victory-banner-fx';banner.textContent=bossWin?'👑 LEGENDARY VICTORY!':'🏆 VICTORY!';layer.appendChild(banner);setTimeout(()=>banner.remove(),1900);}
  const winIcons=bossWin?['👑','✨','🏆','⭐','💎']:['✨','⭐','🏆','💎','🎉'];
  const loseIcons=['🔥','💨','✦','💔'];
  const icons=win?winIcons:loseIcons;
@@ -1158,6 +1210,22 @@ function resultCelebration(win,bossWin=false){
  if(win){
   const colors=bossWin?['#ffe18a','#ff6b45','#c6a5ff','#5ee7ff']:['#ffe18a','#5ee7ff','#8cf7c5'];
   for(let i=0;i<(bossWin?8:5);i++)setTimeout(()=>fxPoint(window.innerWidth*(.12+Math.random()*.76),window.innerHeight*(.18+Math.random()*.56),'fx-burst',colors[i%colors.length]),i*110);
+  // Layered rings and rising gem/trophy particles make a win feel more celebratory.
+  const ringCount=bossWin?9:6;
+  for(let i=0;i<ringCount;i++)setTimeout(()=>{
+   const ring=document.createElement('i');ring.className='victory-ring';
+   ring.style.setProperty('--x',(window.innerWidth*(.12+Math.random()*.76))+'px');
+   ring.style.setProperty('--y',(window.innerHeight*(.2+Math.random()*.52))+'px');
+   ring.style.setProperty('--ring',colors[i%colors.length]);layer.appendChild(ring);setTimeout(()=>ring.remove(),1050);
+  },i*95);
+  const riseIcons=bossWin?['👑','🏆','💎','⭐','✨']:['💎','⭐','✨','🏆'];
+  for(let i=0;i<(bossWin?28:18);i++){
+   const particle=document.createElement('span');particle.className='victory-rise';particle.textContent=riseIcons[i%riseIcons.length];
+   particle.style.setProperty('--x',(Math.random()*100)+'vw');particle.style.setProperty('--y',(55+Math.random()*38)+'vh');
+   particle.style.setProperty('--rise',(90+Math.random()*230)+'px');particle.style.setProperty('--dx',(Math.random()*120-60)+'px');
+   particle.style.setProperty('--rot',(Math.random()*80-40)+'deg');particle.style.setProperty('--size',(14+Math.random()*20)+'px');
+   particle.style.setProperty('--dur',(1.3+Math.random()*1.1)+'s');layer.appendChild(particle);setTimeout(()=>particle.remove(),2600);
+  }
  }else{
   document.body.classList.remove('defeat-flash');void document.body.offsetWidth;document.body.classList.add('defeat-flash');setTimeout(()=>document.body.classList.remove('defeat-flash'),650);
  }
@@ -1206,7 +1274,7 @@ async function animateMatchGroupsSequentially(matches){
    const el=boardRoot.querySelector(`[data-r="${r}"][data-c="${c}"]`);
    if(el){el.classList.remove('match-three','match-four');void el.offsetWidth;el.classList.add(cls);}
   }
-  await sleep(145);
+  await sleep(78);
  }
  matchEffects(matches);
 }
@@ -1217,34 +1285,46 @@ function captureGemOrigins(){
 }
 async function animateFallingGems(origins){
  const root=$('board');
- if(!root||typeof Element==='undefined'||!Element.prototype.animate)return;
+ if(!root)return;
+ const reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const cells=[...root.querySelectorAll('.cell[data-r][data-c]')];
+ if(reduceMotion){await sleep(20);return;}
+ const rootStyle=getComputedStyle(root);
+ const gap=parseFloat(rootStyle.rowGap)||parseFloat(rootStyle.gap)||0;
+ const sample=cells[0];
+ const step=(sample?.getBoundingClientRect().height||56)+gap;
  let longest=0;
- // Animate every surviving/new gem with a clear drop, soft overshoot and tiny spring-back.
- // Wait for the whole refill to finish before allowing a cascade to redraw the board.
- for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++){
-  const gem=board[r][c],el=root.querySelector(`[data-r="${r}"][data-c="${c}"]`);if(!gem||!el)continue;
-  const from=origins&&origins.get(gem);const distance=from?Math.max(0,from.r-r):(r+1);
-  if(distance<=0)continue;
-  cancelCellAnimation(el);
+ for(const cell of cells){
+  const r=Number(cell.dataset.r),c=Number(cell.dataset.c),gem=board[r]?.[c];
+  if(!gem)continue;
+  const face=cell.querySelector('.gem-face');
+  if(!face)continue;
+  const from=origins&&origins.get(gem);
+  const delta=from?Math.max(0,r-from.r):(r+0.75);
+  if(delta<=0)continue;
+  cancelGemFaceAnimation(face);
+  const duration=Math.min(220,90+delta*15);
+  const delay=Math.min(8,c*0.7);
+  longest=Math.max(longest,duration+delay);
+  const startY=-(delta*step);
   try{
-   const duration=Math.min(760,340+distance*48);
-   const delay=Math.min(150,c*18+Math.max(0,SIZE-r-1)*5);
-   longest=Math.max(longest,duration+delay);
-   const startY=-(distance*112);
-   const anim=el.animate([
-    {transform:`translate3d(0,${startY}%,0) scale(.88) rotate(-3deg)`,opacity:.25,filter:'brightness(1.55) saturate(1.18)',offset:0},
-    {transform:`translate3d(0,${Math.max(3,distance*1.8)}%,0) scale(1.045) rotate(1.2deg)`,opacity:1,filter:'brightness(1.2)',offset:.76},
-    {transform:'translate3d(0,-1.2%,0) scale(.985) rotate(-.4deg)',opacity:1,filter:'brightness(1.08)',offset:.89},
-    {transform:'translate3d(0,.45%,0) scale(1.008) rotate(0deg)',opacity:1,filter:'brightness(1.02)',offset:.96},
-    {transform:'translate3d(0,0,0) scale(1) rotate(0deg)',opacity:1,filter:'brightness(1)',offset:1}
-   ],{duration,delay,easing:'cubic-bezier(.16,.76,.24,1)',fill:'both'});
-   activeCellAnimations.set(el,anim);
-   const cleanup=()=>{if(activeCellAnimations.get(el)===anim)activeCellAnimations.delete(el);try{el.style.removeProperty('transform');el.style.removeProperty('translate');el.style.removeProperty('z-index');el.style.removeProperty('filter');}catch(e){}};
-   anim.onfinish=()=>{cleanup();try{anim.cancel()}catch(e){}};
+   face.style.zIndex='5';
+   const anim=face.animate([
+    {transform:`translate3d(0,${startY}px,0) scale(.94)`,opacity:1,offset:0},
+    {transform:`translate3d(0,${Math.max(1,step*.035)}px,0) scale(1.035)`,opacity:1,offset:.82},
+    {transform:`translate3d(0,${-step*.01}px,0) scale(.99)`,opacity:1,offset:.94},
+    {transform:'translate3d(0,0,0) scale(1)',opacity:1,offset:1}
+   ],{duration,delay,easing:'cubic-bezier(.16,.74,.25,1)',fill:'both'});
+   activeGemFaceAnimations.set(face,anim);
+   const cleanup=()=>{
+    if(activeGemFaceAnimations.get(face)===anim)activeGemFaceAnimations.delete(face);
+    try{face.style.removeProperty('transform');face.style.removeProperty('translate');face.style.removeProperty('z-index');}catch(e){}
+   };
+   anim.onfinish=()=>{cleanup();face.classList.add('gem-land-art');setTimeout(()=>face.classList.remove('gem-land-art'),120);try{anim.cancel()}catch(e){}};
    anim.oncancel=cleanup;
-  }catch(e){cancelCellAnimation(el);}
+  }catch(e){cancelGemFaceAnimation(face);}
  }
- if(longest)await sleep(longest+25);
+ if(longest)await sleep(longest+8);
 }
 
 function setTurn(state){turnState=state;if(state==='player')moveSeconds=10;updateUI();}
@@ -1455,7 +1535,7 @@ function settleAndRefillBoard(clearSet){
 async function resolveCascade(first,a,b){
  let matches=first,chain=0,total=0;
  while(matches.set.size&&chain<7){
-  await animateMatchGroupsSequentially(matches);await sleep(280);
+  await animateMatchGroupsSequentially(matches);await sleep(24);
   chain++;comboBest=Math.max(comboBest,chain);
   if(chain>=2)playerStyle.bigCombos++;
   if((matches.groups||[]).some(g=>g.len>=4))playerStyle.largeMatches++;
@@ -1513,7 +1593,7 @@ async function enemyTurn(turn){
  if(mode==='Survival')chance=Math.min(.99,chance+.18);
  const move=getAIMove();
  if(move&&Math.random()<Math.min(.96,chance+.15)){
-  const {a,b}=move;const first=$('board').querySelector(`[data-r="${a.r}"][data-c="${a.c}"]`);const second=$('board').querySelector(`[data-r="${b.r}"][data-c="${b.c}"]`);if(first)first.classList.add('drag-source');if(second)second.classList.add('drag-source');say(`${profile.avatar} ${rival} swaps two gems…`);await sleep(420);
+  const {a,b}=move;const first=$('board').querySelector(`[data-r="${a.r}"][data-c="${a.c}"]`);const second=$('board').querySelector(`[data-r="${b.r}"][data-c="${b.c}"]`);if(first)first.classList.add('drag-source');if(second)second.classList.add('drag-source');say(`${profile.avatar} ${rival} swaps two gems…`);await sleep(420);if(first)first.classList.remove('drag-source');if(second)second.classList.remove('drag-source');
   [board[a.r][a.c],board[b.r][b.c]]=[board[b.r][b.c],board[a.r][a.c]];let matches=getMatches();render();animateMatches(matches);await sleep(420);
   let clear=new Set(matches.set);
   // Rival special gems can trigger too, making the AI's chosen move matter beyond its first match.
@@ -1722,4 +1802,27 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
  </div>
 </div>
 
+<style>
+/* Build 3.5.6: preserve approved gem artwork; refine refill timing only. */
+.cell:not(.special)::before,.cell:not(.special)::after{display:none!important;content:none!important}
+.cell:not(.special){color:transparent!important;font-size:0!important;overflow:visible!important;isolation:isolate}
+.cell .gem-face.regular-gem{display:block!important;width:78%!important;height:78%!important;border-radius:24%!important;position:relative!important;z-index:2!important;pointer-events:none!important;border:2px solid #ffffffb8;box-shadow:inset 0 2px 2px #ffffffa6,inset 0 -5px 6px #07142a75,0 3px 5px #07142a8c;transform-origin:center center;will-change:transform;}
+.cell[data-gem-color="🔴"] .gem-face.regular-gem,.cell[data-gem-color="🟥"] .gem-face.regular-gem,.cell[data-gem-color="red"] .gem-face.regular-gem{background:linear-gradient(135deg,#ffb1b4 0%,#ff4a58 32%,#d5163b 68%,#8d092d 100%);}
+.cell[data-gem-color="🔵"] .gem-face.regular-gem,.cell[data-gem-color="🟦"] .gem-face.regular-gem,.cell[data-gem-color="blue"] .gem-face.regular-gem{background:linear-gradient(135deg,#c4f9ff 0%,#46d1ff 30%,#1978ff 65%,#18369f 100%);}
+.cell[data-gem-color="🟢"] .gem-face.regular-gem,.cell[data-gem-color="🟩"] .gem-face.regular-gem,.cell[data-gem-color="green"] .gem-face.regular-gem{background:linear-gradient(135deg,#d4ffd9 0%,#55f28e 30%,#10b75b 65%,#07563f 100%);}
+.cell[data-gem-color="🟡"] .gem-face.regular-gem,.cell[data-gem-color="🟨"] .gem-face.regular-gem,.cell[data-gem-color="yellow"] .gem-face.regular-gem{background:linear-gradient(135deg,#fff8b0 0%,#ffe45c 30%,#ffb91f 67%,#a95a12 100%);}
+.cell[data-gem-color="🟣"] .gem-face.regular-gem,.cell[data-gem-color="🟪"] .gem-face.regular-gem,.cell[data-gem-color="purple"] .gem-face.regular-gem{background:linear-gradient(135deg,#f0c9ff 0%,#bd72ff 30%,#7d39db 67%,#402078 100%);}
+.cell[data-gem-color="🟧"] .gem-face.regular-gem,.cell[data-gem-color="🟠"] .gem-face.regular-gem,.cell[data-gem-color="orange"] .gem-face.regular-gem{background:linear-gradient(135deg,#ffe0ad 0%,#ffab45 30%,#ed6b1b 67%,#8d3514 100%);}
+.cell .gem-face.regular-gem:before{content:"";position:absolute;left:12%;top:8%;width:53%;height:27%;background:linear-gradient(135deg,#ffffffef,#ffffff2b);clip-path:polygon(0 0,100% 0,72% 100%,15% 100%);border-radius:3px;}
+.cell .gem-face.regular-gem:after{content:"";position:absolute;inset:12%;border:1px solid #ffffff38;border-radius:18%;box-shadow:inset 0 0 7px #ffffff20;}
+.cell .gem-face:not(.regular-gem){width:100%;height:100%;}
+.cell .gem-face.gem-land-art{filter:brightness(1.12)}
+@media(prefers-reduced-motion:reduce){.cell .gem-face{animation:none!important;transition:none!important}}
+</style>
+
 </body></html>
+<style>
+/* Build 3.5.6: approved gem design retained; gem-only cascade timing refined. */
+.board{background:linear-gradient(145deg,#849baa,#718a9b)!important;border-color:#b5cbd6!important;box-shadow:inset 0 0 18px #40596855,0 12px 26px #0003!important}
+.cell{background:linear-gradient(145deg,#536f94,#354c70)!important;border-color:#a8c0d6cc!important;box-shadow:inset 0 1px 2px #ffffff38,inset 0 -3px 0 #253b5666,0 2px 0 #344b61,0 0 0 1px #d0e0e544!important}
+</style>
