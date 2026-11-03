@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 3.5.27 Always-Filled Board</title>
+<title>Gem Clash: AI Arena — Build 3.5.29 Mobile Gem Fall Animation</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -475,7 +475,7 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 .board{background:linear-gradient(145deg,#35466fdd,#465782e8)!important;border-color:#91a5d688!important;box-shadow:inset 0 0 18px #17234366,0 12px 26px #0003!important}
 .cell{background:linear-gradient(145deg,#536a9b,#35496f)!important;border-color:#9aafd9aa!important;box-shadow:inset 0 1px 2px #ffffff35,inset 0 -3px 0 #25355466,0 2px 0 #263654,0 0 0 1px #a7bbe044!important}
 </style>
-<meta name="theme-color" content="#10152b"><meta name="application-name" content="Gem Clash: AI Arena Build 3.5.22"><meta name="description" content="A colorful match-3 fantasy battle arena with three selectable arenas. Challenge rivals, unlock upgrades, and build your champion."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#10152b"><meta name="application-name" content="Gem Clash: AI Arena Build 3.5.29"><meta name="description" content="A colorful match-3 fantasy battle arena with three selectable arenas. Challenge rivals, unlock upgrades, and build your champion."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml">
 
 <style>
 /* Build 2.8.1: animated special-gem tutorials and one-step directional drag feedback. */
@@ -702,7 +702,7 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 <body>
 <div id="comboToast" class="combo-toast" aria-live="polite" aria-atomic="true"></div>
 <div class="wrap">
-<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 3.5.27 · NO BOARD COMPOSITING BLANK</div></div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><strong id="topCoinBalance" class="coin-balance-badge">💰 0 coins</strong><button class="topbtn" id="coinShopNav" type="button">🛒 Coin Shop</button><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn daily-nav" id="dailyReward" type="button">🎁 Daily Rewards</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
+<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 3.5.29 · MOBILE GEM FALL ANIMATION</div></div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><strong id="topCoinBalance" class="coin-balance-badge">💰 0 coins</strong><button class="topbtn" id="coinShopNav" type="button">🛒 Coin Shop</button><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn daily-nav" id="dailyReward" type="button">🎁 Daily Rewards</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
 <div class="layout">
 <section class="panel">
   <div class="stats">
@@ -948,7 +948,7 @@ let board=[], selected=null, playerHp=100, enemyHp=100, enemyMaxHp=100, energy=0
 // Build 3.0.0: lightweight in-battle opponent adaptation (all local; no network or personal data).
 let playerStyle={bigCombos:0,largeMatches:0,specialUses:0,turnDamage:0};
 function updateAIAdaptation(){
- const box=$('aiAdaptation');if(!box)return;let headline='AI STATUS · STUDYING',detail='Reading your moves and board patterns',cls='';
+ const box=$('aiAdaptation');if(!box)return;let headline='AI STATUS · STUDYING',detail=`Guardian level ${profile.level}: rival power is scaling with your progress`,cls='';
  if(playerHp<=maxHealth()*.35){headline='AI STATUS · PRESSING ADVANTAGE';detail=rival==='Frost'?'Holding steady and choosing reliable pressure':'You are low on health — expect stronger pressure';cls='pressure';}
  else if(playerStyle.specialUses>=2){headline='AI STATUS · COUNTERING SPECIALS';detail=rival==='Nexus'?'Hunting high-value clears and special-gem opportunities':rival==='Blaze'?'Prioritising larger, higher-damage matches':'Choosing steadier moves while you spend special gems';cls='counter-special';}
  else if(playerStyle.bigCombos>=2||playerStyle.largeMatches>=3){headline='AI STATUS · COUNTERING COMBOS';detail=rival==='Nexus'?'Prioritising tactical clears and special-gem chances':rival==='Blaze'?'Escalating attack pressure to keep the fight close':'Favouring reliable matches and sustained pressure';cls='counter-combo';}
@@ -978,7 +978,8 @@ function startMusic(){if(!soundOn||musicTimer)return;getAudio();musicTick();}
 function heroMasteryLevel(id=champion){return Math.max(0,Math.min(5,Number(profile.heroLevels?.[id])||0));}
 function maxHealth(){return 100+profile.vitality*10+(CHAMPIONS[champion]?.hp||0)+heroMasteryLevel()*5}
 function powerBonus(){return profile.power*0.12+((CHAMPIONS[champion]?.damage||1)-1)+heroMasteryLevel()*0.05}
-// Build 3.5.20: rivals scale gently with Guardian level and permanent player upgrades.
+// Build 3.5.29: automatic rival progression is driven primarily by Guardian level.
+// Permanent player upgrades add a smaller counter-scaling bonus so upgrades remain rewarding.
 function totalPermanentUpgradeLevels(){
  const heroLevels=Object.values(profile.heroLevels||{}).reduce((sum,n)=>sum+Math.max(0,Number(n)||0),0);
  return Math.max(0,Number(profile.power)||0)+Math.max(0,Number(profile.vitality)||0)+heroLevels;
@@ -986,16 +987,16 @@ function totalPermanentUpgradeLevels(){
 function enemyHealthMultiplier(){
  const levelSteps=Math.max(0,(Number(profile.level)||1)-1);
  const upgradeSteps=totalPermanentUpgradeLevels();
- return 1+Math.min(.40,levelSteps*.02)+Math.min(.25,upgradeSteps*.012);
+ return 1+Math.min(.70,levelSteps*.035)+Math.min(.18,upgradeSteps*.008);
 }
 function enemyDamageMultiplier(){
  const levelSteps=Math.max(0,(Number(profile.level)||1)-1);
  const upgradeSteps=totalPermanentUpgradeLevels();
- return 1+Math.min(.20,levelSteps*.01)+Math.min(.15,upgradeSteps*.008);
+ return 1+Math.min(.40,levelSteps*.02)+Math.min(.12,upgradeSteps*.005);
 }
 function enemyTacticsBonus(){
  const levelSteps=Math.max(0,(Number(profile.level)||1)-1);
- return Math.min(.16,levelSteps*.004+totalPermanentUpgradeLevels()*.002);
+ return Math.min(.28,levelSteps*.008+totalPermanentUpgradeLevels()*.0015);
 }
 function runeMilestoneText(){
  const power=Number(profile.power)||0, vitality=Number(profile.vitality)||0;
@@ -1399,46 +1400,51 @@ function captureGemOrigins(){
  return origins;
 }
 async function animateFallingGems(origins){
- const root=$('board');
- if(!root)return;
- const cells=[...root.querySelectorAll('.cell[data-r][data-c]')];
- if(!cells.length)return;
-
- // The final board is rendered BEFORE this animation starts, so every cell
- // already contains its real gem. Animate a short landing/bounce in place;
- // never translate a gem completely outside its cell (that was the source
- // of the visible blank-cell columns during refill).
+ const root=$('board');if(!root)return;
  const reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
- if(reduceMotion)return;
-
- const animations=[];
+ const cells=[...root.querySelectorAll('.cell[data-r][data-c]')];
+ if(reduceMotion){await sleep(20);return;}
+ const rootStyle=getComputedStyle(root);
+ const gap=parseFloat(rootStyle.rowGap)||parseFloat(rootStyle.gap)||0;
+ const step=(cells[0]?.getBoundingClientRect().height||56)+gap;
+ let longest=0;
+ // Gravity is strictly vertical: surviving gems can only move down within
+ // their original column. New gems enter above the top of that same column.
  for(const cell of cells){
-  const face=cell.querySelector('.gem-face');
-  if(!face)continue;
-  face.getAnimations().forEach(a=>{try{a.cancel();}catch(e){}});
-  const r=Number(cell.dataset.r),c=Number(cell.dataset.c);
-  const gem=board[r]?.[c];
+  const r=Number(cell.dataset.r),c=Number(cell.dataset.c),gem=board[r]?.[c];
   if(!gem)continue;
-  const from=origins&&origins.get(gem);
+  const face=cell.querySelector('.gem-face');if(!face)continue;
+  const from=origins?.get(gem);
   const delta=from?Math.max(0,r-from.r):(r+1);
   if(delta<=0)continue;
+  cancelGemFaceAnimation(face);
+  const duration=Math.min(560,185+delta*52),delay=Math.min(150,c*3+(origins?.has(gem)?0:r*32));
+  longest=Math.max(longest,duration+delay);
   try{
-   const animation=face.animate([
-    {transform:'translate3d(0,-7px,0) scale(.98)',opacity:1},
-    {transform:'translate3d(0,2px,0) scale(1.015)',opacity:1,offset:.82},
-    {transform:'translate3d(0,0,0) scale(1)',opacity:1}
-   ],{
-    duration:Math.min(250,135+delta*14),
-    easing:'cubic-bezier(.2,.68,.25,1)',
-    fill:'both'
-   });
-   animations.push(animation.finished.catch(()=>{}).then(()=>{try{animation.cancel();}catch(e){} }));
-  }catch(e){
-   face.style.transform='none';
-  }
+   if(typeof face.animate!=='function'){
+    face.style.transition='none';face.style.transform=`translate3d(0,${-delta*step}px,0)`;
+    void face.offsetWidth;face.style.transition='transform 260ms cubic-bezier(.18,.72,.24,1)';face.style.transform='translate3d(0,0,0)';
+    longest=Math.max(longest,290+delay);continue;
+   }
+   face.style.zIndex='3';
+   const anim=face.animate([
+    {transform:`translate3d(0,${-delta*step}px,0)`,opacity:.96},
+    {transform:`translate3d(0,${Math.max(1,step*.025)}px,0)`,opacity:1,offset:.88},
+    {transform:'translate3d(0,0,0)',opacity:1}
+   ],{duration,delay,easing:'cubic-bezier(.18,.72,.24,1)',fill:'both'});
+   activeGemFaceAnimations.set(face,anim);
+   const cleanup=()=>{
+    if(activeGemFaceAnimations.get(face)===anim)activeGemFaceAnimations.delete(face);
+    try{face.style.removeProperty('transform');face.style.removeProperty('translate');face.style.removeProperty('z-index');}catch(e){}
+   };
+   anim.onfinish=()=>{cleanup();try{anim.cancel()}catch(e){}};
+   anim.oncancel=cleanup;
+  }catch(e){cancelGemFaceAnimation(face);}
  }
- if(animations.length)await Promise.all(animations);
+ if(longest)await sleep(longest+24);
+ for(const cell of cells){const face=cell.querySelector('.gem-face');if(face){face.style.removeProperty('transition');face.style.removeProperty('transform');face.style.removeProperty('z-index');}}
 }
+
 function setTurn(state){turnState=state;if(state==='player')moveSeconds=10;updateUI();}
 function scoreAIMove(matches){
  // Evaluate both immediate damage and tactical value instead of choosing only by match size.
@@ -1483,16 +1489,22 @@ function getAIMove(){
  }
  if(!moves.length)return null;
  moves.sort((a,b)=>b.score-a.score);
- // Casual opponents sometimes make imperfect moves; Expert opponents usually take the best tactical option.
+ // Guardian progression steadily improves decision quality, regardless of the selected rival.
+ // At higher levels the AI considers fewer near-best alternatives and more consistently picks a top move.
+ const levelSteps=Math.max(0,(Number(profile.level)||1)-1);
+ const candidateLimit=Math.max(1,8-Math.floor(levelSteps/2));
  if(difficulty==='Casual'){
-  const pool=moves.filter(m=>m.score>=moves[0].score*.62).slice(0,Math.min(8,moves.length));
+  const threshold=Math.min(.88,.62+levelSteps*.012);
+  const pool=moves.filter(m=>m.score>=moves[0].score*threshold).slice(0,Math.min(candidateLimit,moves.length));
   return pool[Math.floor(Math.random()*pool.length)];
  }
  if(difficulty==='Expert'){
-  const pool=moves.filter(m=>m.score>=moves[0].score*.97).slice(0,2);
+  const threshold=Math.min(.995,.97+levelSteps*.002);
+  const pool=moves.filter(m=>m.score>=moves[0].score*threshold).slice(0,Math.min(2,candidateLimit,moves.length));
   return pool[Math.floor(Math.random()*pool.length)];
  }
- const pool=moves.filter(m=>m.score>=moves[0].score*.88).slice(0,3);
+ const threshold=Math.min(.985,.88+levelSteps*.009);
+ const pool=moves.filter(m=>m.score>=moves[0].score*threshold).slice(0,Math.min(3,candidateLimit,moves.length));
  return pool[Math.floor(Math.random()*pool.length)];
 }
 // Build 2.8.4: reliable single-gesture drag, with pointer release handled at window level.
