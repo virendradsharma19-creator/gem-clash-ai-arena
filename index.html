@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 3.5.29 Mobile Gem Fall Animation</title>
+<title>Gem Clash: AI Arena — Build 3.5.51 Tougher AI · Battle Balance</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -444,18 +444,6 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 @media(max-width:760px){.cell:not(.special)::before{inset:1px!important}.cell:not(.special)::after{left:1px!important;top:1px!important;width:calc(100% - 2px)!important;height:calc(100% - 2px)!important}}
 
 
-/* Build 3.2.1: visual parity while dragging, sequential match pulses, lightning strike and gravity fall. */
-.drag-ghost{
-  margin:0!important;position:fixed!important;z-index:99999!important;
-  width:var(--drag-cell-size,clamp(42px,8vw,68px))!important;
-  height:var(--drag-cell-size,clamp(42px,8vw,68px))!important;
-  min-width:0!important;max-width:none!important;min-height:0!important;max-height:none!important;
-  padding:0!important;display:grid!important;place-items:center!important;
-  pointer-events:none!important;opacity:1!important;filter:brightness(1.28) saturate(1.25)!important;
-  transform:translate(-50%,-58%) scale(1.08) rotate(-3deg)!important;
-  animation:dragGemLift .16s ease-out both!important;
-}
-.drag-ghost::before,.drag-ghost::after{pointer-events:none}
 .cell.gem-fall{animation:gemFallSettle .28s cubic-bezier(.18,.72,.32,1) var(--fall-delay,0ms) both}
 .cell.lightning-strike{position:relative;z-index:2;animation:lightningCellFlash .32s ease-out var(--strike-delay,0ms) both}
 @keyframes gemFallSettle{
@@ -475,7 +463,7 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 .board{background:linear-gradient(145deg,#35466fdd,#465782e8)!important;border-color:#91a5d688!important;box-shadow:inset 0 0 18px #17234366,0 12px 26px #0003!important}
 .cell{background:linear-gradient(145deg,#536a9b,#35496f)!important;border-color:#9aafd9aa!important;box-shadow:inset 0 1px 2px #ffffff35,inset 0 -3px 0 #25355466,0 2px 0 #263654,0 0 0 1px #a7bbe044!important}
 </style>
-<meta name="theme-color" content="#10152b"><meta name="application-name" content="Gem Clash: AI Arena Build 3.5.29"><meta name="description" content="A colorful match-3 fantasy battle arena with three selectable arenas. Challenge rivals, unlock upgrades, and build your champion."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#10152b"><meta name="application-name" content="Gem Clash: AI Arena Build 3.5.51"><meta name="description" content="A colorful match-3 fantasy battle arena with three selectable arenas. Challenge rivals, unlock upgrades, and build your champion."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml">
 
 <style>
 /* Build 2.8.1: animated special-gem tutorials and one-step directional drag feedback. */
@@ -698,11 +686,73 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 #board > .cell.empty .gem-face.regular-gem { display:block !important; }
 </style>
 
+<style id="build-3-5-36-sequential-match-and-android-fall">
+/* Re-enable only the per-line match animation. Lines are triggered one at a time
+   by animateMatchGroupsSequentially; the board cells themselves remain visible. */
+#board > .cell.match-three { animation:matchBurst .42s ease-in-out both !important; }
+#board > .cell.match-four { animation:matchBurst .5s ease-in-out both !important; }
+#board > .cell.match-three,
+#board > .cell.match-four { visibility:visible !important; }
+#board > .cell .gem-face { opacity:1 !important; visibility:visible !important; }
+</style>
+
+
+<style id="build-3-5-37-continuous-refill-and-soft-match-fx">
+/* Build 3.5.37: the board's final gems stay visible while lightweight ghost
+   copies animate into place. Match pulses are deliberately subtle. */
+#board > .cell.match-three,#board > .cell.match-four {
+ animation:gc537SoftMatch 260ms ease-out both !important;
+ filter:none !important;
+ box-shadow:inherit !important;
+}
+@keyframes gc537SoftMatch {
+ 0%,100% { transform:scale(1); filter:brightness(1); }
+ 45% { transform:scale(1.055); filter:brightness(1.18); }
+}
+#board > .cell.match-three .gem-face,#board > .cell.match-four .gem-face {
+ animation:gc537GemBreak 230ms ease-in forwards !important;
+}
+@keyframes gc537GemBreak {
+ 0% { transform:scale(1); filter:brightness(1); }
+ 55% { transform:scale(.72); filter:brightness(1.08); }
+ 100% { transform:scale(.04); filter:brightness(1); }
+}
+#fxLayer .fx-burst,#fxLayer .fx-spark { display:none !important; }
+</style>
+\n
+<style id="build-3-5-39-visible-special-fx">
+/* Build 3.5.39: make activation cues clearly visible on desktop and Android WebView. */
+.battle-visual-fx{position:fixed!important;inset:0!important;left:0!important;top:0!important;transform:none!important;width:100vw!important;height:100vh!important;display:grid!important;place-items:center!important;z-index:2147483000!important;opacity:1!important;pointer-events:none!important;overflow:hidden!important;background:transparent!important}
+.battle-visual-fx:before{display:none!important;content:none!important}
+.battle-visual-fx .fx-stage{position:relative!important;width:min(58vw,280px)!important;height:min(58vw,280px)!important;display:grid!important;place-items:center!important;overflow:visible!important}
+.battle-visual-fx .fx-icon{position:absolute!important;display:block!important;z-index:5!important;font-size:clamp(3.4rem,11vw,6rem)!important;line-height:1!important;opacity:1!important;visibility:visible!important;text-shadow:0 2px 5px #000b,0 0 16px #fff8!important}
+.battle-visual-fx.fx-bomb .fx-icon{animation:gc39Bomb .85s ease-out both!important}
+.battle-visual-fx.fx-bomb .fx-burst{font-size:clamp(4.5rem,15vw,7rem)!important;animation:gc39Burst .72s ease-out .12s both!important}
+.battle-visual-fx.fx-prism .fx-icon{animation:gc39Prism .95s ease-out both!important}
+.battle-visual-fx.fx-lightning .fx-icon{animation:gc39Lightning .62s ease-out both!important}
+.battle-visual-fx .fx-ring{display:block!important;position:absolute!important;width:22%!important;aspect-ratio:1!important;border:3px solid #fff!important;border-radius:50%!important;opacity:0!important;z-index:2!important;animation:gc39Ring .85s ease-out both!important}
+.battle-visual-fx.fx-bomb .fx-ring{border-color:#ffb35c!important;box-shadow:0 0 18px #ff8b36!important}
+.battle-visual-fx.fx-prism .fx-ring{border-color:#f3a5ff!important;box-shadow:0 0 20px #c66cff, inset 0 0 12px #f3a5ff!important}
+.battle-visual-fx.fx-lightning .fx-ring{border-color:#9df7ff!important;box-shadow:0 0 18px #65eaff!important}
+.battle-visual-fx .fx-spark,.battle-visual-fx .fx-fragment{display:none!important}
+.battle-visual-fx .fx-core,.battle-visual-fx .fx-flash{display:none!important}
+.battle-visual-fx .fx-rainbow-beam{display:block!important;position:absolute!important;width:78%!important;height:78%!important;border-radius:50%!important;border:5px solid transparent!important;background:conic-gradient(#ff4b79,#ffc64b,#fff85e,#50f7a0,#4beaff,#7b72ff,#e76cff,#ff4b79) border-box!important;mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0)!important;mask-composite:exclude!important;opacity:0!important;animation:gc39Rainbow 1s ease-out both!important}
+.battle-visual-fx .fx-bolt-line{display:block!important;position:absolute!important;left:50%!important;top:50%!important;width:110%!important;height:5px!important;transform:translate(-50%,-50%) scaleX(.1)!important;border-radius:5px!important;background:linear-gradient(90deg,transparent,#9df7ff 20%,#fff 50%,#9df7ff 80%,transparent)!important;box-shadow:0 0 12px #55eaff!important;opacity:0!important;animation:gc39Bolt .55s ease-out both!important;z-index:3!important}
+.battle-visual-fx.fx-lightning .fx-icon{z-index:5!important}
+@keyframes gc39Bomb{0%{opacity:0;transform:scale(.45) rotate(-18deg)}35%{opacity:1;transform:scale(1.18) rotate(8deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes gc39Burst{0%{opacity:0;transform:scale(.35)}35%{opacity:1;transform:scale(1.12)}100%{opacity:.15;transform:scale(1.5)}}
+@keyframes gc39Prism{0%{opacity:0;transform:scale(.5) rotate(-35deg)}45%{opacity:1;transform:scale(1.2) rotate(18deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes gc39Lightning{0%,100%{opacity:1;transform:scale(1)}20%{opacity:.25;transform:scale(.82)}45%{opacity:1;transform:scale(1.25)}70%{opacity:.55;transform:scale(.95)}}
+@keyframes gc39Ring{0%{opacity:.9;transform:scale(.3)}100%{opacity:0;transform:scale(3.5)}}
+@keyframes gc39Rainbow{0%{opacity:0;transform:scale(.45) rotate(-35deg)}35%{opacity:.9}100%{opacity:0;transform:scale(1.35) rotate(45deg)}}
+@keyframes gc39Bolt{0%{opacity:0;transform:translate(-50%,-50%) scaleX(.05)}25%{opacity:1;transform:translate(-50%,-50%) scaleX(1)}65%{opacity:.75}100%{opacity:0;transform:translate(-50%,-50%) scaleX(.75)}}
+@media(max-width:600px){.battle-visual-fx .fx-stage{width:min(66vw,250px)!important;height:min(66vw,250px)!important}}
+</style>
 </head>
 <body>
 <div id="comboToast" class="combo-toast" aria-live="polite" aria-atomic="true"></div>
 <div class="wrap">
-<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 3.5.29 · MOBILE GEM FALL ANIMATION</div></div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><strong id="topCoinBalance" class="coin-balance-badge">💰 0 coins</strong><button class="topbtn" id="coinShopNav" type="button">🛒 Coin Shop</button><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn daily-nav" id="dailyReward" type="button">🎁 Daily Rewards</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
+<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 3.5.51 · TOUGHER AI</div></div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><strong id="topCoinBalance" class="coin-balance-badge">💰 0 coins</strong><button class="topbtn" id="coinShopNav" type="button">🛒 Coin Shop</button><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn daily-nav" id="dailyReward" type="button">🎁 Daily Rewards</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
 <div class="layout">
 <section class="panel">
   <div class="stats">
@@ -792,8 +842,7 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
   <div class="rules" id="modeStatus" style="margin:0 0 12px">Classic mode: win for standard rewards.</div>
   <h3 class="side-title">Choose your rival</h3>
   <div class="rivalrow"><button class="rival active" data-rival="Blaze">🔥 Blaze</button><button class="rival" data-rival="Frost">❄️ Frost</button><button class="rival" data-rival="Nexus">🤖 Nexus</button></div>
-  <h3 class="side-title">Difficulty</h3>
-  <div class="diffrow"><button class="diff" data-diff="Casual">Casual</button><button class="diff active" data-diff="Normal">Normal</button><button class="diff" data-diff="Expert">Expert</button></div>
+  <div class="rules" id="difficultyProgressionNote" style="margin:0 0 12px">⚔️ Rival difficulty increases automatically with your Guardian level and permanent upgrades.</div>
   <div id="armoryGroup">
   <h3 class="side-title" id="armoryTitle">🛒 Coin Shop &amp; Champion Armory</h3>
   <div class="rules" style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 9px"><span>Spend coins on permanent battle upgrades</span><strong id="shopCoinBalance">💰 0 coins</strong></div>
@@ -813,10 +862,10 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
     <div class="power"><span class="ico">🛡️</span><strong>Shield Burst</strong><small>Spend 60 energy to restore 22 health, up to 100.</small></div>
   </div>
   </div>
-  <div class="rules"><b>Progression:</b> Wins grant XP and coins; level-ups award bonus coins. Train each unlocked hero up to Mastery Level 5 for +5% attack and +5 max health per level; mastery costs rise to 100, 200, 350, 550 and 800 coins. Hero mastery and your other progress save locally in this browser. <b>Combo chain:</b> matches that cascade trigger a big on-screen combo banner, board impact shake, and a rising damage bonus. Longer chains deal more damage and charge energy faster. <b>Craft special gems:</b> match 4 in a straight line for a glowing ⚡ Lightning Gem (horizontal or vertical), match 5 for 🌈 rainbow prism, or make a T/L-shaped match for 💣 blast bomb. Lightning clears a full row/column, the bomb blasts a 3×3 area, and swapping the rainbow prism with a gem clears that colour.</div>
+  <div class="rules"><b>Progression:</b> Every completed battle grants XP (wins grant more); Guardian levels and rival difficulty rise from XP regardless of the result. Wins grant coins; level-ups award bonus coins. Train each unlocked hero up to Mastery Level 5 for +5% attack and +5 max health per level; mastery costs rise to 100, 200, 350, 550 and 800 coins. Hero mastery and your other progress save locally in this browser. <b>Combo chain:</b> matches that cascade trigger a big on-screen combo banner, board impact shake, and a rising damage bonus. Longer chains deal more damage and charge energy faster. <b>Craft special gems:</b> match 4 in a straight line for a glowing ⚡ Lightning Gem (horizontal or vertical), match 5 for 🌈 rainbow prism, or make a T/L-shaped match for 💣 blast bomb. Lightning clears a full row/column, the bomb blasts a 3×3 area, and swapping the rainbow prism with a gem clears that colour.</div>
 </aside>
 </div>
-<div class="footer">Gem Clash: AI Arena · Build 3.5.9 · Larger Gems + Harmonized Board</div>
+<div class="footer">Gem Clash: AI Arena · Build 3.5.51 · Tougher AI</div>
 </div>
 <div id="fxLayer" aria-hidden="true"></div>
 <div class="overlay" id="overlay" aria-live="assertive" aria-modal="true" role="dialog" aria-labelledby="resultTitle"><div class="modal result-modal"><div class="result-emblem" id="resultEmblem" aria-hidden="true">🏆</div><div class="result-kicker" id="resultKicker">BATTLE COMPLETE</div><h2 id="resultTitle">VICTORY!</h2><p id="resultText">You won the battle.</p><div class="result-rewards" id="resultRewards"><div class="reward-tile"><span>✨</span><small>XP EARNED</small><strong>+50</strong></div><div class="reward-tile"><span>💰</span><small>COINS EARNED</small><strong>+25</strong></div><div class="reward-tile"><span>🔥</span><small>BEST COMBO</small><strong>x3</strong></div></div><div class="result-profile" id="resultProfile"><div class="profile-result-card"><span>🛡️</span><div><small>GUARDIAN LEVEL</small><strong id="resultGuardianLevel">Level 1</strong><em id="resultGuardianXp">0 / 100 XP</em></div></div><div class="profile-result-card"><span>📖</span><div><small>BATTLE RECORD</small><strong id="resultBattleRecord">0 wins · 0 losses</strong><em>Saved on this device</em></div></div></div><div class="result-footer" id="resultFooter">Your legend grows stronger with every battle.</div><button class="primary result-play-again" id="playAgain" type="button">⚔️ BATTLE AGAIN</button></div></div>
@@ -853,16 +902,8 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 @keyframes candySparkle{0%{opacity:0;transform:scale(.25)}30%{opacity:1;transform:scale(1.2)}100%{opacity:0;transform:scale(1.65)}}
 @media(max-width:420px){.result-profile{grid-template-columns:1fr}.profile-result-card{padding:9px}.stats{gap:7px}}
 
-/* Build 2.3.1: floating, lifted gem makes the drag action obvious on mouse and touch. */
+/* Build 3.5.49: clean drag feedback; no floating duplicate gem. */
 .cell.drag-source{opacity:.32;filter:saturate(.7) brightness(1.25);transform:scale(.9);outline:2px dashed var(--cyan);}
-.drag-ghost{position:fixed;z-index:99999;left:0;top:0;width:clamp(42px,8vw,68px);height:clamp(42px,8vw,68px);display:grid;place-items:center;pointer-events:none;user-select:none;font-size:clamp(1.8rem,5vw,2.8rem);border-radius:15px;border:2px solid #d9fcff;background:linear-gradient(145deg,#53699fef,#1b2859f5);box-shadow:0 0 0 4px #5ee7ff45,0 12px 26px #0009,0 0 26px #5ee7ffcc,inset 0 2px 10px #fff7;transform:translate(-50%,-58%) scale(1.12) rotate(-5deg);animation:dragGemLift .16s ease-out both;filter:brightness(1.35) saturate(1.2);}
-.drag-ghost:before{content:"✦";position:absolute;right:-5px;top:-10px;color:#fff3a8;font-size:1rem;text-shadow:0 0 9px #ffe18a;animation:dragSpark .48s ease-in-out infinite alternate;}
-.drag-ghost:after{content:"✧";position:absolute;left:-8px;bottom:-5px;color:#8bf7ff;font-size:.9rem;text-shadow:0 0 10px #5ee7ff;animation:dragSpark .38s ease-in-out infinite alternate-reverse;}
-.drag-ghost.special{border-color:#ffe18a;box-shadow:0 0 0 4px #ffd16666,0 12px 28px #0009,0 0 32px #ffd166,inset 0 2px 12px #fff9;}
-@keyframes dragGemLift{from{opacity:.55;transform:translate(-50%,-45%) scale(.82)}to{opacity:1;transform:translate(-50%,-58%) scale(1.12) rotate(-5deg)}}
-@keyframes dragSpark{from{opacity:.45;transform:scale(.75) rotate(-15deg)}to{opacity:1;transform:scale(1.2) rotate(20deg)}}
-@media(prefers-reduced-motion:reduce){.drag-ghost:before,.drag-ghost:after{animation:none!important}.drag-ghost{animation:none!important}}
-
 /* Build 2.5.4: make the Rainbow Prism unmistakable on the board. */
 [data-mark="RAINBOW"] { outline: 3px solid #ff4de1 !important; box-shadow: 0 0 0 3px #55f7ff, 0 0 16px 6px rgba(255,77,225,.95), inset 0 0 12px rgba(255,255,255,.9) !important; animation: prismCraftGlow 1s ease-in-out infinite alternate !important; position: relative; z-index: 2; }
 @keyframes prismCraftGlow { from { filter: saturate(1.2) brightness(1.05); } to { filter: saturate(1.8) brightness(1.45); } }
@@ -940,15 +981,16 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 <script> (() => {
 const SIZE=8, COLORS=['🟥','🟦','🟩','🟨','🟪','🟧'];
 const RIVALS={
- Blaze:{avatar:'🔥',style:'Aggressive rival',hp:100,attack:9,rate:0.82,ability:'Blaze hits harder but leaves openings.'},
- Frost:{avatar:'❄️',style:'Defensive rival',hp:115,attack:6,rate:0.58,ability:'Frost has extra health and attacks less often.'},
- Nexus:{avatar:'🤖',style:'Adaptive rival',hp:100,attack:7,rate:0.70,ability:'Nexus reacts more often when you build big combos.'}
+ Blaze:{avatar:'🔥',style:'Aggressive rival',hp:100,attack:11,rate:0.94,ability:'Blaze hits hard and relentlessly pressures the player.'},
+ Frost:{avatar:'❄️',style:'Defensive rival',hp:125,attack:9,rate:0.90,ability:'Frost has extra health and applies steady, reliable pressure.'},
+ Nexus:{avatar:'🤖',style:'Adaptive rival',hp:110,attack:10,rate:0.93,ability:'Nexus adapts quickly and favours high-value tactical moves.'}
 };
 let board=[], selected=null, playerHp=100, enemyHp=100, enemyMaxHp=100, energy=0, seconds=120, timerId=null, busy=false, over=false, rival='Blaze', difficulty='Normal', comboBest=0, turnCount=0, arena='Citadel', champion='Mage', mode='Classic', moveSeconds=10, turnState='player', dragStart=null, suppressClickUntil=0, campaignMode=false, campaignStage=1, selectedCampaignStage=1;
 // Build 3.0.0: lightweight in-battle opponent adaptation (all local; no network or personal data).
 let playerStyle={bigCombos:0,largeMatches:0,specialUses:0,turnDamage:0};
+function rivalDifficultyTier(){const level=Math.max(1,Number(profile.level)||1);return level<=3?'EASY':level<=5?'GROWING':level<=10?'MEDIUM':level<=15?'HARD':level<=20?'VERY HARD':'EXPERT';}
 function updateAIAdaptation(){
- const box=$('aiAdaptation');if(!box)return;let headline='AI STATUS · STUDYING',detail=`Guardian level ${profile.level}: rival power is scaling with your progress`,cls='';
+ const box=$('aiAdaptation');if(!box)return;let headline=`RIVAL DIFFICULTY · ${rivalDifficultyTier()}`,detail=`Guardian Level ${profile.level} · difficulty rises with level, regardless of wins or losses`,cls='';
  if(playerHp<=maxHealth()*.35){headline='AI STATUS · PRESSING ADVANTAGE';detail=rival==='Frost'?'Holding steady and choosing reliable pressure':'You are low on health — expect stronger pressure';cls='pressure';}
  else if(playerStyle.specialUses>=2){headline='AI STATUS · COUNTERING SPECIALS';detail=rival==='Nexus'?'Hunting high-value clears and special-gem opportunities':rival==='Blaze'?'Prioritising larger, higher-damage matches':'Choosing steadier moves while you spend special gems';cls='counter-special';}
  else if(playerStyle.bigCombos>=2||playerStyle.largeMatches>=3){headline='AI STATUS · COUNTERING COMBOS';detail=rival==='Nexus'?'Prioritising tactical clears and special-gem chances':rival==='Blaze'?'Escalating attack pressure to keep the fight close':'Favouring reliable matches and sustained pressure';cls='counter-combo';}
@@ -963,7 +1005,7 @@ const CHAMPIONS={
  Phoenix:{icon:'🔥',name:'Solar Phoenix',cost:250,hp:10,damage:1.10,desc:'Starts with +10 health and 10% stronger attacks.'}
 };
 const saved=(()=>{try{return JSON.parse(localStorage.getItem('gemClashSave')||'{}')}catch(e){return {}}})();
-let profile={level:saved.level||1,xp:saved.xp||0,coins:saved.coins||0,wins:saved.wins||0,losses:saved.losses||0,power:saved.power||0,vitality:saved.vitality||0,lastGift:saved.lastGift||'',dailyStreak:Number(saved.dailyStreak)||0,achievements:saved.achievements&&typeof saved.achievements==='object'?saved.achievements:{},arena:saved.arena||'Citadel',campaignUnlocked:Math.max(1,Math.min(9,Number(saved.campaignUnlocked)||1)),campaignWins:Array.isArray(saved.campaignWins)?saved.campaignWins:[]};
+let profile={level:saved.level||1,xp:saved.xp||0,coins:saved.coins||0,wins:saved.wins||0,losses:saved.losses||0,power:saved.power||0,vitality:saved.vitality||0,lastGift:saved.lastGift||'',dailyStreak:Number(saved.dailyStreak)||0,achievements:saved.achievements&&typeof saved.achievements==='object'?saved.achievements:{},arena:saved.arena||'Citadel',campaignUnlocked:Math.max(1,Math.min(9,Number(saved.campaignUnlocked)||1)),campaignWins:Array.isArray(saved.campaignWins)?saved.campaignWins:[],heroLevels:saved.heroLevels&&typeof saved.heroLevels==='object'?saved.heroLevels:{}};
 selectedCampaignStage=profile.campaignUnlocked;
 arena=profile.arena; champion=CHAMPIONS[profile.champion]?profile.champion:'Mage'; if(!Array.isArray(profile.unlockedChampions))profile.unlockedChampions=['Mage']; if(!profile.unlockedChampions.includes('Mage'))profile.unlockedChampions.unshift('Mage'); if(!profile.unlockedChampions.includes(champion))champion='Mage';
 function applyArena(){document.body.dataset.arena=arena;document.querySelectorAll('[data-arena]').forEach(b=>b.classList.toggle('active',b.dataset.arena===arena));}
@@ -978,25 +1020,34 @@ function startMusic(){if(!soundOn||musicTimer)return;getAudio();musicTick();}
 function heroMasteryLevel(id=champion){return Math.max(0,Math.min(5,Number(profile.heroLevels?.[id])||0));}
 function maxHealth(){return 100+profile.vitality*10+(CHAMPIONS[champion]?.hp||0)+heroMasteryLevel()*5}
 function powerBonus(){return profile.power*0.12+((CHAMPIONS[champion]?.damage||1)-1)+heroMasteryLevel()*0.05}
-// Build 3.5.29: automatic rival progression is driven primarily by Guardian level.
-// Permanent player upgrades add a smaller counter-scaling bonus so upgrades remain rewarding.
+// Build 3.5.51: stronger baseline rival durability and damage, with progression scaling retained.
+// Early levels remain welcoming; invested heroes face tougher, more deliberate opponents.
 function totalPermanentUpgradeLevels(){
  const heroLevels=Object.values(profile.heroLevels||{}).reduce((sum,n)=>sum+Math.max(0,Number(n)||0),0);
  return Math.max(0,Number(profile.power)||0)+Math.max(0,Number(profile.vitality)||0)+heroLevels;
 }
+function guardianPressure(){
+ const steps=Math.max(0,(Number(profile.level)||1)-1);
+ // Level steps 1–3: gentle; 4–10: moderate; 11+: stronger long-term climb.
+ return Math.min(.85,Math.min(3,steps)*.025+Math.min(7,Math.max(0,steps-3))*.04+Math.max(0,steps-10)*.025);
+}
 function enemyHealthMultiplier(){
- const levelSteps=Math.max(0,(Number(profile.level)||1)-1);
  const upgradeSteps=totalPermanentUpgradeLevels();
- return 1+Math.min(.70,levelSteps*.035)+Math.min(.18,upgradeSteps*.008);
+ // Counter-scale gradually when the player invests heavily in runes/mastery.
+ // This keeps upgraded heroes powerful without allowing battles to become trivial.
+ const upgradePressure=Math.min(.45,upgradeSteps*.025);
+ return 1.30+Math.min(.85,guardianPressure())+upgradePressure;
 }
 function enemyDamageMultiplier(){
- const levelSteps=Math.max(0,(Number(profile.level)||1)-1);
- const upgradeSteps=totalPermanentUpgradeLevels();
- return 1+Math.min(.40,levelSteps*.02)+Math.min(.12,upgradeSteps*.005);
+ const steps=Math.max(0,(Number(profile.level)||1)-1),upgradeSteps=totalPermanentUpgradeLevels();
+ const levelDamage=Math.min(.75,Math.min(3,steps)*.015+Math.min(7,Math.max(0,steps-3))*.03+Math.max(0,steps-10)*.02);
+ const upgradeDamage=Math.min(.30,upgradeSteps*.015);
+ return 1.30+levelDamage+upgradeDamage;
 }
 function enemyTacticsBonus(){
- const levelSteps=Math.max(0,(Number(profile.level)||1)-1);
- return Math.min(.28,levelSteps*.008+totalPermanentUpgradeLevels()*.0015);
+ const steps=Math.max(0,(Number(profile.level)||1)-1),upgradeSteps=totalPermanentUpgradeLevels();
+ const levelTactics=Math.min(.24,Math.min(3,steps)*.006+Math.min(7,Math.max(0,steps-3))*.012+Math.max(0,steps-10)*.008);
+ return levelTactics+Math.min(.10,upgradeSteps*.004);
 }
 function runeMilestoneText(){
  const power=Number(profile.power)||0, vitality=Number(profile.vitality)||0;
@@ -1077,9 +1128,13 @@ function createBoard(){
 }
 const activeCellAnimations = new WeakMap();
 const activeGemFaceAnimations = new WeakMap();
+const activeGemFaceFallbackTimers = new WeakMap();
 function cancelGemFaceAnimation(el){
  const anim=activeGemFaceAnimations.get(el);
  if(anim){try{anim.onfinish=null;anim.oncancel=null;anim.cancel();}catch(e){}activeGemFaceAnimations.delete(el);}
+ const timer=activeGemFaceFallbackTimers.get(el);
+ if(timer){clearTimeout(timer);activeGemFaceFallbackTimers.delete(el);}
+ el.style.removeProperty('transition');el.style.removeProperty('transition-delay');
  el.style.removeProperty('transform');el.style.removeProperty('translate');el.style.removeProperty('z-index');
 }
 
@@ -1182,28 +1237,134 @@ function showComboToast(chain,damage){
  const boardEl=$('board');if(boardEl)boardEl.classList.remove('combo-shake');
  if(chain>=3)playSound('special');
 }
-function showBattleFx(kind,title,subtitle){
- // Keep the live CSS grid out of the GPU transform/filter animation path.
- // The cinematic effect is rendered in the fixed FX layer instead, so board
- // cells and gem-face compositing cannot disappear during special activations.
- const boardEl=$('board');
- if(boardEl){boardEl.classList.remove('fx-shake','fx-bomb','fx-lightning','fx-prism','board-fx-lightning','combo-shake');}
- // Cinematic visuals only: no rectangular activation announcement.
- document.querySelectorAll('.battle-visual-fx,.special-fx-banner').forEach(el=>el.remove());
- const fx=document.createElement('div');fx.className='battle-visual-fx fx-'+kind;fx.setAttribute('aria-hidden','true');
- const stage=document.createElement('div');stage.className='fx-stage';
- const icon=document.createElement('span');icon.className='fx-icon';icon.textContent=kind==='prism'?'🌈💎':kind==='lightning'?'⚡':'💣';stage.appendChild(icon);
+function showBattleFx(kind,title,subtitle,opts={}){
+ // Special-gem visuals live on a separate overlay: no board, gem, or refill state is touched.
+ document.querySelectorAll('.gc-special-fx-overlay').forEach(n=>n.remove());
+ const boardEl=$('board');if(!boardEl)return;
+ const boardRect=boardEl.getBoundingClientRect();
+ const cellAt=(r,c)=>boardEl.querySelector(`[data-r="${r}"][data-c="${c}"]`);
+ let anchorRect=null;if(opts.pos){const cell=cellAt(opts.pos.r,opts.pos.c);if(cell)anchorRect=cell.getBoundingClientRect();}
+ if(!anchorRect)anchorRect=boardRect;
+ const cx=anchorRect.left+anchorRect.width/2,cy=anchorRect.top+anchorRect.height/2;
+ const overlay=document.createElement('div');overlay.className='gc-special-fx-overlay';overlay.setAttribute('aria-hidden','true');
+ Object.assign(overlay.style,{position:'fixed',inset:'0',width:'100vw',height:'100vh',zIndex:'2147483647',pointerEvents:'none',overflow:'hidden',background:'transparent'});document.body.appendChild(overlay);
+ const make=(tag,styles,parent=overlay)=>{const n=document.createElement(tag);Object.assign(n.style,styles);parent.appendChild(n);return n;};
+ const animate=(node,frames,duration,easing='ease-out',delay=0)=>{try{if(node&&typeof node.animate==='function')node.animate(frames,{duration,easing,delay,fill:'forwards'});}catch(e){}};
+ const cleanup=ms=>setTimeout(()=>{if(overlay.isConnected)overlay.remove();},ms);
+ const svgNS='http://www.w3.org/2000/svg';
+ const svgEl=(tag,attrs,parent)=>{const n=document.createElementNS(svgNS,tag);Object.entries(attrs||{}).forEach(([k,v])=>n.setAttribute(k,String(v)));parent.appendChild(n);return n;};
  if(kind==='bomb'){
-  const burst=document.createElement('span');burst.className='fx-icon fx-burst';burst.textContent='💥';stage.appendChild(burst);
-  ['fx-core','fx-flash'].forEach(cls=>{const layer=document.createElement('span');layer.className=cls;stage.appendChild(layer);});
-  for(let i=0;i<20;i++){const shard=document.createElement('span');shard.className='fx-fragment';const angle=(Math.PI*2*i)/20;const distance=150+(i%4)*42;shard.style.setProperty('--dx',Math.round(Math.cos(angle)*distance)+'px');shard.style.setProperty('--dy',Math.round(Math.sin(angle)*distance)+'px');shard.style.setProperty('--rot',(120+i*31)+'deg');shard.style.animationDelay=(.28+(i%5)*.012)+'s';stage.appendChild(shard);}
- } else if(kind==='prism'){
-  const beam=document.createElement('span');beam.className='fx-rainbow-beam';stage.appendChild(beam);
+  // A compact cinematic detonation: hot core, flame petals, pressure rings, sparks and smoke.
+  const flash=make('div',{position:'fixed',left:`${cx}px`,top:`${cy}px`,width:'min(58vw,310px)',height:'min(58vw,310px)',borderRadius:'50%',background:'radial-gradient(circle,rgba(255,255,255,1) 0 5%,#fff7bd 9%,#ffd34f 20%,#ff7b20 39%,rgba(226,47,13,.72) 56%,transparent 73%)',transform:'translate(-50%,-50%) scale(.04)',opacity:'0',filter:'blur(1px) drop-shadow(0 0 28px #ff6a1b)'});
+  animate(flash,[{opacity:0,transform:'translate(-50%,-50%) scale(.04)'},{opacity:1,offset:.12,transform:'translate(-50%,-50%) scale(.72)'},{opacity:.94,offset:.34,transform:'translate(-50%,-50%) scale(1.18)'},{opacity:0,transform:'translate(-50%,-50%) scale(1.75)'}],780,'cubic-bezier(.08,.72,.18,1)');
+  for(let j=0;j<4;j++){
+   const ring=make('div',{position:'fixed',left:`${cx}px`,top:`${cy}px`,width:'34px',height:'34px',border:`${j===0?8:j===1?5:3}px solid ${['#fff8d6','#ffd05a','#ff792b','#d93618'][j]}`,borderRadius:'50%',boxShadow:'0 0 12px #fff0a8,0 0 28px #ff6a20',transform:'translate(-50%,-50%) scale(.12)',opacity:'0'});
+   animate(ring,[{opacity:0,transform:'translate(-50%,-50%) scale(.12)'},{opacity:.95,offset:.18,transform:`translate(-50%,-50%) scale(${5+j*1.55})`},{opacity:.65,offset:.48,transform:`translate(-50%,-50%) scale(${9+j*2})`},{opacity:0,transform:`translate(-50%,-50%) scale(${12+j*2.3})`}],950+j*80,'cubic-bezier(.08,.65,.2,1)',j*65);
+  }
+  // Flame tongues shoot out in a radial pattern.
+  for(let i=0;i<18;i++){
+   const a=(Math.PI*2*i/18)+(i%2)*.08,dist=85+(i%4)*25,dx=Math.cos(a)*dist,dy=Math.sin(a)*dist;
+   const flame=make('i',{position:'fixed',left:`${cx}px`,top:`${cy}px`,width:`${10+i%3*5}px`,height:`${22+i%4*7}px`,borderRadius:'70% 30% 65% 35%',background:i%4===0?'#fff1a3':i%3===0?'#ffbd35':'#ff5520',boxShadow:'0 0 14px 4px #ff6b21',transform:'translate(-50%,-50%) scale(.1) rotate(0deg)',opacity:'0'});
+   animate(flame,[{opacity:0,transform:'translate(-50%,-50%) scale(.1) rotate(0deg)'},{opacity:1,offset:.16,transform:'translate(-50%,-50%) scale(1.1) rotate(25deg)'},{opacity:.9,offset:.55,transform:`translate(calc(-50% + ${dx*.7}px),calc(-50% + ${dy*.7}px)) scale(.8) rotate(${i*31}deg)`},{opacity:0,transform:`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(.12) rotate(${i*57}deg)`}],820,'cubic-bezier(.12,.65,.2,1)',i%4*18);
+  }
+  // Fast sparks and darkening smoke puffs add depth without covering the board for long.
+  for(let i=0;i<26;i++){
+   const a=(Math.PI*2*i/26)+(i%3)*.09,dist=65+(i%7)*23,dx=Math.cos(a)*dist,dy=Math.sin(a)*dist;
+   const spark=make('i',{position:'fixed',left:`${cx}px`,top:`${cy}px`,width:`${3+i%3*2}px`,height:`${8+i%4*3}px`,borderRadius:'50%',background:i%3===0?'#fff':'#ffc34d',boxShadow:'0 0 9px 2px #ff9b2f',transform:'translate(-50%,-50%) scale(.2)',opacity:'0'});
+   animate(spark,[{opacity:0,transform:'translate(-50%,-50%) scale(.2)'},{opacity:1,offset:.12,transform:'translate(-50%,-50%) scale(1)'},{opacity:.85,offset:.55,transform:`translate(calc(-50% + ${dx*.65}px),calc(-50% + ${dy*.65}px)) rotate(${i*30}deg)`},{opacity:0,transform:`translate(calc(-50% + ${dx}px),calc(-50% + ${dy+24}px)) scale(.1)`}],760,'ease-out',i%6*14);
+  }
+  for(let i=0;i<5;i++){
+   const a=i*Math.PI*2/5,dx=Math.cos(a)*38,dy=Math.sin(a)*30;
+   const smoke=make('div',{position:'fixed',left:`${cx}px`,top:`${cy}px`,width:'34px',height:'34px',borderRadius:'50%',background:'radial-gradient(circle,rgba(80,75,75,.55),rgba(45,43,43,.12) 70%,transparent)',filter:'blur(5px)',transform:'translate(-50%,-50%) scale(.2)',opacity:'0'});
+   animate(smoke,[{opacity:0,transform:'translate(-50%,-50%) scale(.2)'},{opacity:.55,offset:.3,transform:`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(1.25)`},{opacity:0,transform:`translate(calc(-50% + ${dx*1.8}px),calc(-50% + ${dy*1.8-28}px)) scale(2.1)`}],900,'ease-out',110);
+  }
+  cleanup(1350);
+ }else if(kind==='prism'){
+  // Rainbow halo surrounds the full board (including its corners), with a bright travelling spectrum.
+  const px=boardRect.left+boardRect.width/2,py=boardRect.top+boardRect.height/2;
+  const diameter=Math.ceil(Math.hypot(boardRect.width,boardRect.height)*1.38),size=diameter;
+  const svg=svgEl('svg',{viewBox:`0 0 ${size} ${size}`,width:size,height:size},overlay);
+  Object.assign(svg.style,{position:'fixed',left:`${px}px`,top:`${py}px`,width:`${size}px`,height:`${size}px`,overflow:'visible',transform:'translate(-50%,-50%) scale(.42)',opacity:'0',filter:'drop-shadow(0 0 8px rgba(255,255,255,.95)) drop-shadow(0 0 22px rgba(160,80,255,.9))'});
+  const defs=svgEl('defs',{},svg),grad=svgEl('linearGradient',{id:'gcPrismRainbow',x1:'0%',y1:'0%',x2:'100%',y2:'0%'},defs);
+  [['0%','#ff174f'],['16%','#ff8a00'],['32%','#fff000'],['48%','#27e85b'],['64%','#00dfff'],['80%','#315bff'],['92%','#bd35ff'],['100%','#ff174f']].forEach(([o,c])=>svgEl('stop',{offset:o,'stop-color':c},grad));
+  const g=svgEl('g',{transform:`translate(${size/2} ${size/2})`},svg),radius=size*.43;
+  // Broad outer spectrum plus a thinner inner spectrum make the circle read clearly on phones.
+  svgEl('circle',{cx:0,cy:0,r:radius,fill:'none',stroke:'url(#gcPrismRainbow)','stroke-width':Math.max(18,size*.035),'stroke-linecap':'round',opacity:.98},g);
+  svgEl('circle',{cx:0,cy:0,r:radius-size*.055,fill:'none',stroke:'url(#gcPrismRainbow)','stroke-width':Math.max(5,size*.009),'stroke-linecap':'round',opacity:.9},g);
+  const shine=svgEl('circle',{cx:0,cy:0,r:radius,fill:'none',stroke:'#fff','stroke-width':Math.max(2,size*.004),'stroke-dasharray':`${size*.17} ${size*.83}`,'stroke-linecap':'round',opacity:.95},g);
+  animate(svg,[{opacity:0,transform:'translate(-50%,-50%) scale(.42) rotate(-35deg)'},{opacity:1,offset:.18,transform:'translate(-50%,-50%) scale(1) rotate(65deg)'},{opacity:1,offset:.76,transform:'translate(-50%,-50%) scale(1.02) rotate(330deg)'},{opacity:0,transform:'translate(-50%,-50%) scale(1.13) rotate(430deg)'}],1650,'cubic-bezier(.18,.65,.22,1)');
+  animate(shine,[{strokeDashoffset:0,opacity:.2},{strokeDashoffset:-size*.9,opacity:1},{strokeDashoffset:-size*1.8,opacity:.2}],1500,'linear');
+  const wash=make('div',{position:'fixed',left:`${px}px`,top:`${py}px`,width:`${Math.round(boardRect.width*1.04)}px`,height:`${Math.round(boardRect.height*1.04)}px`,borderRadius:'16px',background:'linear-gradient(115deg,rgba(255,40,100,.2),rgba(255,170,0,.18),rgba(255,245,0,.18),rgba(35,255,130,.18),rgba(0,210,255,.2),rgba(70,70,255,.2),rgba(190,40,255,.2))',mixBlendMode:'screen',filter:'blur(7px)',transform:'translate(-50%,-50%) scale(.86)',opacity:'0'});
+  animate(wash,[{opacity:0,transform:'translate(-50%,-50%) scale(.86)'},{opacity:.9,offset:.25,transform:'translate(-50%,-50%) scale(1)'},{opacity:.65,offset:.72,transform:'translate(-50%,-50%) scale(1.03)'},{opacity:0,transform:'translate(-50%,-50%) scale(1.1)'}],1500,'ease-in-out');
+  // Short rainbow pulses ripple across the board in staggered rows, keeping gem art intact.
+  const cells=Array.from(boardEl.querySelectorAll('.cell'));
+  cells.forEach((cell,i)=>{const delay=((i%SIZE)+(Math.floor(i/SIZE)%2)*.45)*42;try{cell.animate([{filter:'brightness(1) saturate(1)'},{filter:'brightness(1.65) saturate(1.65)',offset:.45},{filter:'brightness(1.08) saturate(1.15)'}],{duration:620,delay,fill:'none',easing:'ease-in-out'});}catch(e){}});
+  cleanup(1800);
+ }else{
+  // Thunder strike: draw a jagged, branching electrical channel over the exact row/column.
+  // Use SVG paths with an immediately-visible fallback; WebView animation support varies.
+  const vertical=opts.axis==='col';
+  const lane=vertical?anchorRect.left+anchorRect.width/2:anchorRect.top+anchorRect.height/2;
+  const minX=boardRect.left-34,minY=boardRect.top-34,w=boardRect.width+68,h=boardRect.height+68;
+  const svg=svgEl('svg',{viewBox:`0 0 ${w} ${h}`,width:w,height:h},overlay);
+  Object.assign(svg.style,{position:'fixed',left:`${minX}px`,top:`${minY}px`,width:`${w}px`,height:`${h}px`,overflow:'visible',pointerEvents:'none'});
+  const toLocal=(x,y)=>[x-minX,y-minY];
+  const makeBolt=(offset=0,seed=0)=>{
+   const pts=[],segments=24;
+   for(let i=0;i<=segments;i++){
+    const t=i/segments,along=(vertical?boardRect.top:boardRect.left)+(vertical?boardRect.height:boardRect.width)*t;
+    // Lightning has uneven, abrupt changes in direction rather than a smooth zig-zag.
+    const envelope=(i===0||i===segments)?0:1;
+    const jitter=envelope*((((i*37+seed*19)%53)-26)*.92);
+    const x=vertical?lane+jitter+offset:along;
+    const y=vertical?along:lane+jitter+offset;
+    pts.push(toLocal(x,y));
+   }
+   return pts;
+  };
+  const pathFrom=pts=>pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');
+  const addStroke=(d,color,width,opacity)=>{
+   const path=svgEl('path',{d,fill:'none',stroke:color,'stroke-width':width,'stroke-linecap':'round','stroke-linejoin':'round',opacity},svg);
+   path.style.filter=`drop-shadow(0 0 ${Math.max(3,width*.8)}px ${color})`;
+   return path;
+  };
+  const strike=(delay=0,offset=0,seed=0)=>{
+   const pts=makeBolt(offset,seed),d=pathFrom(pts);
+   const glow=addStroke(d,'#167dff',25,.95),aura=addStroke(d,'#50dfff',13,1),core=addStroke(d,'#ffffff',4.5,1);
+   [glow,aura,core].forEach((path,i)=>{
+    // pathLength=1 makes the draw-on animation independent of device pixel density.
+    path.setAttribute('pathLength','1');path.style.strokeDasharray='1';path.style.strokeDashoffset='0';
+    try{path.animate([
+      {strokeDashoffset:1,opacity:0},{strokeDashoffset:.72,opacity:1,offset:.16},
+      {strokeDashoffset:0,opacity:1,offset:.43},{strokeDashoffset:0,opacity:.18,offset:.57},
+      {strokeDashoffset:0,opacity:1,offset:.7},{strokeDashoffset:0,opacity:0}
+    ],{duration:680,easing:'steps(8,end)',fill:'forwards',delay:delay+i*12});}
+    catch(e){path.style.strokeDashoffset='0';path.style.opacity='1';}
+   });
+   // Forks split from the main channel at irregular angles, like natural lightning.
+   for(let b=0;b<6;b++){
+    const idx=3+b*3;if(idx>=pts.length-2)continue;
+    const [x,y]=pts[idx],dir=b%2?1:-1,len=26+(b*17)%38;
+    const branch=vertical
+      ?`M ${x} ${y} L ${x+dir*len*.55} ${y+len*.22} L ${x-dir*len*.12} ${y+len}`
+      :`M ${x} ${y} L ${x+len*.22} ${y+dir*len*.55} L ${x+len} ${y-dir*len*.12}`;
+    const fork=addStroke(branch,'#dffcff',3.2,.95);
+    try{fork.animate([{opacity:0},{opacity:1,offset:.24},{opacity:.85,offset:.5},{opacity:0}],{duration:360,delay:delay+90+b*34,fill:'forwards',easing:'steps(4,end)'});}catch(e){fork.style.opacity='1';}
+   }
+  };
+  // Main strike, followed by two shorter re-strikes (the characteristic flicker of thunder).
+  strike(0,0,1);strike(155,vertical?15:-13,3);strike(315,vertical?-11:12,5);
+  const flash=make('div',{position:'fixed',inset:'0',background:'rgba(190,235,255,0)',mixBlendMode:'screen',pointerEvents:'none'});
+  try{flash.animate([
+   {background:'rgba(190,235,255,0)'},{background:'rgba(210,245,255,.48)',offset:.08},
+   {background:'rgba(190,235,255,.04)',offset:.2},{background:'rgba(210,245,255,.3)',offset:.34},
+   {background:'rgba(190,235,255,0)',offset:.48},{background:'rgba(210,245,255,.2)',offset:.62},
+   {background:'rgba(190,235,255,0)'}
+  ],{duration:820,easing:'steps(1,end)',fill:'forwards'});}catch(e){flash.style.background='rgba(210,245,255,.2)';}
+  const affected=vertical?Array.from({length:SIZE},(_,r)=>cellAt(r,opts.pos?.c??0)):Array.from({length:SIZE},(_,c)=>cellAt(opts.pos?.r??0,c));
+  affected.filter(Boolean).forEach((cell,i)=>{cell.classList.remove('lightning-strike');cell.style.setProperty('--strike-delay',`${i*58}ms`);void cell.offsetWidth;cell.classList.add('lightning-strike');});
+  cleanup(1450);
  }
- const ring=document.createElement('span');ring.className='fx-ring';stage.appendChild(ring);
- const symbols=kind==='prism'?['🌈','✨','💎','⭐','🟣','🔵','🟢','🟡','💠','✨','🌟','💎']:kind==='lightning'?['⚡','✨','⚡','✴️','⚡','✨']:['🔥','✨','🟠','⭐','🔥','✨','💥','🟡','🔥','💥','✨','🟠'];
- symbols.forEach((symbol,i)=>{const sp=document.createElement('span');sp.className='fx-spark';sp.textContent=symbol;const angle=(Math.PI*2*i)/symbols.length;const distance=(kind==='prism'?145:kind==='bomb'?165:125)+(i%4)*32;sp.style.setProperty('--dx',Math.round(Math.cos(angle)*distance)+'px');sp.style.setProperty('--dy',Math.round(Math.sin(angle)*distance)+'px');sp.style.animationDelay=(kind==='bomb'?.28+(i%4)*.015:kind==='prism'?.05+(i%3)*.025:0)+'s';stage.appendChild(sp);});
- fx.appendChild(stage);document.body.appendChild(fx);setTimeout(()=>fx.remove(),kind==='prism'?1450:kind==='bomb'?1300:1100);
 }
 function setupDisplayPreferences(){
  const config=[['campaignPanel','campaignPanel'],['heroMasteryPanel','heroMasteryPanel'],['armoryGroup','armoryGroup'],['gemGuideGroup','gemGuideGroup']];
@@ -1245,10 +1406,9 @@ function fxAtElement(el,kind='fx-burst',color='#5ee7ff'){
  if(!el)return;const r=el.getBoundingClientRect();fxPoint(r.left+r.width/2,r.top+r.height/2,kind,color);
 }
 function matchEffects(matches){
- const root=$('board');if(!root)return;const cells=[];
- for(const idx of matches.set){const r=Math.floor(idx/SIZE),c=idx%SIZE;const el=root.querySelector(`[data-r="${r}"][data-c="${c}"]`);if(el)cells.push(el);}
- const chosen=cells.filter((_,i)=>i%Math.max(1,Math.ceil(cells.length/5))===0).slice(0,9);
- playSound('match');chosen.forEach((el,i)=>{fxAtElement(el,'fx-burst',i%2?'#ffe18a':'#65eaff');const rect=el.getBoundingClientRect();for(let k=0;k<3;k++){const sp=document.createElement('i');sp.className='fx-spark';sp.style.setProperty('--x',(rect.left+rect.width/2)+'px');sp.style.setProperty('--y',(rect.top+rect.height/2)+'px');sp.style.setProperty('--dx',(Math.random()*90-45)+'px');sp.style.setProperty('--dy',(Math.random()*90-45)+'px');sp.style.setProperty('--fx',i%2?'#ffdf86':'#8df8ff');sp.style.setProperty('--dur',(.45+Math.random()*.4)+'s');fxLayer().appendChild(sp);setTimeout(()=>sp.remove(),1000);}});
+ // Match feedback is intentionally restrained: sound only. The line pulse is
+ // handled by animateMatchGroupsSequentially; no white burst/spark overlay.
+ playSound('match');
 }
 function ultimateEffects(){
  document.body.classList.remove('ultimate-flash');void document.body.offsetWidth;document.body.classList.add('ultimate-flash');setTimeout(()=>document.body.classList.remove('ultimate-flash'),1000);
@@ -1373,25 +1533,22 @@ function animateMatches(matches){
 }
 async function animateMatchGroupsSequentially(matches){
  const boardRoot=$('board');
- // Play each line's burst in sequence, but never hide a matched gem while
- // another line is animating. The old hide/show step exposed empty cells for
- // the remainder of the cascade.
- const groups=(matches.groups||[]).slice().sort((x,y)=>Math.max(y.len||0,0)-Math.max(x.len||0,0));
+ // Animate one complete row/column at a time. Intersections are only pulsed
+ // once, in the first line that reaches them.
+ const groups=(matches.groups||[]).slice().sort((a,b)=>{
+  const ad=a.dir==='row'?0:1,bd=b.dir==='row'?0:1;
+  return ad-bd || (a.cells?.[0]?.[0]??0)-(b.cells?.[0]?.[0]??0) || (a.cells?.[0]?.[1]??0)-(b.cells?.[0]?.[1]??0);
+ });
  const seen=new Set();
  for(const group of groups){
-  const groupSet=new Set();
-  const cls=group.len>=4?'match-four':'match-three';
   const touched=[];
-  for(const [r,c] of group.cells){
-   const key=r*SIZE+c;if(seen.has(key))continue;seen.add(key);groupSet.add(key);
+  for(const [r,c] of (group.cells||[])){
+   const key=r*SIZE+c;if(seen.has(key))continue;seen.add(key);
    const el=boardRoot.querySelector(`[data-r="${r}"][data-c="${c}"]`);
-   if(el){el.classList.remove('match-three','match-four');void el.offsetWidth;el.classList.add(cls);touched.push(el);}
+   if(el){el.classList.remove('match-three','match-four');void el.offsetWidth;el.classList.add(group.len>=4?'match-four':'match-three');touched.push(el);}
   }
-  if(groupSet.size)matchEffects({set:groupSet,groups:[group]});
-  await sleep(group.len>=4?520:440);
-  // Keep matched gems fully visible until the complete refill is committed.
-  // Do not apply a cleared/hidden state to individual cells during a cascade.
-  for(const el of touched){el.classList.remove('match-three','match-four','match-cleared');}
+  if(touched.length){matchEffects({set:new Set(touched.map(el=>Number(el.dataset.r)*SIZE+Number(el.dataset.c))),groups:[group]});await sleep(group.len>=4?340:300);}
+  for(const el of touched)el.classList.remove('match-three','match-four','match-cleared');
  }
 }
 function captureGemOrigins(){
@@ -1401,50 +1558,46 @@ function captureGemOrigins(){
 }
 async function animateFallingGems(origins){
  const root=$('board');if(!root)return;
- const reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  const cells=[...root.querySelectorAll('.cell[data-r][data-c]')];
- if(reduceMotion){await sleep(20);return;}
- const rootStyle=getComputedStyle(root);
- const gap=parseFloat(rootStyle.rowGap)||parseFloat(rootStyle.gap)||0;
- const step=(cells[0]?.getBoundingClientRect().height||56)+gap;
- let longest=0;
- // Gravity is strictly vertical: surviving gems can only move down within
- // their original column. New gems enter above the top of that same column.
+ const boardRect=root.getBoundingClientRect();
+ const gap=parseFloat(getComputedStyle(root).rowGap)||parseFloat(getComputedStyle(root).gap)||0;
+ const cellRect=cells[0]?.getBoundingClientRect();
+ const step=(cellRect?.height||56)+gap;
+ const overlays=[];let longest=0;
+ // The real, final gem is rendered and remains visible in every destination
+ // cell. Only a temporary visual copy travels from its old position/top edge;
+ // this avoids exposing empty-looking cells during Android Chrome repaints.
  for(const cell of cells){
   const r=Number(cell.dataset.r),c=Number(cell.dataset.c),gem=board[r]?.[c];
   if(!gem)continue;
-  const face=cell.querySelector('.gem-face');if(!face)continue;
   const from=origins?.get(gem);
   const delta=from?Math.max(0,r-from.r):(r+1);
   if(delta<=0)continue;
-  cancelGemFaceAnimation(face);
-  const duration=Math.min(560,185+delta*52),delay=Math.min(150,c*3+(origins?.has(gem)?0:r*32));
-  longest=Math.max(longest,duration+delay);
+  const face=cell.querySelector('.gem-face');if(!face)continue;
+  const rect=cell.getBoundingClientRect();
+  const ghost=cell.cloneNode(true);
+  ghost.removeAttribute('id');ghost.removeAttribute('aria-label');
+  ghost.querySelectorAll('[id]').forEach(n=>n.removeAttribute('id'));
+  ghost.style.cssText += `;position:fixed!important;left:${rect.left}px!important;top:${rect.top}px!important;width:${rect.width}px!important;height:${rect.height}px!important;margin:0!important;z-index:9998!important;pointer-events:none!important;animation:none!important;opacity:1!important;visibility:visible!important;`;
+  ghost.classList.remove('match-three','match-four','match-cleared','selected','drag-source','drag-target');
+  const ghostFace=ghost.querySelector('.gem-face');
+  if(ghostFace){ghostFace.style.setProperty('opacity','1','important');ghostFace.style.setProperty('visibility','visible','important');ghostFace.style.removeProperty('transition');ghostFace.style.removeProperty('transform');}
+  document.body.appendChild(ghost);overlays.push(ghost);
+  const distance=Math.max(1,delta)*step;
+  const duration=Math.min(420,190+delta*35);
+  longest=Math.max(longest,duration);
   try{
-   if(typeof face.animate!=='function'){
-    face.style.transition='none';face.style.transform=`translate3d(0,${-delta*step}px,0)`;
-    void face.offsetWidth;face.style.transition='transform 260ms cubic-bezier(.18,.72,.24,1)';face.style.transform='translate3d(0,0,0)';
-    longest=Math.max(longest,290+delay);continue;
-   }
-   face.style.zIndex='3';
-   const anim=face.animate([
-    {transform:`translate3d(0,${-delta*step}px,0)`,opacity:.96},
-    {transform:`translate3d(0,${Math.max(1,step*.025)}px,0)`,opacity:1,offset:.88},
-    {transform:'translate3d(0,0,0)',opacity:1}
-   ],{duration,delay,easing:'cubic-bezier(.18,.72,.24,1)',fill:'both'});
-   activeGemFaceAnimations.set(face,anim);
-   const cleanup=()=>{
-    if(activeGemFaceAnimations.get(face)===anim)activeGemFaceAnimations.delete(face);
-    try{face.style.removeProperty('transform');face.style.removeProperty('translate');face.style.removeProperty('z-index');}catch(e){}
-   };
-   anim.onfinish=()=>{cleanup();try{anim.cancel()}catch(e){}};
-   anim.oncancel=cleanup;
-  }catch(e){cancelGemFaceAnimation(face);}
+   const animation=ghost.animate([
+    {transform:`translate3d(0,${-distance}px,0)`},
+    {transform:'translate3d(0,0,0)'}
+   ],{duration,delay:Math.min(90,c*3),easing:'cubic-bezier(.18,.72,.24,1)',fill:'forwards'});
+   animation.onfinish=()=>{ghost.remove();};
+   animation.oncancel=()=>{ghost.remove();};
+  }catch(e){ghost.remove();}
  }
- if(longest)await sleep(longest+24);
- for(const cell of cells){const face=cell.querySelector('.gem-face');if(face){face.style.removeProperty('transition');face.style.removeProperty('transform');face.style.removeProperty('z-index');}}
+ if(longest)await sleep(longest+110);
+ overlays.forEach(el=>el.remove());
 }
-
 function setTurn(state){turnState=state;if(state==='player')moveSeconds=10;updateUI();}
 function scoreAIMove(matches){
  // Evaluate both immediate damage and tactical value instead of choosing only by match size.
@@ -1492,27 +1645,22 @@ function getAIMove(){
  // Guardian progression steadily improves decision quality, regardless of the selected rival.
  // At higher levels the AI considers fewer near-best alternatives and more consistently picks a top move.
  const levelSteps=Math.max(0,(Number(profile.level)||1)-1);
- const candidateLimit=Math.max(1,8-Math.floor(levelSteps/2));
- if(difficulty==='Casual'){
-  const threshold=Math.min(.88,.62+levelSteps*.012);
-  const pool=moves.filter(m=>m.score>=moves[0].score*threshold).slice(0,Math.min(candidateLimit,moves.length));
-  return pool[Math.floor(Math.random()*pool.length)];
- }
- if(difficulty==='Expert'){
-  const threshold=Math.min(.995,.97+levelSteps*.002);
-  const pool=moves.filter(m=>m.score>=moves[0].score*threshold).slice(0,Math.min(2,candidateLimit,moves.length));
-  return pool[Math.floor(Math.random()*pool.length)];
- }
- const threshold=Math.min(.985,.88+levelSteps*.009);
- const pool=moves.filter(m=>m.score>=moves[0].score*threshold).slice(0,Math.min(3,candidateLimit,moves.length));
+ const upgradeSteps=totalPermanentUpgradeLevels();
+ // The rival becomes more deliberate as the Guardian advances and the player's
+ // permanent runes/mastery improve. Early levels retain some move variety.
+ const progression=Math.min(1,levelSteps/20);
+ const upgradePressure=Math.min(.10,upgradeSteps*.005);
+ // Early rivals retain variety; advanced rivals consistently favour their strongest
+ // available tactical options. Upgrades improve AI judgement as well as its stats.
+ const threshold=Math.min(.999,.90+progression*.095+upgradePressure);
+ const candidateLimit=Math.max(1,3-Math.floor(levelSteps/8)-Math.floor(upgradeSteps/8));
+ const pool=moves.filter(m=>m.score>=moves[0].score*threshold).slice(0,Math.min(candidateLimit,moves.length));
  return pool[Math.floor(Math.random()*pool.length)];
 }
 // Build 2.8.4: reliable single-gesture drag, with pointer release handled at window level.
 const boardRoot=$('board');
-let dragGhost=null, dragHasMoved=false;
-function placeDragGhost(x,y){if(dragGhost){dragGhost.style.left=x+'px';dragGhost.style.top=y+'px';}}
+let dragHasMoved=false;
 function clearDragVisual(){
- if(dragGhost){dragGhost.remove();dragGhost=null;}
  boardRoot.querySelectorAll('.drag-source,.drag-target').forEach(el=>{el.classList.remove('drag-source','drag-target');el.style.removeProperty('--drag-distance');});
  dragHasMoved=false;
 }
@@ -1536,21 +1684,13 @@ window.addEventListener('pointermove',e=>{
  const dx=e.clientX-dragStart.startX,dy=e.clientY-dragStart.startY,distance=Math.hypot(dx,dy);
  if(distance>7&&!dragHasMoved){
   dragHasMoved=true;dragStart.cell.classList.add('drag-source');
-  dragGhost=dragStart.cell.cloneNode(true);
-  dragGhost.className='drag-ghost '+dragStart.cell.className;
-  dragGhost.removeAttribute('data-r');dragGhost.removeAttribute('data-c');
-  dragGhost.removeAttribute('aria-label');dragGhost.replaceChildren(...Array.from(dragStart.cell.childNodes).map(n=>n.cloneNode(true)));
-  dragGhost.setAttribute('aria-hidden','true');document.body.appendChild(dragGhost);
  }
  if(!dragHasMoved)return;
  const candidate=dragCandidate(dragStart,dx,dy);
  if(candidate){
-  const axis=Math.abs(dx)>=Math.abs(dy)?'x':'y',delta=axis==='x'?dx:dy;
-  const limit=(axis==='x'?dragStart.cellWidth:dragStart.cellHeight)*.92,clamped=Math.max(-limit,Math.min(limit,delta));
-  placeDragGhost(axis==='x'?dragStart.centerX+clamped:dragStart.centerX,axis==='y'?dragStart.centerY+clamped:dragStart.centerY);
   boardRoot.querySelectorAll('.drag-target').forEach(el=>el.classList.remove('drag-target'));
   if(candidate.r>=0&&candidate.r<SIZE&&candidate.c>=0&&candidate.c<SIZE){const target=boardRoot.querySelector(`[data-r="${candidate.r}"][data-c="${candidate.c}"]`);if(target)target.classList.add('drag-target');}
- }else placeDragGhost(dragStart.centerX,dragStart.centerY);
+ }
 },{passive:true});
 window.addEventListener('pointerup',e=>{
  if(!dragStart||e.pointerId!==dragStart.pointerId)return;
@@ -1574,7 +1714,7 @@ async function prismSwap(prismPos,targetPos){
  if(over||busy)return;playerStyle.specialUses++;busy=true;setTurn('resolving');selected=null;
  const prism=board[prismPos.r][prismPos.c], target=board[targetPos.r][targetPos.c]?.color||randColor();
  const clear=new Set([prismPos.r*SIZE+prismPos.c]);
- showBattleFx('prism','🌈 RAINBOW PRISM!','All gems matching this colour are being cleared!');
+ showBattleFx('prism','🌈 RAINBOW PRISM!','All gems matching this colour are being cleared!',{pos:prismPos});
  for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++)if(board[r][c]?.color===target)clear.add(r*SIZE+c);
  playSound('special');const damage=Math.min(55,Math.round(clear.size*3*(1+powerBonus())));await animateShot('playerAvatar','enemyAvatar','strong',clear.size);enemyHp=Math.max(0,enemyHp-damage);impactFeedback('enemyAvatar',damage);energy=Math.min(100,energy+clear.size*4);
  // Save survivor positions, then clear/compact/refill in memory before the
@@ -1606,7 +1746,7 @@ async function activateSwappedSpecial(specialPos,otherPos){
  }
  const fxKind=special.special==='bomb'||special.special==='cross'?'bomb':(special.special==='lightningH'||special.special==='lightningV'||special.special==='row'?'lightning':'bomb');
  const fxTitle=special.special==='bomb'?'💣 BLAST BOMB!':special.special==='lightningH'?'⚡ ROW LIGHTNING!':special.special==='lightningV'?'⚡ COLUMN LIGHTNING!':special.special==='cross'?'✖️ CROSS BLAST!':'💥 ROW BLAST!';
- showBattleFx(fxKind,fxTitle,`Clearing ${count} tiles and striking your rival!`);
+ showBattleFx(fxKind,fxTitle,`Clearing ${count} tiles and striking your rival!`,{pos:specialPos,axis:special.special==='lightningV'?'col':'row'});
  playSound('special');
  const damage=Math.min(65,Math.round(count*(2.8+powerBonus())));
  await animateShot('playerAvatar','enemyAvatar',special.special==='lightningH'||special.special==='lightningV'?'lightning':'strong',count);
@@ -1709,14 +1849,14 @@ function bossWarning(){const boss=bossIdentity(),box=$('bossAlert');if(!boss||!b
 async function enemyTurn(turn){
  if(over||enemyHp<=0)return;busy=true;setTurn('enemy');$('board').classList.add('enemy-thinking');const boss=isBossBattle(),bossMove=boss&&turn%3===0;if(bossMove){bossWarning();await sleep(900);}await sleep(450);
  const profile=RIVALS[rival];let chance=profile.rate;
- if(difficulty==='Casual')chance*=.55;if(difficulty==='Expert')chance=Math.min(.98,chance*1.25);chance+=enemyTacticsBonus();
+ chance+=enemyTacticsBonus();
  if(rival==='Nexus'&&comboBest>=3)chance=Math.min(.98,chance+.12);if(rival==='Nexus'&&turn>=4)chance=Math.min(.98,chance+.08);
  // Adapt reaction tempo to what the player is doing, without exceeding the selected difficulty ceiling.
  if(playerStyle.bigCombos>=2)chance+=rival==='Nexus'?.10:.04;
  if(playerStyle.specialUses>=2)chance+=rival==='Nexus'?.08:.03;
  if(playerHp<=maxHealth()*.35&&rival==='Blaze')chance+=.06;
- if(difficulty==='Casual')chance=Math.min(.62,chance);else if(difficulty==='Normal')chance=Math.min(.90,chance);else chance=Math.min(.99,chance);
- if(mode==='Survival')chance=Math.min(.99,chance+.18);
+ chance=Math.min(.99,chance);
+ if(mode==='Survival')chance=Math.min(.995,chance+.05);
  const move=getAIMove();
  if(move&&Math.random()<Math.min(.96,chance+.15)){
   const {a,b}=move;const first=$('board').querySelector(`[data-r="${a.r}"][data-c="${a.c}"]`);const second=$('board').querySelector(`[data-r="${b.r}"][data-c="${b.c}"]`);if(first)first.classList.add('drag-source');if(second)second.classList.add('drag-source');say(`${profile.avatar} ${rival} swaps two gems…`);await sleep(420);if(first)first.classList.remove('drag-source');if(second)second.classList.remove('drag-source');
@@ -1729,9 +1869,9 @@ async function enemyTurn(turn){
   for(let c=0;c<SIZE;c++){let vals=[];for(let r=SIZE-1;r>=0;r--)if(board[r][c])vals.push(board[r][c]);while(vals.length<SIZE)vals.push(randomCell());for(let r=SIZE-1,i=0;r>=0;r--,i++)board[r][c]=vals[i];}
   // Atomically display the fully refilled board before the rival's attack sequence.
   ensureBoardComplete();render();
-  const dmg=Math.max(4,Math.round((count*(1.4+(difficulty==='Expert'?.45:0))+(rival==='Blaze'?2:0)+(rival==='Nexus'&&count>=5?3:0)+(bossMove?12:0))*enemyDamageMultiplier()));await animateShot('enemyAvatar','playerAvatar',bossMove?'strong':count>=5?'lightning':count>=4?'fire':'magic',count);playerHp=Math.max(0,playerHp-dmg);impactFeedback('playerAvatar',dmg);say(bossMove?`👑 BOSS SPECIAL! ${bossIdentity().warning} deals ${dmg} damage!`:`${profile.avatar} ${rival} made a tactical match (${count} gems) and dealt ${dmg} damage!`);playSound('attack');beep(260,.12);
+  const dmg=Math.max(4,Math.round((count*1.9+(rival==='Blaze'?4:0)+(rival==='Nexus'&&count>=5?5:0)+(bossMove?16:0))*enemyDamageMultiplier()));await animateShot('enemyAvatar','playerAvatar',bossMove?'strong':count>=5?'lightning':count>=4?'fire':'magic',count);playerHp=Math.max(0,playerHp-dmg);impactFeedback('playerAvatar',dmg);say(bossMove?`👑 BOSS SPECIAL! ${bossIdentity().warning} deals ${dmg} damage!`:`${profile.avatar} ${rival} made a tactical match (${count} gems) and dealt ${dmg} damage!`);playSound('attack');beep(260,.12);
  }else{
-  let dmg=profile.attack+(difficulty==='Expert'?3:difficulty==='Casual'?-2:0);if(mode==='Survival')dmg+=3;if(rival==='Blaze'&&turn%3===0)dmg+=5;if(rival==='Nexus'&&comboBest>=3)dmg+=2;if(rival==='Frost'&&playerHp<40)dmg=Math.max(3,dmg-1);if(bossMove)dmg+=12;dmg=Math.max(1,Math.round(dmg*enemyDamageMultiplier()));await animateShot('enemyAvatar','playerAvatar',bossMove?'strong':rival==='Blaze'?'fire':rival==='Frost'?'ice':'lightning',bossMove?3:1);playerHp=Math.max(0,playerHp-dmg);impactFeedback('playerAvatar',dmg);say(bossMove?`👑 BOSS SPECIAL! ${bossIdentity().warning} deals ${dmg} damage!`:`${profile.avatar} ${rival} strikes for ${dmg} damage!`);playSound('attack');beep(230,.12);
+  let dmg=profile.attack;if(mode==='Survival')dmg+=3;if(rival==='Blaze'&&turn%3===0)dmg+=5;if(rival==='Nexus'&&comboBest>=3)dmg+=2;if(rival==='Frost'&&playerHp<40)dmg=Math.max(3,dmg-1);if(bossMove)dmg+=16;dmg=Math.max(1,Math.round(dmg*enemyDamageMultiplier()));await animateShot('enemyAvatar','playerAvatar',bossMove?'strong':rival==='Blaze'?'fire':rival==='Frost'?'ice':'lightning',bossMove?3:1);playerHp=Math.max(0,playerHp-dmg);impactFeedback('playerAvatar',dmg);say(bossMove?`👑 BOSS SPECIAL! ${bossIdentity().warning} deals ${dmg} damage!`:`${profile.avatar} ${rival} strikes for ${dmg} damage!`);playSound('attack');beep(230,.12);
  }
  $('board').classList.remove('enemy-thinking');busy=false;turnCount=Math.max(turnCount,turn);checkEnd();if(!over){setTurn('player');render();}
 }
@@ -1757,8 +1897,10 @@ function endGame(win){
  const xpReward=win?Math.round((50+comboBest*5)*bonus):15;
  const coinReward=win?Math.round(25*bonus):0;
  let levelsGained=0,levelCoins=0;
- if(win){profile.wins++;profile.xp+=xpReward;profile.coins+=coinReward;while(profile.xp>=profile.level*100){profile.xp-=profile.level*100;profile.level++;levelsGained++;profile.coins+=50;levelCoins+=50;}}
+ if(win){profile.wins++;profile.xp+=xpReward;profile.coins+=coinReward;}
  else{profile.losses++;profile.xp+=xpReward;}
+ // Guardian progression is XP-based, not win-based: losses also count toward the next level.
+ while(profile.xp>=profile.level*100){profile.xp-=profile.level*100;profile.level++;levelsGained++;profile.coins+=50;levelCoins+=50;}
  profile.bestCombo=Math.max(Number(profile.bestCombo)||0,Number(comboBest)||0);if(win&&campaignMode&&isBossBattle())profile.bossSlayer=true;
  let campaignBonus=0;
  if(campaignMode&&win){const st=CAMPAIGN_STAGES[campaignStage-1];const firstClear=!profile.campaignWins.includes(campaignStage);if(firstClear){profile.campaignWins.push(campaignStage);campaignBonus=st&&st.boss?60:20;profile.coins+=campaignBonus;}if(campaignStage===profile.campaignUnlocked&&profile.campaignUnlocked<9)profile.campaignUnlocked++;selectedCampaignStage=Math.min(9,profile.campaignUnlocked);renderCampaignMap();}
@@ -1774,7 +1916,7 @@ function endGame(win){
  $('resultText').textContent=campaignMode?(win?(campaignStage===9?'The Inferno Dragon has fallen! The crystal corruption fades, and peace returns to all three kingdoms.':`Stage ${campaignStage} cleared! ${rival} has been defeated${CAMPAIGN_STAGES[campaignStage-1].boss?' in a mighty boss battle':''}. ${CAMPAIGN_STAGES[campaignStage].story}`):`Stage ${campaignStage} remains unfinished. ${CAMPAIGN_STAGES[campaignStage-1].story} Regroup and try again.`):(win?`You defeated ${rival} in ${modeLabel()} mode! The arena is yours.`:`${rival} won this round. Regroup, upgrade, and come back stronger!`);
  $('resultRewards').innerHTML=`<div class="reward-tile"><span>✨</span><small>XP EARNED</small><strong>+${xpReward}</strong></div><div class="reward-tile"><span>💰</span><small>COINS EARNED</small><strong>+${totalCoinsEarned}</strong></div><div class="reward-tile"><span>🔥</span><small>BEST COMBO</small><strong>x${comboBest}</strong></div>`;
  $('resultGuardianLevel').textContent=`Level ${profile.level}`;$('resultGuardianXp').textContent=`${profile.xp} / ${profile.level*100} XP · 💰 ${profile.coins}`;$('resultBattleRecord').textContent=`${profile.wins} wins · ${profile.losses} losses`;
- $('resultFooter').textContent=campaignMode?(win?`Campaign reward: +${campaignBonus} bonus coins. ${campaignStage===9?'The Adventure Campaign is complete!':`Next: Stage ${Math.min(9,profile.campaignUnlocked)}.`}`:`Your campaign progress is safe. You can retry this stage or upgrade in the Armory.`):(win?(levelsGained?`LEVEL UP! You reached Level ${profile.level} and earned ${levelCoins} bonus coins.`:'Your legend grows stronger with every victory.'):`No coins for a defeat. You earned ${xpReward} XP—win the next battle to earn coins.`);
+ $('resultFooter').textContent=campaignMode?(win?`Campaign reward: +${campaignBonus} bonus coins. ${campaignStage===9?'The Adventure Campaign is complete!':`Next: Stage ${Math.min(9,profile.campaignUnlocked)}.`}`:`Your campaign progress is safe. You earned ${xpReward} XP; Guardian progress continues even after a defeat.`):(levelsGained?`LEVEL UP! You reached Level ${profile.level} and earned ${levelCoins} bonus coins. Rival difficulty has increased.`:(win?'Your legend grows stronger with every victory.':`No battle coins for a defeat. You earned ${xpReward} XP; defeats still move you toward the next Guardian Level.`));
  $('playAgain').disabled=false;$('playAgain').textContent=campaignMode?'⚔️ RETRY STAGE':'⚔️ BATTLE AGAIN';
  overlay.classList.add('show');
  resultCelebration(win,bossWin);
@@ -1829,7 +1971,7 @@ function renderCampaignMap(){
  $('campaignStory').textContent=st.story;$('campaignObjective').textContent=st.objective;
  $('startCampaign').textContent=selectedCampaignStage<=profile.campaignUnlocked?(st.boss?'👑 CHALLENGE THE BOSS':'⚔️ START ADVENTURE'):'🔒 STAGE LOCKED';$('startCampaign').disabled=selectedCampaignStage>profile.campaignUnlocked;
 }
-function launchCampaignStage(n){const st=CAMPAIGN_STAGES[n-1];if(!st||n>profile.campaignUnlocked)return;campaignMode=true;campaignStage=n;selectedCampaignStage=n;arena=st.arena;rival=st.rival;difficulty=st.difficulty;mode='Classic';applyArena();document.querySelectorAll('[data-rival]').forEach(b=>b.classList.toggle('active',b.dataset.rival===rival));document.querySelectorAll('[data-diff]').forEach(b=>b.classList.toggle('active',b.dataset.diff===difficulty));document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));updateModeStatus();renderCampaignMap();start();say(`${st.boss?'👑 BOSS MISSION: ':'📜 STORY MISSION: '} ${st.story} OBJECTIVE: ${st.objective} ${RIVALS[rival].ability}`);}
+function launchCampaignStage(n){const st=CAMPAIGN_STAGES[n-1];if(!st||n>profile.campaignUnlocked)return;campaignMode=true;campaignStage=n;selectedCampaignStage=n;arena=st.arena;rival=st.rival;difficulty='Normal';mode='Classic';applyArena();document.querySelectorAll('[data-rival]').forEach(b=>b.classList.toggle('active',b.dataset.rival===rival));document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));updateModeStatus();renderCampaignMap();start();say(`${st.boss?'👑 BOSS MISSION: ':'📜 STORY MISSION: '} ${st.story} OBJECTIVE: ${st.objective} ${RIVALS[rival].ability}`);}
 function start(){
  applyArena();updateChampions();updateModeStatus();clearInterval(timerId);playerHp=maxHealth();enemyMaxHp=RIVALS[rival].hp;enemyHp=enemyMaxHp;if(campaignMode){const st=CAMPAIGN_STAGES[campaignStage-1];if(st&&st.boss)enemyMaxHp=Math.round(enemyMaxHp*1.75);else if(campaignStage>=7)enemyMaxHp=Math.round(enemyMaxHp*1.2);enemyHp=enemyMaxHp;}energy=0;seconds=mode==='TimeAttack'?75:mode==='Survival'?180:120;if(mode==='TimeAttack')enemyHp=Math.round(enemyHp*.8);enemyMaxHp=Math.round(enemyMaxHp*enemyHealthMultiplier());enemyHp=enemyMaxHp;comboBest=0;turnCount=0;playerStyle={bigCombos:0,largeMatches:0,specialUses:0,turnDamage:0};selected=null;busy=false;over=false;updateAIAdaptation();
  $('overlay').classList.remove('show','result-win','result-lose');$('overlay').classList.remove('boss-win');['playerAvatar','enemyAvatar'].forEach(id=>{const el=$(id);if(el)el.classList.remove('celebrate','fallen');});const boss=bossIdentity();$('battlehead')?.classList.toggle('boss-arena',!!boss);const bossBox=$('bossAlert');if(bossBox){bossBox.classList.toggle('active',!!boss);bossBox.classList.remove('warning');bossBox.innerHTML=boss?`👑 ${boss.title}<span class="boss-sub">Boss battle · beware the special attack every third enemy turn</span>`:'';}setBattleHeroes();$('playerChampionName').textContent=CHAMPIONS[champion].name;$('playerChampionRole').textContent=CHAMPIONS[champion].desc;$('enemyName').textContent=boss?boss.name:rival;$('enemyStyle').textContent=boss?`BOSS · ${RIVALS[rival].style}`:RIVALS[rival].style;
@@ -1838,7 +1980,7 @@ function start(){
 document.querySelectorAll('[data-arena]').forEach(b=>b.addEventListener('click',()=>{campaignMode=false;arena=b.dataset.arena;profile.arena=arena;applyArena();saveProfile();say(`Arena changed to ${arena}. Your next battle is ready!`);start();}));
 document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{campaignMode=false;mode=b.dataset.mode;updateModeStatus();start();}));
 document.querySelectorAll('[data-rival]').forEach(b=>b.addEventListener('click',()=>{campaignMode=false;rival=b.dataset.rival;document.querySelectorAll('[data-rival]').forEach(x=>x.classList.toggle('active',x===b));start();}));
-document.querySelectorAll('[data-diff]').forEach(b=>b.addEventListener('click',()=>{campaignMode=false;difficulty=b.dataset.diff;document.querySelectorAll('[data-diff]').forEach(x=>x.classList.toggle('active',x===b));start();}));
+
 document.querySelectorAll('[data-champion]').forEach(b=>b.addEventListener('click',()=>{
  const id=b.dataset.champion, c=CHAMPIONS[id];
  if(!profile.unlockedChampions.includes(id)){
@@ -1978,6 +2120,165 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
 }
 </style>
 
+<style id="build-3-5-33-android-gem-repaint-guard">
+/* Android WebView: regular gems are CSS-painted spans with empty text content.
+   Explicitly keep those spans in the paint tree during the refill transition. */
+#board > .cell .gem-face.regular-gem {
+  display:block !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  -webkit-backface-visibility:visible !important;
+  backface-visibility:visible !important;
+}
+#board > .cell { opacity:1 !important; visibility:visible !important; }
+</style>
+<style id="build-3-5-34-compact-special-effects">
+/* Keep bomb, lightning and prism feedback readable without covering the board. */
+.battle-visual-fx{
+ inset:auto!important;left:50%!important;top:50%!important;
+ width:min(58vw,320px)!important;height:min(58vw,320px)!important;
+ transform:translate(-50%,-50%)!important;overflow:visible!important;
+ background:transparent!important;opacity:.82!important;
+}
+.battle-visual-fx:before{display:none!important;animation:none!important}
+.battle-visual-fx .fx-stage{width:100%!important;height:100%!important}
+.battle-visual-fx.fx-bomb .fx-icon{font-size:clamp(2.8rem,9vw,5rem)!important;filter:drop-shadow(0 0 5px #ff9a45)!important}
+.battle-visual-fx.fx-bomb .fx-burst{font-size:clamp(4rem,15vw,8rem)!important;filter:drop-shadow(0 0 8px #ff6a00)!important}
+.battle-visual-fx.fx-prism .fx-icon{font-size:clamp(3rem,10vw,5.5rem)!important;filter:drop-shadow(0 0 6px #ed62ff)!important}
+.battle-visual-fx .fx-ring{border-width:4px!important;box-shadow:0 0 12px currentColor!important}
+.battle-visual-fx .fx-spark{font-size:clamp(.8rem,2.5vw,1.5rem)!important;filter:drop-shadow(0 0 4px #fff)!important}
+.battle-visual-fx .fx-fragment{box-shadow:0 0 5px #ff7a1a!important}
+@media(max-width:600px){
+ .battle-visual-fx{width:min(48vw,220px)!important;height:min(48vw,220px)!important;opacity:.68!important}
+ .battle-visual-fx .fx-spark{font-size:1rem!important}
+}
+</style>
+
+<style id="build-3-5-35-minimal-special-effects">
+/* Build 3.5.35: restrained special effects; keep the board and gems easy to see. */
+.battle-visual-fx{opacity:.42!important;width:min(34vw,170px)!important;height:min(34vw,170px)!important;filter:none!important}
+.battle-visual-fx:before{display:none!important;animation:none!important;opacity:0!important}
+.battle-visual-fx .fx-icon{filter:none!important;text-shadow:0 1px 3px #0008!important}
+.battle-visual-fx.fx-bomb .fx-icon{font-size:clamp(2rem,7vw,3.2rem)!important;animation:subtleFxPop .32s ease-out both!important}
+.battle-visual-fx.fx-bomb .fx-burst{font-size:clamp(2.5rem,9vw,4.2rem)!important;filter:none!important;animation:subtleFxPop .28s ease-out .08s both!important}
+.battle-visual-fx.fx-prism .fx-icon{font-size:clamp(2.2rem,7vw,3.5rem)!important;animation:subtleFxPop .35s ease-out both!important}
+.battle-visual-fx .fx-ring{border-width:2px!important;box-shadow:0 0 4px currentColor!important;animation-duration:.35s!important}
+.battle-visual-fx .fx-spark,.battle-visual-fx .fx-fragment{display:none!important;animation:none!important}
+.battle-visual-fx .fx-core{width:13%!important;filter:none!important;animation-duration:.28s!important}
+.battle-visual-fx .fx-flash{display:none!important;animation:none!important}
+.battle-visual-fx .fx-rainbow-beam{width:12%!important;height:12%!important;filter:none!important;box-shadow:0 0 8px #f09cff!important;animation-duration:.35s!important}
+.battle-visual-fx.fx-prism .fx-stage:after{display:none!important;animation:none!important}
+.special-fx-banner{display:none!important}
+#board.fx-shake,#board.fx-bomb,#board.board-fx-lightning,#board.fx-prism{animation:none!important;filter:none!important;transform:none!important;box-shadow:inherit!important}
+body.ultimate-flash,body.combat-shake .wrap{animation:none!important;filter:none!important;transform:none!important}
+.cell.special[data-mark="BOMB"],.cell.special[data-mark="BOMB GEM"],.cell.special[data-mark="CROSS"],.cell.special[data-mark="ROW BLAST"],.cell.special[data-mark="RAINBOW"],.cell.special[data-mark="RAINBOW PRISM"],.cell.special[data-mark="PRISM"]{animation:none!important;filter:none!important}
+.cell.special[data-mark="BOMB"],.cell.special[data-mark="BOMB GEM"],.cell.special[data-mark="CROSS"]{box-shadow:inset 0 0 0 1px #ffc18a,0 0 5px #ff985555!important}
+.cell.special[data-mark="ROW BLAST"]{box-shadow:inset 0 0 0 1px #ffe18a,0 0 5px #ffe18a55!important}
+@keyframes subtleFxPop{0%{opacity:0;transform:scale(.82)}100%{opacity:1;transform:scale(1)}}
+@media(max-width:600px){.battle-visual-fx{width:min(28vw,125px)!important;height:min(28vw,125px)!important;opacity:.34!important}}
+</style>
+
+
+<style id="build-3-5-47-fullscreen-tabs">
+/* Build 3.5.49 — focused battle view and dedicated feature tabs */
+.wrap{width:min(100%,1180px);max-width:1180px;margin:0 auto;padding:clamp(6px,1.2vw,14px)}
+header{margin-bottom:8px;gap:8px}
+header .tag{font-size:.68rem;letter-spacing:.06em}
+#coinShopNav,#helpButton,#dailyReward{display:none!important}
+.feature-tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;margin:0 0 10px;padding:6px;border:1px solid #435180;border-radius:15px;background:#111a35;box-shadow:0 8px 24px #0003;position:sticky;top:0;z-index:1200}
+.feature-tab{min-width:0;padding:10px 5px;border:1px solid transparent;border-radius:10px;background:#202c50;color:#cbd6f4;font-size:.82rem;font-weight:900;white-space:nowrap;transition:background .18s,border-color .18s,transform .18s}
+.feature-tab[aria-selected="true"]{color:#10172d;background:linear-gradient(135deg,#ffe18a,#ffc45c);border-color:#fff0b8;box-shadow:0 3px 12px #ffd16644;transform:translateY(-1px)}
+.layout{display:block;min-width:0}
+.layout>.panel:first-child{width:100%;max-width:940px;margin:0 auto;padding:clamp(8px,1.5vw,16px)}
+.layout>aside{display:none!important}
+.layout.tab-content-active>.panel:first-child{display:none}
+.layout.tab-content-active>aside{display:block!important;width:100%;max-width:940px;margin:0 auto;padding:clamp(10px,2vw,18px)}
+.tab-pane{display:none;min-width:0}
+.tab-pane.active{display:block}
+.tab-pane>h3:first-child{margin-top:2px}
+.tab-pane .side-title{margin-top:16px}
+.tab-pane .powerlist,.tab-pane .champion-grid,.tab-pane .modegrid{margin-bottom:12px}
+/* Let the board use the available screen width without changing its gem art. */
+.layout>.panel:first-child .board{width:min(100%,min(76vh,760px));margin:0 auto;gap:clamp(3px,.65vw,6px)}
+.layout>.panel:first-child .cell{border-radius:clamp(6px,1vw,11px)}
+.layout>.panel:first-child .battlehead{max-width:760px;margin-left:auto;margin-right:auto}
+.layout>.panel:first-child .turnbanner,.layout>.panel:first-child .hint,.layout>.panel:first-child .actionrow,.layout>.panel:first-child .log,.layout>.panel:first-child .boss-alert{max-width:760px;margin-left:auto;margin-right:auto}
+.layout>.panel:first-child .actionrow{display:flex;justify-content:center;flex-wrap:wrap}
+.layout>.panel:first-child .actionrow button{flex:1 1 145px;max-width:230px}
+#tabPane-settings .display-settings{margin-bottom:14px}
+#tabPane-guide .rules{line-height:1.65}
+@media(max-width:680px){
+ .wrap{padding:5px}
+ header{align-items:center;margin-bottom:6px}
+ header .logo{font-size:1.16rem}
+ header>div:last-child{gap:5px!important}
+ #newGame{padding:7px 9px;font-size:.76rem}
+ .coin-balance-badge{padding:7px 8px;font-size:.76rem}
+ .feature-tabs{gap:4px;padding:4px;margin-bottom:7px;border-radius:12px}
+ .feature-tab{padding:9px 1px;font-size:clamp(.62rem,2.7vw,.78rem);border-radius:8px}
+ .layout>.panel:first-child{padding:7px;border-radius:14px}
+ .layout>.panel:first-child .board{width:min(100%,calc(100vw - 18px));gap:3px}
+ .layout>.panel:first-child .cell{border-radius:7px}
+ .layout>.panel:first-child .hint{font-size:.72rem;margin-top:7px}
+ .layout>.panel:first-child .actionrow{gap:5px}
+ .layout>.panel:first-child .actionrow button{font-size:.72rem;padding:9px 5px;flex:1 1 30%}
+}
+@media(max-height:650px) and (min-width:681px){.layout>.panel:first-child .board{width:min(100%,min(67vh,680px))}.feature-tabs{padding:4px;margin-bottom:6px}.feature-tab{padding:7px}}
+</style>
+<script id="build-3-5-47-tab-controller">
+(function(){
+ function setupBattleTabs(){
+  const layout=document.querySelector('.layout');
+  if(!layout || layout.dataset.tabsReady==='1') return;
+  const aside=layout.querySelector(':scope > aside');
+  const battle=layout.querySelector(':scope > .panel');
+  if(!aside||!battle) return;
+  layout.dataset.tabsReady='1';
+  const definitions=[
+   {id:'battle',label:'⚔️ Battle',pane:false},
+   {id:'heroes',label:'🦸 Heroes'},
+   {id:'rewards',label:'🎁 Rewards'},
+   {id:'shop',label:'🛒 Shop'},
+   {id:'guide',label:'📘 Guide'},
+   {id:'settings',label:'⚙️ Settings'}
+  ];
+  const nav=document.createElement('nav');nav.className='feature-tabs';nav.setAttribute('aria-label','Game sections');
+  definitions.forEach((d,i)=>{const b=document.createElement('button');b.type='button';b.className='feature-tab';b.textContent=d.label;b.dataset.tab=d.id;b.setAttribute('aria-selected',i===0?'true':'false');b.addEventListener('click',()=>activate(d.id));nav.appendChild(b)});
+  layout.parentNode.insertBefore(nav,layout);
+  const panes={};
+  definitions.filter(d=>d.pane!==false).forEach(d=>{const pane=document.createElement('section');pane.className='tab-pane';pane.id='tabPane-'+d.id;pane.setAttribute('aria-label',d.label.replace(/^\S+\s/,''));panes[d.id]=pane;aside.appendChild(pane)});
+  const originalNodes=Array.from(aside.children).filter(el=>!el.classList.contains('tab-pane'));
+  originalNodes.forEach(el=>{
+   let target='guide';
+   const id=el.id||'';
+   const cls=el.classList;
+   const heading=el.matches('h3.side-title')?el.textContent.trim():'';
+   if(cls.contains('reward-panel')) target='rewards';
+   else if(cls.contains('display-settings')) target='settings';
+   else if(id==='armoryGroup') target='shop';
+   else if(id==='gemGuideGroup') target='guide';
+   else if(id==='campaignPanel'||cls.contains('arenarow')||cls.contains('rivalrow')||['championGrid','championStatus','heroAbilityPreview','heroMasteryPanel','modeGrid','modeStatus','difficultyProgressionNote'].includes(id)||['Choose your arena','Choose your champion','Battle mode','Choose your rival'].includes(heading)) target='heroes';
+   else if(cls.contains('rules') && el.textContent.trim().startsWith('Progression:')) target='guide';
+   panes[target].appendChild(el);
+  });
+  function activate(id){
+   const isBattle=id==='battle';
+   layout.classList.toggle('tab-content-active',!isBattle);
+   Object.entries(panes).forEach(([key,pane])=>pane.classList.toggle('active',key===id));
+   nav.querySelectorAll('.feature-tab').forEach(btn=>btn.setAttribute('aria-selected',btn.dataset.tab===id?'true':'false'));
+   if(isBattle){window.dispatchEvent(new Event('resize'));}
+   else {const pane=panes[id];if(pane)window.scrollTo({top:Math.max(0,nav.offsetTop-4),behavior:'smooth'});}
+  }
+  activate('battle');
+  // Existing header shortcuts now route to their matching tab, preserving familiar access.
+  const shopShortcut=document.getElementById('coinShopNav');if(shopShortcut)shopShortcut.addEventListener('click',()=>activate('shop'));
+  const rewardsShortcut=document.getElementById('dailyReward');if(rewardsShortcut)rewardsShortcut.addEventListener('click',()=>activate('rewards'));
+  const helpShortcut=document.getElementById('helpButton');if(helpShortcut)helpShortcut.addEventListener('click',()=>activate('guide'));
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setupBattleTabs,{once:true});else setupBattleTabs();
+})();
+</script>
+
 </body></html>
 <style>
 /* Build 3.5.9: preserve original gem shapes and textures; animate jewel artwork only. */
@@ -1985,3 +2286,33 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
 .cell{background:linear-gradient(145deg,#536f94,#354c70)!important;border-color:#a8c0d6cc!important;box-shadow:inset 0 1px 2px #ffffff38,inset 0 -3px 0 #253b5666,0 2px 0 #344b61,0 0 0 1px #d0e0e544!important}
 </style>
 
+
+<style id="build-3-5-38-subtle-special-activation-fx">
+/* Restrained, short activation cues. The live board itself is never transformed or flashed. */
+.battle-visual-fx{
+  width:min(30vw,150px)!important;height:min(30vw,150px)!important;
+  opacity:.78!important;filter:none!important;pointer-events:none!important;
+}
+.battle-visual-fx .fx-stage{isolation:isolate!important}
+.battle-visual-fx .fx-icon{font-size:clamp(2rem,6vw,3.1rem)!important;filter:none!important;text-shadow:0 1px 3px #0008!important}
+.battle-visual-fx.fx-bomb .fx-icon{animation:gcBombPop .42s ease-out both!important}
+.battle-visual-fx.fx-bomb .fx-burst{font-size:clamp(2.6rem,8vw,4rem)!important;animation:gcBombBurst .48s ease-out .08s both!important;filter:none!important}
+.battle-visual-fx.fx-prism .fx-icon{font-size:clamp(2.2rem,6.5vw,3.4rem)!important;animation:gcPrismTurn .72s ease-out both!important}
+.battle-visual-fx.fx-lightning .fx-icon{font-size:clamp(2.2rem,6.5vw,3.4rem)!important;animation:gcBoltFlash .38s ease-out both!important}
+.battle-visual-fx .fx-ring{border-width:2px!important;box-shadow:0 0 5px currentColor!important;animation:gcSoftRing .48s ease-out both!important}
+.battle-visual-fx .fx-spark,.battle-visual-fx .fx-fragment,.battle-visual-fx .fx-flash{display:none!important;animation:none!important}
+.battle-visual-fx .fx-core{width:16%!important;filter:none!important;animation:gcSoftCore .32s ease-out both!important}
+.battle-visual-fx .fx-rainbow-beam{display:block!important;width:42%!important;height:42%!important;opacity:.42!important;filter:none!important;box-shadow:0 0 5px #e8a5ff!important;animation:gcPrismHalo .68s ease-out both!important}
+.battle-visual-fx .fx-bolt-line{position:absolute;left:50%;top:50%;width:76%;height:2px;transform:translate(-50%,-50%);border-radius:3px;background:linear-gradient(90deg,transparent,#a9f7ff 25%,#fff 50%,#a9f7ff 75%,transparent);box-shadow:0 0 5px #79eaff;opacity:0;animation:gcBoltLine .38s ease-out both;z-index:0}
+.battle-visual-fx.fx-lightning .fx-icon{position:relative;z-index:1}
+@keyframes gcBombPop{0%{opacity:0;transform:scale(.68)}55%{opacity:1;transform:scale(1.12)}100%{opacity:1;transform:scale(1)}}
+@keyframes gcBombBurst{0%{opacity:0;transform:scale(.55)}45%{opacity:.9;transform:scale(1.08)}100%{opacity:0;transform:scale(1.28)}}
+@keyframes gcPrismTurn{0%{opacity:0;transform:scale(.72) rotate(-18deg)}45%{opacity:1;transform:scale(1.08) rotate(8deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes gcPrismHalo{0%{opacity:0;transform:scale(.55) rotate(-20deg)}45%{opacity:.48}100%{opacity:0;transform:scale(1.35) rotate(35deg)}}
+@keyframes gcBoltFlash{0%{opacity:0;transform:scale(.72)}25%{opacity:1;transform:scale(1.12)}55%{opacity:.55;transform:scale(.96)}100%{opacity:1;transform:scale(1)}}
+@keyframes gcBoltLine{0%{opacity:0;transform:translate(-50%,-50%) scaleX(.2)}35%{opacity:.65;transform:translate(-50%,-50%) scaleX(1)}100%{opacity:0;transform:translate(-50%,-50%) scaleX(.85)}}
+@keyframes gcSoftRing{0%{opacity:.55;transform:scale(.35)}100%{opacity:0;transform:scale(2.4)}}
+@keyframes gcSoftCore{0%{opacity:0;transform:scale(.4)}45%{opacity:.28}100%{opacity:0;transform:scale(1.35)}}
+@media(max-width:600px){.battle-visual-fx{width:min(26vw,112px)!important;height:min(26vw,112px)!important;opacity:.72!important}}
+@media(prefers-reduced-motion:reduce){.battle-visual-fx *{animation:none!important;opacity:.65!important}}
+</style>
