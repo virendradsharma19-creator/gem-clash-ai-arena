@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gem Clash: AI Arena — Build 3.5.51 Tougher AI · Battle Balance</title>
+<title>Gem Clash: AI Arena — Build 3.5.54 Fair Challenge</title>
 <style>
 :root{--bg:#10152b;--panel:#1b2342;--panel2:#252f55;--text:#f4f7ff;--muted:#aab5d6;--gold:#ffd166;--cyan:#5ee7ff;--red:#ff5d78;--green:#72f1b8}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#26366b 0,#10152b 48%,#080b18 100%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text);min-height:100vh}
@@ -237,7 +237,7 @@ body.combat-shake .wrap{animation:combatShake .32s ease-out}
 
 /* Build 2.1.0: cinematic boss encounters */
 .boss-alert{display:none;margin:10px 0;padding:10px 12px;border:1px solid #ff806e99;border-radius:12px;background:linear-gradient(100deg,#4a1d36,#29152d 60%,#401d28);color:#ffe4a7;font-weight:950;text-align:center;letter-spacing:.035em;box-shadow:0 0 22px #ff513b24;animation:bossPulse 1.2s ease-in-out infinite}
-.boss-alert.active{display:block}.boss-alert.warning{border-color:#fff0a0;background:linear-gradient(100deg,#71302b,#3e1d34);color:#fff4bd;animation:bossWarning .5s ease-in-out 3}
+.boss-alert .boss-phase{display:inline-flex;margin:6px 0 0;padding:3px 8px;border-radius:999px;background:#ffffff16;border:1px solid #ffe18a66;color:#ffe9a8;font-size:.66rem;font-weight:950;letter-spacing:.08em}.boss-alert.phase-two{border-color:#ffbd6a;background:linear-gradient(100deg,#58302d,#30203b 60%,#49252a)}.boss-alert.phase-three{border-color:#ff765f;background:linear-gradient(100deg,#70252d,#351a36 60%,#62251e);box-shadow:0 0 25px #ff674433}.boss-alert.active{display:block}.boss-alert.warning{border-color:#fff0a0;background:linear-gradient(100deg,#71302b,#3e1d34);color:#fff4bd;animation:bossWarning .5s ease-in-out 3}
 .boss-alert .boss-sub{display:block;margin-top:3px;color:#ffc4c9;font-size:.72rem;font-weight:750;letter-spacing:0}
 .battlehead.boss-arena{border-color:#ff806eaa;background:radial-gradient(ellipse at 80% 45%,#642a47 0%,#271b40 48%,#171b39 100%);box-shadow:inset 0 1px #ffffff18,0 8px 22px #0004,0 0 24px #ff513b20}
 .battlehead.boss-arena .fighter:last-child .avatar{filter:drop-shadow(0 0 12px #ff633f99)}
@@ -463,7 +463,7 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 .board{background:linear-gradient(145deg,#35466fdd,#465782e8)!important;border-color:#91a5d688!important;box-shadow:inset 0 0 18px #17234366,0 12px 26px #0003!important}
 .cell{background:linear-gradient(145deg,#536a9b,#35496f)!important;border-color:#9aafd9aa!important;box-shadow:inset 0 1px 2px #ffffff35,inset 0 -3px 0 #25355466,0 2px 0 #263654,0 0 0 1px #a7bbe044!important}
 </style>
-<meta name="theme-color" content="#10152b"><meta name="application-name" content="Gem Clash: AI Arena Build 3.5.51"><meta name="description" content="A colorful match-3 fantasy battle arena with three selectable arenas. Challenge rivals, unlock upgrades, and build your champion."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#10152b"><meta name="application-name" content="Gem Clash: AI Arena Build 3.5.53"><meta name="description" content="A colorful match-3 fantasy battle arena with three selectable arenas. Challenge rivals, unlock upgrades, and build your champion."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml">
 
 <style>
 /* Build 2.8.1: animated special-gem tutorials and one-step directional drag feedback. */
@@ -752,7 +752,7 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
 <body>
 <div id="comboToast" class="combo-toast" aria-live="polite" aria-atomic="true"></div>
 <div class="wrap">
-<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 3.5.51 · TOUGHER AI</div></div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><strong id="topCoinBalance" class="coin-balance-badge">💰 0 coins</strong><button class="topbtn" id="coinShopNav" type="button">🛒 Coin Shop</button><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn daily-nav" id="dailyReward" type="button">🎁 Daily Rewards</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
+<header><div><div class="logo">💎 GEM <span>CLASH</span>: AI ARENA</div><div class="tag">BUILD 3.5.53 · CAMPAIGN & BOSS BATTLES</div></div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><strong id="topCoinBalance" class="coin-balance-badge">💰 0 coins</strong><button class="topbtn" id="coinShopNav" type="button">🛒 Coin Shop</button><button class="topbtn" id="helpButton" type="button">❔ How to Play</button><button class="topbtn" id="soundToggle" aria-pressed="false">🔇 Sound Off</button><button class="topbtn daily-nav" id="dailyReward" type="button">🎁 Daily Rewards</button><button class="topbtn" id="newGame">↻ New Battle</button></div></header>
 <div class="layout">
 <section class="panel">
   <div class="stats">
@@ -862,10 +862,10 @@ body.defeat-flash{animation:defeatScreenFlash .58s ease-out both}@keyframes defe
     <div class="power"><span class="ico">🛡️</span><strong>Shield Burst</strong><small>Spend 60 energy to restore 22 health, up to 100.</small></div>
   </div>
   </div>
-  <div class="rules"><b>Progression:</b> Every completed battle grants XP (wins grant more); Guardian levels and rival difficulty rise from XP regardless of the result. Wins grant coins; level-ups award bonus coins. Train each unlocked hero up to Mastery Level 5 for +5% attack and +5 max health per level; mastery costs rise to 100, 200, 350, 550 and 800 coins. Hero mastery and your other progress save locally in this browser. <b>Combo chain:</b> matches that cascade trigger a big on-screen combo banner, board impact shake, and a rising damage bonus. Longer chains deal more damage and charge energy faster. <b>Craft special gems:</b> match 4 in a straight line for a glowing ⚡ Lightning Gem (horizontal or vertical), match 5 for 🌈 rainbow prism, or make a T/L-shaped match for 💣 blast bomb. Lightning clears a full row/column, the bomb blasts a 3×3 area, and swapping the rainbow prism with a gem clears that colour.</div>
+  <div class="rules"><b>Progression:</b> Every completed battle grants XP (wins grant more); Guardian levels and rival difficulty rise from XP regardless of the result. Wins grant coins and level-up bonuses; defeats grant XP but never coins. Train each unlocked hero up to Mastery Level 5 for +5% attack and +5 max health per level; mastery costs rise to 100, 200, 350, 550 and 800 coins. Hero mastery and your other progress save locally in this browser. <b>Combo chain:</b> matches that cascade trigger a big on-screen combo banner, board impact shake, and a rising damage bonus. Longer chains deal more damage and charge energy faster. <b>Craft special gems:</b> match 4 in a straight line for a glowing ⚡ Lightning Gem (horizontal or vertical), match 5 for 🌈 rainbow prism, or make a T/L-shaped match for 💣 blast bomb. Lightning clears a full row/column, the bomb blasts a 3×3 area, and swapping the rainbow prism with a gem clears that colour.</div>
 </aside>
 </div>
-<div class="footer">Gem Clash: AI Arena · Build 3.5.51 · Tougher AI</div>
+<div class="footer">Gem Clash: AI Arena · Build 3.5.52 · Progression & Rewards</div>
 </div>
 <div id="fxLayer" aria-hidden="true"></div>
 <div class="overlay" id="overlay" aria-live="assertive" aria-modal="true" role="dialog" aria-labelledby="resultTitle"><div class="modal result-modal"><div class="result-emblem" id="resultEmblem" aria-hidden="true">🏆</div><div class="result-kicker" id="resultKicker">BATTLE COMPLETE</div><h2 id="resultTitle">VICTORY!</h2><p id="resultText">You won the battle.</p><div class="result-rewards" id="resultRewards"><div class="reward-tile"><span>✨</span><small>XP EARNED</small><strong>+50</strong></div><div class="reward-tile"><span>💰</span><small>COINS EARNED</small><strong>+25</strong></div><div class="reward-tile"><span>🔥</span><small>BEST COMBO</small><strong>x3</strong></div></div><div class="result-profile" id="resultProfile"><div class="profile-result-card"><span>🛡️</span><div><small>GUARDIAN LEVEL</small><strong id="resultGuardianLevel">Level 1</strong><em id="resultGuardianXp">0 / 100 XP</em></div></div><div class="profile-result-card"><span>📖</span><div><small>BATTLE RECORD</small><strong id="resultBattleRecord">0 wins · 0 losses</strong><em>Saved on this device</em></div></div></div><div class="result-footer" id="resultFooter">Your legend grows stronger with every battle.</div><button class="primary result-play-again" id="playAgain" type="button">⚔️ BATTLE AGAIN</button></div></div>
@@ -985,7 +985,7 @@ const RIVALS={
  Frost:{avatar:'❄️',style:'Defensive rival',hp:125,attack:9,rate:0.90,ability:'Frost has extra health and applies steady, reliable pressure.'},
  Nexus:{avatar:'🤖',style:'Adaptive rival',hp:110,attack:10,rate:0.93,ability:'Nexus adapts quickly and favours high-value tactical moves.'}
 };
-let board=[], selected=null, playerHp=100, enemyHp=100, enemyMaxHp=100, energy=0, seconds=120, timerId=null, busy=false, over=false, rival='Blaze', difficulty='Normal', comboBest=0, turnCount=0, arena='Citadel', champion='Mage', mode='Classic', moveSeconds=10, turnState='player', dragStart=null, suppressClickUntil=0, campaignMode=false, campaignStage=1, selectedCampaignStage=1;
+let board=[], selected=null, playerHp=100, enemyHp=100, enemyMaxHp=100, energy=0, seconds=120, timerId=null, busy=false, over=false, rival='Blaze', difficulty='Normal', comboBest=0, turnCount=0, arena='Citadel', champion='Mage', mode='Classic', moveSeconds=10, turnState='player', dragStart=null, suppressClickUntil=0, campaignMode=false, campaignStage=1, selectedCampaignStage=1, bossPhase=1;
 // Build 3.0.0: lightweight in-battle opponent adaptation (all local; no network or personal data).
 let playerStyle={bigCombos:0,largeMatches:0,specialUses:0,turnDamage:0};
 function rivalDifficultyTier(){const level=Math.max(1,Number(profile.level)||1);return level<=3?'EASY':level<=5?'GROWING':level<=10?'MEDIUM':level<=15?'HARD':level<=20?'VERY HARD':'EXPERT';}
@@ -1036,13 +1036,13 @@ function enemyHealthMultiplier(){
  // Counter-scale gradually when the player invests heavily in runes/mastery.
  // This keeps upgraded heroes powerful without allowing battles to become trivial.
  const upgradePressure=Math.min(.45,upgradeSteps*.025);
- return 1.30+Math.min(.85,guardianPressure())+upgradePressure;
+ return 1.10+Math.min(.50,guardianPressure()*.75)+Math.min(.25,upgradeSteps*.014);
 }
 function enemyDamageMultiplier(){
  const steps=Math.max(0,(Number(profile.level)||1)-1),upgradeSteps=totalPermanentUpgradeLevels();
  const levelDamage=Math.min(.75,Math.min(3,steps)*.015+Math.min(7,Math.max(0,steps-3))*.03+Math.max(0,steps-10)*.02);
  const upgradeDamage=Math.min(.30,upgradeSteps*.015);
- return 1.30+levelDamage+upgradeDamage;
+ return 1.12+Math.min(.42,levelDamage*.72)+Math.min(.18,upgradeSteps*.009);
 }
 function enemyTacticsBonus(){
  const steps=Math.max(0,(Number(profile.level)||1)-1),upgradeSteps=totalPermanentUpgradeLevels();
@@ -1716,7 +1716,7 @@ async function prismSwap(prismPos,targetPos){
  const clear=new Set([prismPos.r*SIZE+prismPos.c]);
  showBattleFx('prism','🌈 RAINBOW PRISM!','All gems matching this colour are being cleared!',{pos:prismPos});
  for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++)if(board[r][c]?.color===target)clear.add(r*SIZE+c);
- playSound('special');const damage=Math.min(55,Math.round(clear.size*3*(1+powerBonus())));await animateShot('playerAvatar','enemyAvatar','strong',clear.size);enemyHp=Math.max(0,enemyHp-damage);impactFeedback('enemyAvatar',damage);energy=Math.min(100,energy+clear.size*4);
+ playSound('special');const damage=Math.min(55,Math.round(clear.size*3*(1+powerBonus())));await animateShot('playerAvatar','enemyAvatar','strong',clear.size);enemyHp=Math.max(0,enemyHp-damage);syncBossPhase();impactFeedback('enemyAvatar',damage);energy=Math.min(100,energy+clear.size*4);
  // Save survivor positions, then clear/compact/refill in memory before the
  // next render. Never render the intermediate null board during a Prism wipe.
  const origins=captureGemOrigins();
@@ -1750,7 +1750,7 @@ async function activateSwappedSpecial(specialPos,otherPos){
  playSound('special');
  const damage=Math.min(65,Math.round(count*(2.8+powerBonus())));
  await animateShot('playerAvatar','enemyAvatar',special.special==='lightningH'||special.special==='lightningV'?'lightning':'strong',count);
- enemyHp=Math.max(0,enemyHp-damage);impactFeedback('enemyAvatar',damage);energy=Math.min(100,energy+count*4);
+ enemyHp=Math.max(0,enemyHp-damage);syncBossPhase();impactFeedback('enemyAvatar',damage);energy=Math.min(100,energy+count*4);
  say(`${special.special==='bomb'?'💣 BLAST BOMB':special.special==='lightningH'?'⚡ ROW LIGHTNING':special.special==='lightningV'?'⚡ COLUMN LIGHTNING':special.special==='cross'?'✖️ CROSS BLAST':'💥 ROW BLAST'} activated! Cleared ${count} tiles for ${damage} damage.`);
  const origins=captureGemOrigins();
  settleAndRefillBoard(clear);
@@ -1811,9 +1811,9 @@ async function resolveCascade(first,a,b){
   const processedSpecials=new Set();let expanded=true;
   while(expanded){expanded=false;for(const idx of [...clear]){if(processedSpecials.has(idx))continue;const r=Math.floor(idx/SIZE),c=idx%SIZE,cell=board[r][c];if(!cell?.special)continue;processedSpecials.add(idx);const before=clear.size;addSpecialBlast(clear,r,c,cell);if(clear.size>before)expanded=true;}}
   const comboMultiplier=1+Math.min(5,chain-1)*0.12;
-  const damage=Math.round(clear.size*(2+chain*.6)*(1+powerBonus())*comboMultiplier+(spec?5:0));
+  const damage=Math.round(clear.size*(2+chain*.6)*(1+powerBonus())*comboMultiplier*1.22+(spec?5:0));
   const shotPromise=animateShot('playerAvatar','enemyAvatar',spec?'strong':attackKind(clear.size,chain),clear.size);
-  enemyHp=Math.max(0,enemyHp-damage);impactFeedback('enemyAvatar',damage);energy=Math.min(100,energy+clear.size*4+chain*3);
+  enemyHp=Math.max(0,enemyHp-damage);syncBossPhase();impactFeedback('enemyAvatar',damage);energy=Math.min(100,energy+clear.size*4+chain*3);
   total+=damage;if(spec)playSound('special');else beep(Math.min(900,320+clear.size*35+chain*35),.07);
   if(chain>=2)showComboToast(chain,damage);
   say(`${chain>1?'COMBO x'+chain+'! ':''}${spec==='prism'?'🌈 RAINBOW PRISM CRAFTED!':spec==='bomb'?'💣 BLAST BOMB CRAFTED!':spec==='lightningH'?'⚡ ROW LIGHTNING CRAFTED!':spec==='lightningV'?'⚡ COLUMN LIGHTNING CRAFTED!':spec==='cross'?'✖️ CROSS BOMB CREATED!':spec==='row'?'💥 ROW BLASTER CREATED!':`Match x${clear.size}!`} ${damage} damage${chain>1?' (combo bonus!)':''}.`);
@@ -1844,10 +1844,20 @@ async function resolveCascade(first,a,b){
 }
 function isBossBattle(){return campaignMode&&!!CAMPAIGN_STAGES[campaignStage-1]?.boss;}
 function bossIdentity(){if(!isBossBattle())return null;return ({3:{name:'CITADEL OVERLORD',title:'👑 The Citadel Overlord',warning:'OBLIVION STRIKE',attack:'The Overlord channels a crushing void blast!'},6:{name:'FROST TITAN',title:'❄️ The Frost Titan',warning:'GLACIAL CATACLYSM',attack:'The Frost Titan unleashes a freezing shockwave!'},9:{name:'INFERNO DRAGON',title:'🐉 The Inferno Dragon',warning:'INFERNO BREATH',attack:'The Inferno Dragon breathes a devastating wave of fire!'}})[campaignStage]||null;}
+function bossSpecialDamage(){return bossPhase>=3?22:bossPhase===2?17:13;}
+function syncBossPhase(announce=true){
+ if(!isBossBattle()||!enemyMaxHp)return;
+ const ratio=enemyHp/enemyMaxHp;const next=ratio<=.30?3:ratio<=.65?2:1;
+ if(next===bossPhase)return;bossPhase=next;
+ const box=$('bossAlert'),boss=bossIdentity();
+ if(box&&boss){box.classList.remove('phase-two','phase-three','warning');box.classList.toggle('phase-two',bossPhase===2);box.classList.toggle('phase-three',bossPhase===3);const phaseText=bossPhase===3?'FINAL PHASE · FURY UNLEASHED':'PHASE II · POWER AWAKENED';box.innerHTML=`👑 ${boss.title}<span class="boss-sub">${bossPhase===3?'The boss is enraged. Special attacks come more often and hit harder.':'The boss is powering up. Watch for more frequent special attacks.'}</span><span class="boss-phase">${phaseText}</span>`;}
+ if(announce)say(bossPhase===3?'🔥 BOSS ENRAGED! Final phase — brace for devastating attacks!':'⚠️ BOSS POWER AWAKENED! Special attacks are becoming more dangerous.');
+}
+
 function bossWarning(){const boss=bossIdentity(),box=$('bossAlert');if(!boss||!box)return;box.classList.remove('warning');void box.offsetWidth;box.classList.add('active','warning');box.innerHTML=`⚠️ ${boss.warning}<span class="boss-sub">${boss.attack}</span>`;ultimateBanner('⚠️ '+boss.warning);playSound('attack');setTimeout(()=>{if(box.classList.contains('warning')){box.classList.remove('warning');box.innerHTML=`👑 ${boss.title}<span class="boss-sub">Boss battle · beware the special attack</span>`;}},1800);}
 
 async function enemyTurn(turn){
- if(over||enemyHp<=0)return;busy=true;setTurn('enemy');$('board').classList.add('enemy-thinking');const boss=isBossBattle(),bossMove=boss&&turn%3===0;if(bossMove){bossWarning();await sleep(900);}await sleep(450);
+ if(over||enemyHp<=0)return;busy=true;setTurn('enemy');$('board').classList.add('enemy-thinking');const boss=isBossBattle(),bossInterval=bossPhase>=3?2:3,bossMove=boss&&turn%bossInterval===0;if(bossMove){bossWarning();await sleep(900);}await sleep(450);
  const profile=RIVALS[rival];let chance=profile.rate;
  chance+=enemyTacticsBonus();
  if(rival==='Nexus'&&comboBest>=3)chance=Math.min(.98,chance+.12);if(rival==='Nexus'&&turn>=4)chance=Math.min(.98,chance+.08);
@@ -1869,20 +1879,20 @@ async function enemyTurn(turn){
   for(let c=0;c<SIZE;c++){let vals=[];for(let r=SIZE-1;r>=0;r--)if(board[r][c])vals.push(board[r][c]);while(vals.length<SIZE)vals.push(randomCell());for(let r=SIZE-1,i=0;r>=0;r--,i++)board[r][c]=vals[i];}
   // Atomically display the fully refilled board before the rival's attack sequence.
   ensureBoardComplete();render();
-  const dmg=Math.max(4,Math.round((count*1.9+(rival==='Blaze'?4:0)+(rival==='Nexus'&&count>=5?5:0)+(bossMove?16:0))*enemyDamageMultiplier()));await animateShot('enemyAvatar','playerAvatar',bossMove?'strong':count>=5?'lightning':count>=4?'fire':'magic',count);playerHp=Math.max(0,playerHp-dmg);impactFeedback('playerAvatar',dmg);say(bossMove?`👑 BOSS SPECIAL! ${bossIdentity().warning} deals ${dmg} damage!`:`${profile.avatar} ${rival} made a tactical match (${count} gems) and dealt ${dmg} damage!`);playSound('attack');beep(260,.12);
+  const dmg=Math.max(4,Math.round((count*1.9+(rival==='Blaze'?4:0)+(rival==='Nexus'&&count>=5?5:0)+(bossMove?bossSpecialDamage():0))*enemyDamageMultiplier()));await animateShot('enemyAvatar','playerAvatar',bossMove?'strong':count>=5?'lightning':count>=4?'fire':'magic',count);playerHp=Math.max(0,playerHp-dmg);impactFeedback('playerAvatar',dmg);say(bossMove?`👑 BOSS SPECIAL! ${bossIdentity().warning} deals ${dmg} damage!`:`${profile.avatar} ${rival} made a tactical match (${count} gems) and dealt ${dmg} damage!`);playSound('attack');beep(260,.12);
  }else{
-  let dmg=profile.attack;if(mode==='Survival')dmg+=3;if(rival==='Blaze'&&turn%3===0)dmg+=5;if(rival==='Nexus'&&comboBest>=3)dmg+=2;if(rival==='Frost'&&playerHp<40)dmg=Math.max(3,dmg-1);if(bossMove)dmg+=16;dmg=Math.max(1,Math.round(dmg*enemyDamageMultiplier()));await animateShot('enemyAvatar','playerAvatar',bossMove?'strong':rival==='Blaze'?'fire':rival==='Frost'?'ice':'lightning',bossMove?3:1);playerHp=Math.max(0,playerHp-dmg);impactFeedback('playerAvatar',dmg);say(bossMove?`👑 BOSS SPECIAL! ${bossIdentity().warning} deals ${dmg} damage!`:`${profile.avatar} ${rival} strikes for ${dmg} damage!`);playSound('attack');beep(230,.12);
+  let dmg=profile.attack;if(mode==='Survival')dmg+=3;if(rival==='Blaze'&&turn%3===0)dmg+=5;if(rival==='Nexus'&&comboBest>=3)dmg+=2;if(rival==='Frost'&&playerHp<40)dmg=Math.max(3,dmg-1);if(bossMove)dmg+=bossSpecialDamage();dmg=Math.max(1,Math.round(dmg*enemyDamageMultiplier()));await animateShot('enemyAvatar','playerAvatar',bossMove?'strong':rival==='Blaze'?'fire':rival==='Frost'?'ice':'lightning',bossMove?3:1);playerHp=Math.max(0,playerHp-dmg);impactFeedback('playerAvatar',dmg);say(bossMove?`👑 BOSS SPECIAL! ${bossIdentity().warning} deals ${dmg} damage!`:`${profile.avatar} ${rival} strikes for ${dmg} damage!`);playSound('attack');beep(230,.12);
  }
  $('board').classList.remove('enemy-thinking');busy=false;turnCount=Math.max(turnCount,turn);checkEnd();if(!over){setTurn('player');render();}
 }
-async function useUltimate(){if(energy<100||busy||over)return;busy=true;championAbility('ultimate');ultimateEffects();ultimateBanner('ULTIMATE BLAST!');energy=0;await animateShot('playerAvatar','enemyAvatar','lightning',5);const ultimateDamage=Math.round(35*(1+powerBonus())*(profile.power>=5?1.15:1))+(profile.power>=10?10:0);enemyHp=Math.max(0,enemyHp-ultimateDamage);impactFeedback('enemyAvatar',ultimateDamage);say(`⚡ ULTIMATE BLAST! A massive arcane strike deals ${ultimateDamage} damage!`);playSound('magic');beep(880,.18);busy=false;render();checkEnd();if(!over){setTurn('enemy');enemyTurn(turnCount+1);}}
+async function useUltimate(){if(energy<100||busy||over)return;busy=true;championAbility('ultimate');ultimateEffects();ultimateBanner('ULTIMATE BLAST!');energy=0;await animateShot('playerAvatar','enemyAvatar','lightning',5);const ultimateDamage=Math.round(35*(1+powerBonus())*(profile.power>=5?1.15:1))+(profile.power>=10?10:0);enemyHp=Math.max(0,enemyHp-ultimateDamage);syncBossPhase();impactFeedback('enemyAvatar',ultimateDamage);say(`⚡ ULTIMATE BLAST! A massive arcane strike deals ${ultimateDamage} damage!`);playSound('magic');beep(880,.18);busy=false;render();checkEnd();if(!over){setTurn('enemy');enemyTurn(turnCount+1);}}
 
 async function useHeroSkill(){
  if(energy<40||busy||over||turnState!=='player')return;
  busy=true;energy-=40;championAbility('skill');
  const cfg={Mage:{damage:22,kind:'magic',extra:0,text:'Arcane Pulse blasts the rival with focused magic.'},Knight:{damage:15,kind:'strong',extra:12,text:'Shield Bash strikes the rival and restores 12 health.'},Ranger:{damage:18,kind:'lightning',extra:10,text:'Star Volley hits hard and restores 10 energy.'},Phoenix:{damage:20,kind:'fire',extra:8,text:'Flame Burst scorches the rival and restores 8 health.'}};
  const skill=cfg[champion]||cfg.Mage;ultimateBanner(skill.text.toUpperCase());await animateShot('playerAvatar','enemyAvatar',skill.kind,3);
- const runeSkillBonus=profile.power>=3?6:0;const damage=Math.round(skill.damage*(1+powerBonus()))+runeSkillBonus;enemyHp=Math.max(0,enemyHp-damage);impactFeedback('enemyAvatar',damage);
+ const runeSkillBonus=profile.power>=3?6:0;const damage=Math.round(skill.damage*(1+powerBonus()))+runeSkillBonus;enemyHp=Math.max(0,enemyHp-damage);syncBossPhase();impactFeedback('enemyAvatar',damage);
  if(champion==='Knight'||champion==='Phoenix'){const before=playerHp;const masteryHeal=profile.vitality>=5?5:0;playerHp=Math.min(maxHealth(),playerHp+skill.extra+masteryHeal);if(playerHp>before)impactFeedback('playerAvatar',playerHp-before,'heal');}
  if(champion==='Ranger')energy=Math.min(100,energy+skill.extra);
  say(`✨ ${CHAMPIONS[champion].name}: ${skill.text} Deals ${damage} damage.`);playSound(champion==='Phoenix'?'attack':'magic');beep(champion==='Phoenix'?760:680,.14);busy=false;render();checkEnd();if(!over){setTurn('enemy');enemyTurn(turnCount+1);}
@@ -1899,12 +1909,16 @@ function endGame(win){
  let levelsGained=0,levelCoins=0;
  if(win){profile.wins++;profile.xp+=xpReward;profile.coins+=coinReward;}
  else{profile.losses++;profile.xp+=xpReward;}
- // Guardian progression is XP-based, not win-based: losses also count toward the next level.
- while(profile.xp>=profile.level*100){profile.xp-=profile.level*100;profile.level++;levelsGained++;profile.coins+=50;levelCoins+=50;}
+ // Guardian progression is XP-based, not win-based: losses still count toward the next level.
+ // Coin rule: a defeated battle must never grant coins, including level-up and combat-achievement bonuses.
+ while(profile.xp>=profile.level*100){profile.xp-=profile.level*100;profile.level++;levelsGained++;if(win){profile.coins+=50;levelCoins+=50;}}
  profile.bestCombo=Math.max(Number(profile.bestCombo)||0,Number(comboBest)||0);if(win&&campaignMode&&isBossBattle())profile.bossSlayer=true;
  let campaignBonus=0;
  if(campaignMode&&win){const st=CAMPAIGN_STAGES[campaignStage-1];const firstClear=!profile.campaignWins.includes(campaignStage);if(firstClear){profile.campaignWins.push(campaignStage);campaignBonus=st&&st.boss?60:20;profile.coins+=campaignBonus;}if(campaignStage===profile.campaignUnlocked&&profile.campaignUnlocked<9)profile.campaignUnlocked++;selectedCampaignStage=Math.min(9,profile.campaignUnlocked);renderCampaignMap();}
- const achievementCoins=checkAchievements();saveProfile();
+ // Combat achievement rewards are settled on victory. Progress made during a defeat is retained
+ // (e.g. best combo) and can unlock the achievement on a later win. Daily-claim achievements
+ // continue to be checked immediately by claimDailyReward(), outside battle results.
+ const achievementCoins=win?checkAchievements():0;saveProfile();
  const totalCoinsEarned=win?(coinReward+levelCoins+campaignBonus+achievementCoins):0;
  const overlay=$('overlay'),playerAvatar=$('playerAvatar'),enemyAvatar=$('enemyAvatar');
  overlay.classList.remove('result-win','result-lose','boss-win');overlay.classList.add(win?'result-win':'result-lose');const bossWin=win&&isBossBattle();if(bossWin)overlay.classList.add('boss-win');
@@ -1955,13 +1969,13 @@ function setBattleHeroes(){
 const CAMPAIGN_STAGES=[
  {name:'Citadel Outskirts',region:'Citadel',arena:'Citadel',rival:'Blaze',difficulty:'Casual',icon:'🏰',boss:false,story:'The kingdom’s ancient beacon has gone dark. Strange gem magic is spreading from the outskirts, and the people need a champion to reopen the road to the capital.',objective:'Defeat Blaze and relight the outer beacon.'},
  {name:'Guardians’ Bridge',region:'Citadel',arena:'Citadel',rival:'Frost',difficulty:'Casual',icon:'🌉',boss:false,story:'The bridge guardians have been enchanted and now block the only path to the throne. A cold whisper hints that someone powerful is directing them.',objective:'Defeat Frost and secure the bridge to the capital.'},
- {name:'Citadel Overlord',region:'Citadel',arena:'Citadel',rival:'Nexus',difficulty:'Normal',icon:'👹',boss:true,story:'At last, the Citadel Overlord reveals himself. He has been draining the kingdom’s crystal heart to open a gate to the frozen north.',objective:'Defeat the Citadel Overlord. Watch for the warning before his special attack.'},
+ {name:'Citadel Overlord',region:'Citadel',arena:'Citadel',rival:'Nexus',difficulty:'Normal',icon:'👹',boss:true,story:'At last, the Citadel Overlord reveals himself. He has been draining the kingdom’s crystal heart to open a gate to the frozen north.',objective:'Defeat the Citadel Overlord. Watch for the warning before his special attack. His power rises as his health falls.'},
  {name:'Frozen Pass',region:'Frostlands',arena:'Frostlands',rival:'Frost',difficulty:'Normal',icon:'❄️',boss:false,story:'The crystal gate leads to the Frostlands. A blizzard hides the trail, and Frost’s scouts are guarding the mountain pass.',objective:'Defeat Frost and cross the frozen pass.'},
  {name:'Crystal Cavern',region:'Frostlands',arena:'Frostlands',rival:'Nexus',difficulty:'Normal',icon:'💎',boss:false,story:'Deep inside the mountain, you discover crystals pulsing with stolen energy. The trail leads to a titan who is gathering power beneath the ice.',objective:'Defeat Nexus and disrupt the corrupted crystal chamber.'},
- {name:'Frost Titan',region:'Frostlands',arena:'Frostlands',rival:'Frost',difficulty:'Expert',icon:'🧊',boss:true,story:'The Frost Titan rises from the glacier, guarding a shard that points toward Emberfall. The frozen realm trembles with every step.',objective:'Defeat the Frost Titan and claim the ember-shard. Beware the glacial special attack.'},
+ {name:'Frost Titan',region:'Frostlands',arena:'Frostlands',rival:'Frost',difficulty:'Expert',icon:'🧊',boss:true,story:'The Frost Titan rises from the glacier, guarding a shard that points toward Emberfall. The frozen realm trembles with every step.',objective:'Defeat the Frost Titan and claim the ember-shard. The Titan has three escalating phases; beware the glacial special attack.'},
  {name:'Ember Trail',region:'Emberfall',arena:'Emberfall',rival:'Blaze',difficulty:'Normal',icon:'🌋',boss:false,story:'The shard guides you into Emberfall, where rivers of lava surround an ancient fortress. Blaze stands in your way, testing whether your resolve can survive the heat.',objective:'Defeat Blaze and make a safe path through the volcanic trail.'},
  {name:'Lava Fortress',region:'Emberfall',arena:'Emberfall',rival:'Nexus',difficulty:'Expert',icon:'🔥',boss:false,story:'Within the fortress, you learn the truth: the corrupted crystals are feeding a dragon beneath the mountain. Nexus is the last guardian before its lair.',objective:'Defeat Nexus and break the fortress seal.'},
- {name:'Inferno Dragon',region:'Emberfall',arena:'Emberfall',rival:'Blaze',difficulty:'Expert',icon:'🐉',boss:true,story:'The Inferno Dragon awakens, threatening to consume all three kingdoms. The shards glow together in your hands. This is the final battle for the realm.',objective:'Defeat the Inferno Dragon and end the crystal corruption once and for all.'}
+ {name:'Inferno Dragon',region:'Emberfall',arena:'Emberfall',rival:'Blaze',difficulty:'Expert',icon:'🐉',boss:true,story:'The Inferno Dragon awakens, threatening to consume all three kingdoms. The shards glow together in your hands. This is the final battle for the realm.',objective:'Defeat the Inferno Dragon through all three escalating phases and end the crystal corruption once and for all.'}
 ];
 function renderCampaignMap(){
  const map=$('campaignMap');if(!map)return;map.innerHTML='';
@@ -1973,8 +1987,8 @@ function renderCampaignMap(){
 }
 function launchCampaignStage(n){const st=CAMPAIGN_STAGES[n-1];if(!st||n>profile.campaignUnlocked)return;campaignMode=true;campaignStage=n;selectedCampaignStage=n;arena=st.arena;rival=st.rival;difficulty='Normal';mode='Classic';applyArena();document.querySelectorAll('[data-rival]').forEach(b=>b.classList.toggle('active',b.dataset.rival===rival));document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));updateModeStatus();renderCampaignMap();start();say(`${st.boss?'👑 BOSS MISSION: ':'📜 STORY MISSION: '} ${st.story} OBJECTIVE: ${st.objective} ${RIVALS[rival].ability}`);}
 function start(){
- applyArena();updateChampions();updateModeStatus();clearInterval(timerId);playerHp=maxHealth();enemyMaxHp=RIVALS[rival].hp;enemyHp=enemyMaxHp;if(campaignMode){const st=CAMPAIGN_STAGES[campaignStage-1];if(st&&st.boss)enemyMaxHp=Math.round(enemyMaxHp*1.75);else if(campaignStage>=7)enemyMaxHp=Math.round(enemyMaxHp*1.2);enemyHp=enemyMaxHp;}energy=0;seconds=mode==='TimeAttack'?75:mode==='Survival'?180:120;if(mode==='TimeAttack')enemyHp=Math.round(enemyHp*.8);enemyMaxHp=Math.round(enemyMaxHp*enemyHealthMultiplier());enemyHp=enemyMaxHp;comboBest=0;turnCount=0;playerStyle={bigCombos:0,largeMatches:0,specialUses:0,turnDamage:0};selected=null;busy=false;over=false;updateAIAdaptation();
- $('overlay').classList.remove('show','result-win','result-lose');$('overlay').classList.remove('boss-win');['playerAvatar','enemyAvatar'].forEach(id=>{const el=$(id);if(el)el.classList.remove('celebrate','fallen');});const boss=bossIdentity();$('battlehead')?.classList.toggle('boss-arena',!!boss);const bossBox=$('bossAlert');if(bossBox){bossBox.classList.toggle('active',!!boss);bossBox.classList.remove('warning');bossBox.innerHTML=boss?`👑 ${boss.title}<span class="boss-sub">Boss battle · beware the special attack every third enemy turn</span>`:'';}setBattleHeroes();$('playerChampionName').textContent=CHAMPIONS[champion].name;$('playerChampionRole').textContent=CHAMPIONS[champion].desc;$('enemyName').textContent=boss?boss.name:rival;$('enemyStyle').textContent=boss?`BOSS · ${RIVALS[rival].style}`:RIVALS[rival].style;
+ applyArena();updateChampions();updateModeStatus();clearInterval(timerId);bossPhase=1;playerHp=maxHealth();enemyMaxHp=RIVALS[rival].hp;enemyHp=enemyMaxHp;if(campaignMode){const st=CAMPAIGN_STAGES[campaignStage-1];if(st&&st.boss)enemyMaxHp=Math.round(enemyMaxHp*1.40);else if(campaignStage>=7)enemyMaxHp=Math.round(enemyMaxHp*1.2);enemyHp=enemyMaxHp;}energy=0;seconds=mode==='TimeAttack'?75:mode==='Survival'?180:120;if(mode==='TimeAttack')enemyHp=Math.round(enemyHp*.8);enemyMaxHp=Math.round(enemyMaxHp*enemyHealthMultiplier());enemyHp=enemyMaxHp;comboBest=0;turnCount=0;playerStyle={bigCombos:0,largeMatches:0,specialUses:0,turnDamage:0};selected=null;busy=false;over=false;updateAIAdaptation();
+ $('overlay').classList.remove('show','result-win','result-lose');$('overlay').classList.remove('boss-win');['playerAvatar','enemyAvatar'].forEach(id=>{const el=$(id);if(el)el.classList.remove('celebrate','fallen');});const boss=bossIdentity();$('battlehead')?.classList.toggle('boss-arena',!!boss);$('bossAlert')?.classList.remove('phase-two','phase-three');const bossBox=$('bossAlert');if(bossBox){bossBox.classList.toggle('active',!!boss);bossBox.classList.remove('warning');bossBox.innerHTML=boss?`👑 ${boss.title}<span class="boss-sub">Boss battle · Phase I: special attack every third enemy turn</span>`:'';}setBattleHeroes();$('playerChampionName').textContent=CHAMPIONS[champion].name;$('playerChampionRole').textContent=CHAMPIONS[champion].desc;$('enemyName').textContent=boss?boss.name:rival;$('enemyStyle').textContent=boss?`BOSS · ${RIVALS[rival].style}`:RIVALS[rival].style;
  createBoard();setTurn('player');render();say(`${rival}: ${RIVALS[rival].ability}`);timerId=setInterval(()=>{if(over)return;seconds--;if(!busy&&turnState==='player'){moveSeconds--;if(moveSeconds<=0){setTurn('enemy');say(`⏱️ Time is up! ${rival} takes the turn.`);enemyTurn(turnCount+1);}}updateUI();if(seconds<=0)checkEnd();},1000);
 }
 document.querySelectorAll('[data-arena]').forEach(b=>b.addEventListener('click',()=>{campaignMode=false;arena=b.dataset.arena;profile.arena=arena;applyArena();saveProfile();say(`Arena changed to ${arena}. Your next battle is ready!`);start();}));
@@ -2067,7 +2081,7 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
    <article class="gem-tutorial"><h4>🌈 Rainbow Prism</h4><div class="tutorial-demo prism-demo" aria-label="Animation showing a rainbow prism swapping with a red gem and clearing red gems"><span>🔴</span><span>🟢</span><span class="demo-special">🌈</span><span>🔴</span><span>🟣</span><span>🔴</span><span>🔵</span></div><p>Drag 🌈 one tile onto the colour you want. It clears <b>all gems of that colour</b>.</p></article>
   </div>
   <p style="color:#aab5d6;font-size:13px">Tip: watch the highlighted neighbour while dragging. Release after moving only one space. You can replay these mini-tutorials any time from “How to Play”.</p>
-  <ul style="line-height:1.8;padding-left:22px"><li><b>Choose your setup:</b> select a champion, arena, rival, difficulty and battle mode.</li><li><b>Special gems:</b> Bombs and Lightning activate when swapped one tile with a neighbour. Prism clears the colour of the gem you swap it with. Matching four in a line creates Lightning; matching five creates Prism; T/L matches create Bombs.</li><li><b>Hero Skills:</b> spend 40 energy for a champion-specific skill: Arcane Pulse (Mage), Shield Bash (Knight), Star Volley (Ranger), or Flame Burst (Phoenix).</li><li><b>Ultimate:</b> spend 100 energy for your selected hero’s signature ultimate attack.</li><li><b>Shield Burst:</b> spend 60 energy to recover health.</li><li><b>Hero collection & mastery:</b> unlock champions with coins, then train each hero up to Mastery Level 5 for +5% attack and +5 max health per level. Each hero has separate mastery progress.</li><li><b>Earn rewards:</b> wins give coins and XP. Spend coins on champions and upgrades.</li><li><b>Campaign story:</b> choose an unlocked stage to read its story and mission objective before starting. Clear stages to continue the story.</li><li><b>Boss battles:</b> stages 3, 6 and 9 have extra health. Watch for a warning every third boss turn—special attacks deal heavy damage.</li><li><b>Progress:</b> saved in this browser on this device. Clearing browser data may erase it.</li></ul>
+  <ul style="line-height:1.8;padding-left:22px"><li><b>Choose your setup:</b> select a champion, arena, rival, difficulty and battle mode.</li><li><b>Special gems:</b> Bombs and Lightning activate when swapped one tile with a neighbour. Prism clears the colour of the gem you swap it with. Matching four in a line creates Lightning; matching five creates Prism; T/L matches create Bombs.</li><li><b>Hero Skills:</b> spend 40 energy for a champion-specific skill: Arcane Pulse (Mage), Shield Bash (Knight), Star Volley (Ranger), or Flame Burst (Phoenix).</li><li><b>Ultimate:</b> spend 100 energy for your selected hero’s signature ultimate attack.</li><li><b>Shield Burst:</b> spend 60 energy to recover health.</li><li><b>Hero collection & mastery:</b> unlock champions with coins, then train each hero up to Mastery Level 5 for +5% attack and +5 max health per level. Each hero has separate mastery progress.</li><li><b>Earn rewards:</b> wins give coins and XP; defeats give XP but no coins. Daily gifts and level-up bonuses on victories help fund upgrades.</li><li><b>Campaign story:</b> choose an unlocked stage to read its story and mission objective before starting. Clear stages to continue the story.</li><li><b>Boss battles:</b> stages 3, 6 and 9 have extra health and three phases. Boss special attacks remain telegraphed and become more frequent only in the final phase.</li><li><b>Progress:</b> saved in this browser on this device. Clearing browser data may erase it.</li></ul>
   <p style="color:#aab5d6;font-size:13px">This is a local browser game with scripted computer opponents. Online multiplayer and a native Android/iOS app are not included in this build.</p>
  </div>
 </div>
